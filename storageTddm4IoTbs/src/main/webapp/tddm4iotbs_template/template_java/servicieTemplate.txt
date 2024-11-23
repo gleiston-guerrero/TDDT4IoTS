@@ -1,0 +1,14 @@
+package com.app.tddt4iots.service;{$s}
+{$s}
+import org.springframework.stereotype.Service;{$s}
+import com.app.tddt4iots.entities.*;{$s}
+import java.util.*;{$s}
+import java.lang.*;{$s}
+import java.io.*;{$s}
+{$s}
+@Service{$s}
+public interface {$className}Service { 
+    {$s}
+{$methosClass}
+    {$s}
+}

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html  ng-app="app">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="resources/js/js-library/angular.js" type="text/javascript"></script>
+    </head>
+    <body ng-controller="ctrl">
+        <div>TODO write content</div>
+
+        <script>
+                    var jkl;
+                    var app = angular.module("app", []);
+                    app.controller("ctrl", ($scope, $http) => {
+
+                        setTimeout(() => {
+//                            $scope.loaddata();
+                            tmp();
+                        }, 1500);
+
+                        $scope.loaddata = function () {
+                            $http.get('http://localhost:8080/storageTddm4IoTbs/tddm4iotbs_components/miniprotoboardEolPoOSkpYUoEolMAwrZbEoltjyPoOErTrZbPoOyDkzkAWlLO22/component.json', {
+                            }).then(function (response) {
+                                $scope.puertos = response.data.parameters;
+                                console.log($scope.puertos);
+                                jkl = $scope.puertos;
+//                                let dif = [0, 0];
+//
+//                                let count = 0;
+//                                let xyz = $scope.puertos[0].loc.split(" ")[0];
+//                                for (let ind = 0; ind < $scope.puertos.length; ind++) {
+//                                    if ((/(VccH\_[0-9]+)/g).test($scope.puertos[ind].name_port)) {
+//                                        console.log($scope.puertos[ind].name_port);
+//                                        let loc = $scope.puertos[ind].loc.split(" ");
+//                                        dif[0] += parseFloat(loc[0]);
+//                                        dif[1] += parseFloat(loc[1]);
+//                                    }
+                                //puntos iniciales
+
+//                                    if ((/(VccL_.*)/g).test($scope.puertos[ind].name_port)) {
+//                                        console.log($scope.puertos[ind].name_port);
+//                                        let loc = $scope.puertos[ind].loc.split(" ");
+//                                        dif[0] += parseFloat(loc[0]);
+////                                        dif[1] += parseFloat(loc[1]);
+//                                        count++;
+//                                        console.log(loc[0]);
+//                                    }
+//                                }
+                                console.log("-----------");
+//                                console.log((dif[0] - xyz) / count, dif[1] / count);
+                            }, function (response) {
+                                console.log("error");
+                                console.log(response);
+                            });
+                        };
+                    });
+
+                    function tmp() {
+                        let tmpx = {
+                            "name_port": "VccL_",
+                            "digital": false,
+                            "analog": false,
+                            "data": false,
+                            "loc": "",
+                            "energy": false,
+                            "id": 0,
+                            "key": -2
+                        };
+                        x = -380.8504450523932;
+//                        y = -252.34809393734494;
+//                        gy = -151.18989619309735;
+//                        gy = 28;
+                        gy = 208.0235292550632;
+                        paso = 25.65;
+                        let iter = 0;
+
+                        let id = 360;
+//                        let arr = ["e", "d", "c", "b", "a"];
+                        let arr = ["GndH", "VccH", "c", "b", "a"];
+                        for (let f = 0; f < 2; f++)
+                        {
+                            let Res = [];
+                            y = gy + (paso * iter++);
+                            for (let i = 0; i < 30; i++) {
+                                let tm = tmpx;
+                                tm.name_port = arr[f] + "_" + (i + 1);
+                                tm.loc = (x + (paso * i)) + " " + y;
+                                tm.id = id++;
+                                tm.key = (id + 1) * (-1);
+                                Res.push({...tm});
+                            }
+                            console.log(JSON.stringify(Res));
+                        }
+//                        console.log(Res);
+
+                    }
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,25 @@
+package com.app.tddt4iots.entities;{$s}
+{$s}
+import com.app.tddt4iots.enums.*;{$s}
+import lombok.Data;{$s}
+import lombok.NoArgsConstructor;{$s}
+import java.util.*;{$s}
+import java.lang.*;{$s}
+{$s}
+import jakarta.persistence.*;{$s}
+${imports}
+{$s}
+@Entity{$s}
+@Table(name = "{$nameClass}"){$s}
+@Data{$s}
+@NoArgsConstructor{$s}
+public class {$nameClass} {{$s}
+    {$s}
+    @Id{$s}
+    @GeneratedValue(strategy = GenerationType.AUTO){$s}
+    private Long {$idClass};{$s} 
+    {$s}
+{$attrs}
+    {$s}
+}
+    

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>
+            <h3>Envía un mensaje</h3>
+            <label for="name" >Remitente:</label><br>
+            <input type="text" id="name" name="name"><br>
+            <label for="mensaje" >Mensaje:</label><br>
+            <textarea id="mensaje" name="mensaje"></textarea><br>
+            <input type="button" id="cli" value="enviar"/>
+        </div>
+        <div>
+            <h5>Bandeja de Mensajes:</h5>
+            <div id="allmsg">
+                <!--                <div style="background-color:#; border-radius: 15px; width: 250px;color:white">
+                                    <table border="1">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    Anthony
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="right" >
+                                                    <p>
+                                                        Holis
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>-->
+            </div>
+        </div>
+        <script>
+            "use strict";
+            //subete bien
+            console.log(window.location);
+            console.log((window.location.protocol === 'https:' ? 'wss://' : 'ws://'));
+            var url = (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host + "/" + proyectName() + "ws_sharing"; //"achex.ca:4010"
+            console.log("host", window.location.host);
+            console.log("path", "/" + proyectName() + "ws_sharing");
+            var webSocket = new WebSocket(url);
+
+
+//            console.log(url);
+            webSocket.onopen = onOpen;
+            webSocket.onclose = onClose;
+            webSocket.onmessage = onMessage;
+
+            function onOpen() {
+                console.log("conectado...");
+            }
+            function onClose() {
+                console.log("Desconectado...");
+            }
+
+
+            function MessageSend(obj) {
+                console.log("enviando...");
+                console.log(obj);
+                //JSON.stringify(obj)
+//                webSocket.send(obj);
+                webSocket.send(JSON.stringify(obj));
+            }
+            function onMessage(evt) {
+                var obj = JSON.parse(evt.data);
+                document.getElementById("allmsg").innerHTML += '<bt/><bt/><div style="background-color:#27A897; border-radius: 15px; width: 250px;"><table border="0"><tbody><tr><td>' + obj.nombre +
+                        '</td></tr><tr><td><p>' + obj.mensaje +
+                        '</p></td></tr></tbody></table></div>';
+            }
+            document.getElementById("cli").addEventListener("click", function () {
+                let name = document.querySelector('#name').value;
+                let message = document.querySelector('#mensaje').value;
+                MessageSend(
+                        {
+                            nombre: (name.length === 0 || name === undefined) ? "THE HACKER" : name,
+                            mensaje: (message.length === 0 || message === undefined) ? "void" : message
+                        }
+                );
+
+                document.getElementById("allmsg").innerHTML += '<bt/><bt/><div style="background-color:#E8FFF3; border-radius: 15px; width: 250px;"><table border="0"><tbody><tr><td>' +
+                        ((name.length === 0 || name === undefined) ? "THE HACKER" : name) +
+                        '</td></tr><tr><td><p>' +
+                        ((message.length === 0 || message === undefined) ? "void" : message) +
+                        '</p></td></tr></tbody></table></div>';
+            });
+
+            function proyectName() {
+                var rutaAbsoluta = self.location.pathname.toString().substring(1);
+                var posicionUltimaBarra = rutaAbsoluta.toString().indexOf("/");
+                rutaAbsoluta = rutaAbsoluta.substring(0, posicionUltimaBarra);
+                console.log(rutaAbsoluta);
+                return rutaAbsoluta + "/";
+            }
+        </script>
+    </body>
+</html>

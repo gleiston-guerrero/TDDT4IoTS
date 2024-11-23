@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html ng-app="app">
+    <head>
+        <title>searchUseCase</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link href="CSSexample/css_global.css" rel="stylesheet" type="text/css"/>
+
+        <script src="JSLibreries/angular.js" type="text/javascript"></script>
+        <script src="JSLibreries/jquery.min.js" type="text/javascript"></script>
+
+        <style>
+            /* <datalist> and <option> styling */
+            datalist {
+                position: absolute;
+                max-height: 20em;
+                border: 0 none;
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+
+            datalist option {
+                font-size: 0.8em;
+                padding: 0.3em 1em;
+                background-color: #ccc;
+                cursor: pointer;
+            }
+
+            datalist option:hover, datalist option:focus {
+                color: #fff;
+                background-color: #036;
+                outline: 0 none;
+            }
+        </style>
+    </head>
+    <body ng-controller="controllerWords">
+        <label>Search</label> <br> <br> 
+
+        <hr>
+
+        <input id="idVerbs" placeholder="Verbs" ng-model="valueVerbs.text" type="text" list="verbs_list"><br> <br> 
+        <datalist id="verbs_list">
+            <option ng-repeat="verbs in Verbs" value="{{verbs.verb}}">{{verbs.verb}}</option>
+        </datalist>
+
+        <input id="idNouns" placeholder="Nouns" ng-model="valueNouns.text" type="text" list="nouns_list" ><br> <br> 
+        <datalist id="nouns_list">
+            <option ng-repeat="nouns in Nouns" value="{{nouns.noun}}">{{nouns.noun}}</option>
+        </datalist>
+
+        <input id="idAdjectives" placeholder="Adjectives" ng-model="valueAdjectives.text" type="text" list="adjectives_list"><br> <br> 
+        <datalist id="adjectives_list" >
+            <option ng-repeat="adjectives in Adjectives" value="{{adjectives.adjective}}">{{adjectives.adjective}}</option>
+        </datalist>
+
+        <input id="idPastVerb" placeholder="PastVerb" ng-model="value.text" type="text" list="pastVerb_list"><br> <br>     
+        <datalist id="pastVerb_list" >
+            <option ng-repeat="pastverb in PastVerb" value="{{pastverb.pastVerb}}">{{pastverb.pastVerb}}</option>
+        </datalist>
+
+        <hr>
+
+        <input id="idVerbsNouns" placeholder="Verbs Nouns" ng-model="valueVerbsNouns.text" type="text" list="verbsnouns_list"><br> <br> 
+        <datalist id="verbsnouns_list">
+            <option ng-repeat="verbs in Verbs" value="{{verbs.verb}}" id="optionVerbs">{{verbs.verb}}</option>
+            <option ng-repeat="nouns in Nouns" value="{{valueVerbsNouns.text}} {{nouns.noun}}">{{valueVerbsNouns.text}} {{nouns.noun}}</option>
+        </datalist>
+
+        <hr>
+
+        <input id="idVerb" placeholder="Verbs" ng-model="valueVerb.text" type="text" list="verb_list">
+        <datalist id="verb_list">
+            <option ng-repeat="verbs in Verbs" value="{{verbs.verb}}">{{verbs.verb}}</option>
+        </datalist>
+        <input id="idNoun" placeholder="Nouns" ng-model="valueNoun.text" type="text" list="noun_list" ><br> <br> 
+        <datalist id="noun_list">
+            <option ng-repeat="nouns in Nouns" value="{{nouns.noun}}">{{nouns.noun}}</option>
+        </datalist>
+
+        <hr>
+
+        <input id="idUseCase" placeholder="User Case" ng-model="valueUseCase.text" type="text" list="caseuse_list" ><br> <br> 
+        <datalist id="caseuse_list">
+            <option ng-repeat="usecase in UseCase">{{usecase}}</option>
+        </datalist>
+
+
+        <script src="JSExamples/js_global.js" type="text/javascript"></script>
+        <script src="JSExamples/js_words.js" type="text/javascript"></script>
+
+    </body>
+</html>

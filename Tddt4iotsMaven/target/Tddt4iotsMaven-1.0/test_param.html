@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html  ng-app="app">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="resources/js/js-library/angular.js" type="text/javascript"></script>
+        <script src="resources/js/js-library/base64.js" type="text/javascript"></script>
+    </head>
+    <body ng-controller="ctrl">
+        <button ng-repeat="head in codeHeads" 
+                ng-click="changeSection(head)"
+                >{{head}}</button>
+        <hr>
+        <h5>{{viewCode.tittle}}</h5>
+        <code>{{viewCode.code}}</code>
+        <hr>
+        <div ng-repeat="ctrl in controls">
+            <span>{{ctrl.param}}</span>
+            <input ng-model="ctrl.value" type="text">
+        </div>
+        <hr>
+        <button ng-click="printParams()">print</button>
+        <hr>
+        <div>{{result.params}}</div>
+        <code>{{result.code}}</code>
+        <script src="resources/js/js-global/utils_imagenes.js" type="text/javascript"></script>
+        <script>
+                    var app = angular.module("app", []);
+                    app.controller("ctrl", ($scope, $http) => {
+
+                        $scope.code = {};
+                        $scope.codeHeads = [];
+                        $scope.viewCode = {
+                            tittle: 'NONE',
+                            code: '#'
+                        };
+
+
+                        $scope.controls = [];
+
+                        $scope.replacementParams = {};
+
+                        $scope.result = {};
+                        setTimeout(() => {
+                            $scope.loadC();
+                            //searchParam("SoftwareSerial SIM900({$param1}, {$param222}, {$param22g});");
+                        }, 500);
+                        $scope.loadC = () => {
+                            $http.get('../storageTddm4IoTbs/tddm4iotbs_components/sim900EolPoOSkpZaitjyMAwPoOEolErTtjyCNZPoOEolOAhtGzqUtS1'
+                                    + '/component.json').then((data) => {
+                                let code = data.data.code;
+                                console.log(code);
+                                let heads = Object.keys(code);
+                                console.log(heads);
+                                $scope.codeHeads = heads;
+                                $scope.code = code;
+                                if (heads.length > 0) {
+                                    $scope.changeSection(heads[0]);
+                                }
+                            });
+                        };
+
+                        $scope.changeSection = (param) => {
+                            $scope.viewCode.tittle = param;
+                            console.log($scope.code[param]);
+                            $scope.viewCode.code = b64_to_utf8($scope.code[param]);
+
+                            if ($scope.replacementParams[param] != undefined) {
+                                $scope.controls = $scope.replacementParams[param];
+                            } else {
+                                let params = searchParam($scope.viewCode.code);
+
+                                $scope.controls = [];
+                                for (let i = 0; i < params.length; i++) {
+                                    $scope.controls.push({
+                                        param: params[i],
+                                        value: 0
+                                    });
+                                }
+                                $scope.replacementParams[param] = $scope.controls;
+                            }
+
+
+                        };
+
+                        $scope.printParams = () => {
+                            //angular.toJson(object)
+                            $scope.result.params = angular.toJson($scope.replacementParams);
+                            //$scope.result.code
+                            console.log("-------------------------\n");
+                            console.log($scope.replacementParams);
+                            console.log("-------------------------\n");
+                            let tmpcode = '';
+                            for (let i = 0; i < $scope.codeHeads.length; i++) {
+                                let hd = $scope.codeHeads[i];
+                                let codeSec = b64_to_utf8($scope.code[hd]);//string con codigo
+                                let paramstoRep = $scope.replacementParams[hd];
+                                console.log($scope.replacementParams[hd]);
+                                if (paramstoRep != undefined) {
+                                    for (let i2 = 0; i2 < paramstoRep.length; i2++) {
+                                        console.log(paramstoRep[i2]);
+                                        codeSec = codeSec.toString().replace(paramstoRep[i2].param, paramstoRep[i2].value);
+                                    }
+                                }else{
+                                    alert("llena todos los parámetros");
+                                    return;
+                                }
+                                console.log(codeSec);
+                                tmpcode += "\n" + hd + "\n";
+                                tmpcode += codeSec;
+                            }
+                            $scope.result.code = tmpcode;
+                        };
+
+                        const searchParam = (param) => {
+                            let resp = param.match(/\{\$param[0-9]+\}/g);
+                            console.log("params", resp);
+                            return resp !== null ? resp : [];
+                        };
+
+                    });
+        </script>
+
+    </body>
+</html>

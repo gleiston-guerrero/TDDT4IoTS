@@ -1,0 +1,658 @@
+<div class="modal fade" id="modalNewPort" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered sha" role="document">
+        <div class="modal-content">
+            <form name="form_new_port" ng-submit="createPorst(form_new_port)">
+                <div class="modal-header">
+                    <h5 class="modal-title">New port</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Name port:</label>
+                        <input name="ip_nameport"
+                               ng-model="ip_nameport"
+                               ng-class="(form_new_port.ip_nameport.$invalid &&
+                                                       form_new_port.ip_nameport.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" required/>
+                        <div class="invalid-feedback">
+                            Please enter the name port
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-switch">
+                            <input ng-disabled="form_new_port.ip_isenergy.$viewValue ||
+                                                form_new_port.ip_isdata.$viewValue ||
+                                                form_new_port.ip_isanalog.$viewValue" type="checkbox"
+                                   name="ip_isdigital" ng-model="ip_isdigital"
+                                   class="custom-control-input" id="isdigital">
+                            <label class="custom-control-label" for="isdigital">The port is of digital type</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-switch">
+                            <input ng-disabled="form_new_port.ip_isdigital.$viewValue ||
+                                                form_new_port.ip_isdata.$viewValue ||
+                                                form_new_port.ip_isenergy.$viewValue" type="checkbox" name="ip_isanalog"
+                                   ng-model="ip_isanalog"
+                                   class="custom-control-input" id="isanalog">
+                            <label class="custom-control-label" for="isanalog">The port is analog type</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-switch">
+                            <input ng-disabled="form_new_port.ip_isdigital.$viewValue ||
+                                                form_new_port.ip_isanalog.$viewValue ||
+                                                form_new_port.ip_isenergy.$viewValue" type="checkbox" name="ip_isdata"
+                                   ng-model="ip_isdata"
+                                   class="custom-control-input" id="isdata">
+                            <label class="custom-control-label" for="isdata">The port will be used to send
+                                and receive data</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-switch">
+                            <input ng-disabled="form_new_port.ip_isdigital.$viewValue ||
+                                                form_new_port.ip_isdata.$viewValue ||
+                                                form_new_port.ip_isanalog.$viewValue" type="checkbox" name="ip_isenergy"
+                                   ng-model="ip_isenergy"
+                                   class="custom-control-input" id="ispower">
+                            <label class="custom-control-label" for="ispower">The port is for power supply</label>
+                        </div>
+                        <div ng-show="form_new_port.ip_isenergy.$viewValue">
+                            <label> Enter the maximum and minimum voltage received by the power port: </label>
+                            <div class="row">
+                                <div class="col">
+                                    <label class="col-form-label col-form-label-sm"> Maximum </label>
+                                    <input name="ip_voltmax" ng-model="ip_voltmax"
+                                           ng-pattern="/^[0-9]+(.[0-9]+)?$/" type="text"
+                                           ng-class="form_new_port.ip_voltmax.$error.pattern ?
+                                                                   'form-control form-control-sm is-invalid'
+                                                                   : 'form-control form-control-sm'">
+                                    <div class="invalid-feedback" ng-show="form_new_port.ip_voltmax.$error.pattern">
+                                        The value entered is not valid, enter decimal numbers between 0 - 9 separated by
+                                        "."
+                                        {{form_new_port.ip_voltmax.$error.pattern}}
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <label class="col-form-label col-form-label-sm"> Minimum </label>
+                                    <input name="ip_voltmin" ng-model="ip_voltmin"
+                                           class=" form-control form-control-sm w-100"
+                                           ng-pattern="/^[0-9]+(.[0-9]+)?$/" type="text"
+                                           ng-class="form_new_port.ip_voltmin.$error.pattern ?
+                                                                   'form-control form-control-sm is-invalid'
+                                                                   : 'form-control form-control-sm'">
+                                    <div class="invalid-feedback" ng-show="form_new_port.ip_voltmin.$error.pattern">
+                                        The value entered is not valid, enter decimal numbers between 0 - 9 separated by
+                                        "."
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button ng-click="cancelNewPort()" type="button" class="btn btn-sm btn-danger">Cancel</button>
+                    <button ng-show="editPort === false" type="submit" class="btn btn-sm btn-primary"
+                            ng-disabled="form_new_port.$invalid">
+                        Create port
+                    </button>
+                    <button type="button" ng-show="editPort === true" class="btn btn-sm btn-primary"
+                            ng-disabled="form_new_port.$invalid" ng-click="updatePort(form_new_port)">
+                        Update port
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--modal para visualizar los parametros de cada puerto-->
+<div class="modal fade" id="modalPortView" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered sha" role="document">
+        <div class="modal-content">
+            <form name="form_port_view">
+                <div class="modal-header">
+                    <h5 class="modal-title">Details port</h5>
+                </div>
+                <div class="modal-body">
+                    <fieldset disabled>
+                        <div class="form-group">
+                            <label class="col-form-label col-form-label-sm"> Name port:</label>
+                            <input name="ip_nameport_v"
+                                   ng-model="ip_nameport_v"
+                                   ng-class="(form_port_view.ip_nameport.$invalid &&
+                                                       form_port_view.ip_nameport.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" required/>
+                            <div class="invalid-feedback">
+                                Please enter the name port
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-switch">
+                                <input disabled type="checkbox"
+                                       name="ip_isdigital_v" ng-model="ip_isdigital_v"
+                                       class="custom-control-input" id="">
+                                <label class="custom-control-label" >The port is of digital type</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-switch">
+                                <input disabled type="checkbox" name="ip_isanalog_v"
+                                       ng-model="ip_isanalog_v"
+                                       class="custom-control-input" id="">
+                                <label class="custom-control-label" >The port is analog type</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-switch">
+                                <input disabled type="checkbox" name="ip_isdata_v"
+                                       ng-model="ip_isdata_v"
+                                       class="custom-control-input" id="">
+                                <label class="custom-control-label" >The port will be used to send
+                                    and receive data</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-switch">
+                                <input disabled type="checkbox" name="ip_isenergy_v"
+                                       ng-model="ip_isenergy_v"
+                                       class="custom-control-input" id="">
+                                <label class="custom-control-label" >The port is for power supply</label>
+                            </div>
+                            <div ng-show="form_port_view.ip_isenergy_v.$viewValue">
+                                <label> The maximum and minimum voltage received by the power port: </label>
+                                <div class="row">
+                                    <div class="col">
+                                        <label class="col-form-label col-form-label-sm"> Maximum </label>
+                                        <input name="ip_voltmax_v" ng-model="ip_voltmax_v"
+                                               ng-class="form_port_view.ip_voltmax_v.$error.pattern ?
+                                                                   'form-control form-control-sm is-invalid'
+                                                                   : 'form-control form-control-sm'">
+
+                                    </div>
+                                    <div class="col">
+                                        <label class="col-form-label col-form-label-sm"> Minimum </label>
+                                        <input name="ip_voltmin_v" ng-model="ip_voltmin_v"
+                                               class=" form-control form-control-sm w-100"
+                                               ng-class="ip_voltmax_v.ip_voltmin.$error.pattern ?
+                                                                   'form-control form-control-sm is-invalid'
+                                                                   : 'form-control form-control-sm'">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <button ng-click="cancelPortView()" type="button" class="btn btn-sm btn-danger">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="page-title d-flex flex-column me-5 w-75 m-auto">
+        <h5 class="d-flex flex-column text-dark fw-bolder fs-3 mb-0">IoT Components</h5>
+        <ul class="breadcrumb fw-bold fs-7 small">
+            <li class="breadcrumb-item text-muted">
+                <a href="app.html#!/home" class="text-muted text-hover-primary">Home</a>
+            </li>
+            <li class="breadcrumb-item text-muted">
+                <a href="app.html#!/home" class="text-muted text-hover-primary">IoT Components</a>
+            </li>
+        </ul>
+        <!--end::Breadcrumb-->
+    </div>
+
+    <div id="newComponent" class="card shadow mb-4 w-75 m-auto">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">New component</h6>
+        </div>
+        <!-- Card Body -->
+        <div class="card-body" style="height: auto; overflow: auto">
+            <form name="form_new_component" ng-submit="saveComponent(form_new_component)">
+                <div class="form-group">
+                    <label class="col-form-label col-form-label-sm"> Name component: </label>
+                    <input name="ip_namecomponent"
+                           ng-model="ip_namecomponent"
+                           ng-class="(form_new_component.ip_namecomponent.$invalid &&
+                                               form_new_component.ip_namecomponent.$dirty) ?
+                                               'form-control form-control-sm is-invalid'
+                                               : 'form-control form-control-sm'" required type="text">
+                    <div class="invalid-feedback">
+                        Please enter the component name.
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label col-form-label-sm"> Type component:</label>
+                    <select class="form-control form-control-sm" name="ip_typecomponent" ng-model="ip_typecomponent"
+                            ng-class="(form_new_component.ip_typecomponent.$invalid &&
+                                                form_new_component.ip_typecomponent.$dirty) ?
+                                                'form-control form-control-sm is-invalid'
+                                                : 'form-control form-control-sm'" required>
+                        <option value=""> ---</option>
+                        <option value="embedded_system"> Embedded system</option>
+                        <option value="sensor"> Sensor</option>
+                        <option value="actuator"> Actuator</option>
+                        <option value="communication_module"> Communication module</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Please select the type of component.
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label col-form-label-sm"> Description component: </label>
+                    <textarea name="ip_descriptioncomponent"
+                              ng-model="ip_descriptioncomponent"
+                              ng-class="(form_new_component.ip_descriptioncomponent.$invalid &&
+                                                  form_new_component.ip_descriptioncomponent.$dirty) ?
+                                                  'form-control form-control-sm is-invalid'
+                                                  : 'form-control form-control-sm'" required
+                              id="id_descriptioncomponent" cols="30" rows="10" maxlength="200"></textarea>
+                    <div class="invalid-feedback">
+                        Please enter the component description.
+                    </div>
+                </div>
+
+                <div class="alert alert-warning small" role="alert">
+                    
+                    In the various code sections, you must specify the parameters essential for your component to function correctly. 
+                    Use the following naming convention: <strong> {$param#} </strong>. The "#" symbol designates the parameter's sequential number within each code block.
+                    
+
+                </div>
+
+                <div class="accordion small mb-4" id="accordionExample">
+                    <div class="card">
+                        <div class="card-header" id="itemlibraries">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne"
+                                        aria-expanded="true" aria-controls="collapseOne">
+                                    Libraries
+                                </button>
+                            </h2>
+                        </div>
+
+                        <div id="collapseOne" class="collapse show" aria-labelledby="itemlibraries"
+                             data-parent="#accordionExample">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label class="col-form-label col-form-label-sm">
+                                        Input the required Arduino code pertaining to the <strong> libraries </strong> needed for the component to function correctly within the IoT device.</label>
+                                    <div class="border" id="libraries"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="itemvariables">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                        data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Variables
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="itemvariables"
+                             data-parent="#accordionExample">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label class="col-form-label col-form-label-sm"> Input the required Arduino code pertaining to the <strong> variables </strong> needed for the component to function correctly within the IoT device. </label>
+                                    <div class="border" id="variables"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="itemsetup">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                        data-target="#collapseTree" aria-expanded="false" aria-controls="collapseTree">
+                                    Setup
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapseTree" class="collapse" aria-labelledby="itemsetup" data-parent="#accordionExample">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label class="col-form-label col-form-label-sm"> 
+                                        Input the required Arduino code pertaining to the <strong> setup </strong> needed for the component to function correctly within the IoT device.</label>
+                                    <div class="border" id="setup"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="itemloop">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                        data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    Loop
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapseFour" class="collapse" aria-labelledby="itemloop" data-parent="#accordionExample">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label class="col-form-label col-form-label-sm"> Input the required Arduino code pertaining to the <strong> loop </strong> needed for the component to function correctly within the IoT device. </label>
+                                    <div class="border" id="loop"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="itemmethods">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                        data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                    Methods
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapseFive" class="collapse" aria-labelledby="itemmethods"
+                             data-parent="#accordionExample">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label class="col-form-label col-form-label-sm"> Input the required Arduino code pertaining to the <strong> methods </strong> needed for the component to function correctly within the IoT device.
+                                    <div class="border" id="methods"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <label class="col-form-label col-form-label-sm">Select the image of the component, we recommend
+                    using a .png file.</label> <br>
+
+                <div class="mt-3 mb-4">
+                    <label class="btn button-ds btn-sm" for="loadImage"> Select image </label>
+                    <input id="loadImage" type="file" style="display: none">
+                    <button type="button" class="btn button-d btn-sm float-right" ng-click="newPort()"> New port</button>
+                </div>
+
+                <div class="border w-100" id="lienzo" style="height: 500px;">
+
+                </div>
+
+                <div class="form-group mt-4 float-right">
+                    <button type="button" ng-click="cancelComponent()" class="btn button-dt btn-sm"> Cancel</button>
+                    <button ng-show="flag_update === false" ng-disabled="form_new_component.$invalid"
+                            type="submit" class="btn button-d btn-sm"> Save component
+                    </button>
+                    <button ng-show="flag_update === true" ng-disabled="form_new_component.$invalid"
+                            type="button" ng-click="updateSaveComponente(form_new_component)"
+                            class="btn button-d btn-sm"> Update component
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="listComponent">
+        <!--lista de los componentes ingresados por el usuario logeado-->
+        <div ng-show="viewMyComponents" class="card shadow mb-4 w-75 m-auto">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-dark">My component list -
+                    (Rows) {{arrayComponentes.length}} </h6>
+                <button type="button" ng-click="clickViewComponentAdmin()"
+                        style="position: absolute;right: 0;margin-right: 19rem;"
+                        ng-show="DatoUsuario.type_person === 'A' || DatoUsuario.type_person === 'R'"
+                        class="btn button-dt btn-sm"><i class="fas fa-stopwatch"></i> Proposals
+                </button>
+                <button type="button" ng-click="clickViewComunityComponents()"
+                        style="position: absolute;right: 0;margin-right: 11rem;"
+                        class="btn button-ds btn-sm"><i class="fas fa-globe-americas"></i> Comunity
+                </button>
+                <button type="button" ng-click="openFormNewComponent()"
+                        class="btn button-d btn-sm"> New Component
+                </button>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body" style="height: 460px; overflow: auto">
+
+                <div class="text-center" ng-show="arrayComponentes.length === 0">
+                    <img class="mb-4" src="resources/img/img-app/nodata.svg" alt="..." width="150">
+                    <br>
+                    <h5>No data currently available</h5>
+                </div>
+
+                <div class="form-group" ng-show="arrayComponentes.length > 0">
+                    <label class="col-form-label col-form-label-sm"> Component name: </label>
+                    <input name="name_component" id="name_component" class="form-control form-control-sm" type="text">
+                </div>
+
+                <div class="alert alert-primary" role="alert" id="component_table"
+                     ng-repeat="dom_array_components in arrayComponentes" ng-show="arrayComponentes.length > 0">
+                    <div class="media mb-2">
+                        <img src="resources/img/img-app/037-processor.png" class="align-self-center mr-3" alt="..."
+                             width="70">
+                        <div class="media-body">
+                            <div style="font-size: 12px">
+                                <strong> Update date: </strong> {{dom_array_components.uploaddate_component}}
+                                <div class="float-right" style="font-size: 14px">
+                                    <strong> Status: </strong>
+                                    <span ng-show="dom_array_components.active_component === 'A'"><span
+                                            class="badge badge-pill badge-success"> APPROVED </span></span>
+                                    <span ng-show="dom_array_components.active_component === 'R'"><span
+                                            class="badge badge-pill badge-danger"> REJECTED </span></span>
+                                    <span ng-show="dom_array_components.active_component === 'S'"><span
+                                            class="badge badge-pill badge-info"> IN REVIEW </span></span>
+                                    <span ng-show="dom_array_components.active_component === 'I'"><span
+                                            class="badge badge-pill badge-dark"> REMOVED </span></span>
+                                </div>
+                            </div>
+                            <h5 class="mt-0 text-dark"><strong> {{dom_array_components.name_component}} </strong></h5>
+                            <div style="line-height: 10px;margin-top: -10px;margin-bottom: 10px;text-align: justify;">
+                                <span style="font-size: 12px"> {{dom_array_components.description_component}} </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-4 col-md-3 mb-2">
+                                    <div class="dropdown">
+                                        <button class="btn button-dt btn-sm w-100"
+                                                ng-click="selectProject(dom_myprojects)"
+                                                type="button" id="actions{{dom_array_components.id_component}}"
+                                                data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+                                            Actions <i class="fas fa-chevron-down ml-4"></i>
+                                        </button>
+                                        <div class="dropdown-menu"
+                                             aria-labelledby="actions{{dom_array_components.id_component}}">
+                                            <button ng-show="dom_array_components.active_component === 'S'"
+                                                    ng-click="stateComponent('DELETE', dom_array_components.id_component)"
+                                                    class="dropdown-item"><i class="fas fa-trash-alt"></i> Delete
+                                            </button>
+                                            <button ng-show="dom_array_components.active_component !== 'A'"
+                                                    ng-click="updateComponent(dom_array_components.id_component)"
+                                                    class="dropdown-item"><i class="fas fa-pen-square"></i> Update
+                                            </button>
+                                            <button class="dropdown-item"
+                                                    ng-click="selectedComponent(dom_array_components, 'M')">
+                                                <i class="fas fa-info-circle"></i>
+                                                Details
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--lista de componentes ingresados por toda la comunidad de usuarios-->
+        <div ng-show="viewComunityComponents" class="card shadow mb-4 w-75 m-auto">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-dark">Comunity component list - (Rows)
+                    {{arrayComponentesAll.length}}</h6>
+                <button type="button" ng-click="clickViewMyComponents()" class="btn button-ds btn-sm float-right">
+                    <i class="fas fa-chevron-circle-left"></i> Return
+                </button>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body" style="height: 460px; overflow: auto">
+                <div class="form-group">
+                    <label class="col-form-label col-form-label-sm"> Component name: </label>
+                    <input name="name_component" class="form-control form-control-sm" type="text">
+                </div>
+
+                <div class="alert alert-primary" role="alert"
+                     ng-repeat="dom_array_components in arrayComponentesAll">
+                    <div class="media mb-2">
+                        <img src="resources/img/img-app/037-processor.png" class="align-self-center mr-3" alt="..."
+                             width="70">
+                        <div class="media-body">
+                            <div style="font-size: 12px">
+                                <strong> Update date: </strong> {{dom_array_components.uploaddate_component}} <br>
+                                <strong> Owner: </strong>
+                                {{dom_array_components.lastname_person + ' ' + dom_array_components.name_person}}
+                            </div>
+                            <h5 class="mt-0 text-dark"><strong> {{dom_array_components.name_component}} </strong></h5>
+                            <div style="line-height: 10px;margin-top: -10px;margin-bottom: 10px;text-align: justify;">
+                                <span style="font-size: 12px"> {{dom_array_components.description_component}} </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-4 col-md-3 mb-2">
+                                    
+                                    
+                                    <div class="dropdown">
+                                        <button class="btn button-dt btn-sm w-100"
+                                                ng-click="selectProject(dom_myprojects)"
+                                                type="button" id="actions{{dom_array_components.id_component}}"
+                                                data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+                                            Actions <i class="fas fa-chevron-down ml-4"></i>
+                                        </button>
+                                        <div class="dropdown-menu"
+                                             aria-labelledby="actions{{dom_array_components.id_component}}">
+                                            <button class="dropdown-item"
+                                                    ng-click="selectedComponent(dom_array_components, 'C')">
+                                                <i class="fas fa-info-circle"></i>
+                                                Details
+                                            </button>
+                                            <button class="dropdown-item"
+                                                    ng-click="updateComponent(dom_array_components.id_component)">
+                                                <i class="fas fa-pen"></i>
+                                                Update
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--detalles del componente seleccionado-->
+        <div ng-show="viewDetailsComponent" class="card shadow mb-4 w-75 m-auto">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-dark">Details Component</h6>
+                <button type="button" ng-click="returnDetailsComponent()" class="btn button-ds btn-sm float-right">
+                    <i class="fas fa-chevron-circle-left"></i> Return
+                </button>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body" style="height: auto; overflow: auto">
+                <h5> Image Component </h5>
+                <div class="border w-100" id="lienzoView" style="height: 500px;">
+
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label col-form-label-sm"> Name component </label>
+                    <label class="form-control form-control-sm h-auto"> {{detailsComponenteSelected.name_component}}
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label col-form-label-sm"> Description component </label>
+                    <label class="form-control form-control-sm h-auto text-justify">
+                        {{detailsComponenteSelected.description_component}}
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!--lista de componentes que solo visualizara el usuario administador para evaluar los componentes-->
+        <div ng-show="viewComponentsProposals &&
+        (DatoUsuario.type_person === 'A' || DatoUsuario.type_person === 'R')"
+             class="card shadow mb-4 w-75 m-auto">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-dark">Component proposals for review -
+                    (Rows) {{arrayComponentesEvaluate.length}} </h6>
+                <button type="button" ng-click="clickViewMyComponents()" class="btn button-ds btn-sm float-right">
+                    <i class="fas fa-chevron-circle-left"></i> Return
+                </button>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body" style="height: 460px; overflow: auto">
+                <div class="form-group">
+                    <label class="col-form-label col-form-label-sm"> Component name: </label>
+                    <input name="name_component" class="form-control form-control-sm" type="text" />
+                </div>
+
+                <div class="alert alert-primary" role="alert" id=""
+                     ng-repeat="dom_array_components in arrayComponentesEvaluate">
+                    <div class="media mb-2">
+                        <img src="resources/img/img-app/037-processor.png" class="align-self-center mr-3" alt="..."
+                             width="70">
+                        <div class="media-body">
+                            <div style="font-size: 12px">
+                                <strong> Update date: </strong> {{dom_array_components.uploaddate_component}} <br>
+                                <strong> Owner: </strong>
+                                {{dom_array_components.lastname_person + ' ' + dom_array_components.name_person}}
+                                <div class="float-right" style="font-size: 14px">
+                                    <strong> Status: </strong>
+                                    <span ng-show="dom_array_components.active_component === 'A'"><span
+                                            class="badge badge-pill badge-success"> APPROVED </span></span>
+                                    <span ng-show="dom_array_components.active_component === 'R'"><span
+                                            class="badge badge-pill badge-danger"> REJECTED </span></span>
+                                    <span ng-show="dom_array_components.active_component === 'S'"><span
+                                            class="badge badge-pill badge-info"> IN REVIEW </span></span>
+                                    <span ng-show="dom_array_components.active_component === 'I'"><span
+                                            class="badge badge-pill badge-dark"> REMOVED </span></span>
+                                </div>
+                            </div>
+                            <h5 class="mt-0 text-dark"><strong> {{dom_array_components.name_component}} </strong></h5>
+                            <div style="line-height: 10px;margin-top: -10px;margin-bottom: 10px;text-align: justify;">
+                                <span style="font-size: 12px"> {{dom_array_components.description_component}} </span>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-4 col-md-3 mb-2">
+                                    <div class="dropdown">
+                                        <button class="btn button-dt btn-sm w-100"
+                                                ng-click="selectProject(dom_myprojects)"
+                                                type="button" id="actions_ad{{dom_array_components.id_component}}"
+                                                data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+                                            Actions <i class="fas fa-chevron-down ml-4"></i>
+                                        </button>
+                                        <div class="dropdown-menu"
+                                             aria-labelledby="actions_ad{{dom_array_components.id_component}}">
+                                            <button ng-click="stateComponent('APROBE', dom_array_components.id_component)"
+                                                    class="dropdown-item"> <i class="fas fa-check-circle"></i> Approve
+                                            </button>
+                                            <button ng-click="stateComponent('REJECT', dom_array_components.id_component)"
+                                                    class="dropdown-item"> <i class="fas fa-times-circle"></i> Reject
+                                            </button>
+                                            <button ng-click="updateComponent(dom_array_components.id_component)"
+                                                    class="dropdown-item"> <i class="fas fa-eye"></i> View
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

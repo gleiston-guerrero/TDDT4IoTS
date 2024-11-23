@@ -1,0 +1,609 @@
+[{
+        "adjective": "Angry",
+        "adjectiveSpanish": "Enfadado, enojado",
+        "state": "A"
+    }, {
+        "adjective": "Bad",
+        "adjectiveSpanish": "Malo",
+        "state": "A"
+    }, {
+        "adjective": "Big",
+        "adjectiveSpanish": "Grande",
+        "state": "A"
+    }, {
+        "adjective": "Bitter",
+        "adjectiveSpanish": "Amargo",
+        "state": "A"
+    }, {
+        "adjective": "Black",
+        "adjectiveSpanish": "Negro",
+        "state": "A"
+    }, {
+        "adjective": "Bossy",
+        "adjectiveSpanish": "Mandón",
+        "state": "A"
+    }, {
+        "adjective": "Brave",
+        "adjectiveSpanish": "Valiente",
+        "state": "A"
+    }, {
+        "adjective": "Brief",
+        "adjectiveSpanish": "Breve",
+        "state": "A"
+    }, {
+        "adjective": "Bright",
+        "adjectiveSpanish": "Brillante, luminoso",
+        "state": "A"
+    }, {
+        "adjective": "Broad",
+        "adjectiveSpanish": "Ancho, amplio",
+        "state": "A"
+    }, {
+        "adjective": "Busy",
+        "adjectiveSpanish": "Ocupado, ajetreado",
+        "state": "A"
+    }, {
+        "adjective": "Calm",
+        "adjectiveSpanish": "Tranquilo",
+        "state": "A"
+    }, {
+        "adjective": "Cheap",
+        "adjectiveSpanish": "Barato, económico",
+        "state": "A"
+    }, {
+        "adjective": "Clean",
+        "adjectiveSpanish": "Limpio, sano",
+        "state": "A"
+    }, {
+        "adjective": "Clear",
+        "adjectiveSpanish": "Claro, despejado",
+        "state": "A"
+    }, {
+        "adjective": "Clever",
+        "adjectiveSpanish": "Listo, ingenioso",
+        "state": "A"
+    }, {
+        "adjective": "Close",
+        "adjectiveSpanish": "Cerca",
+        "state": "A"
+    }, {
+        "adjective": "Cloudy",
+        "adjectiveSpanish": "Nubiado",
+        "state": "A"
+    }, {
+        "adjective": "Clumsy",
+        "adjectiveSpanish": "Torpe",
+        "state": "A"
+    }, {
+        "adjective": "Cold",
+        "adjectiveSpanish": "Frío",
+        "state": "A"
+    }, {
+        "adjective": "Cool",
+        "adjectiveSpanish": "Fresco",
+        "state": "A"
+    }, {
+        "adjective": "Crazy",
+        "adjectiveSpanish": "Loco",
+        "state": "A"
+    }, {
+        "adjective": "Creepy",
+        "adjectiveSpanish": "Espeluznante, repugnante",
+        "state": "A"
+    }, {
+        "adjective": "Crispy",
+        "adjectiveSpanish": "Crujiente",
+        "state": "A"
+    }, {
+        "adjective": "Cruel",
+        "adjectiveSpanish": "Cruel",
+        "state": "A"
+    }, {
+        "adjective": "Crunchy",
+        "adjectiveSpanish": "Crujiente",
+        "state": "A"
+    }, {
+        "adjective": "Curvy",
+        "adjectiveSpanish": "Curvo",
+        "state": "A"
+    }, {
+        "adjective": "Dark",
+        "adjectiveSpanish": "Oscuro, moreno",
+        "state": "A"
+    }, {
+        "adjective": "Deadly",
+        "adjectiveSpanish": "Mortal, mortífero",
+        "state": "A"
+    }, {
+        "adjective": "Deep",
+        "adjectiveSpanish": "Profundo",
+        "state": "A"
+    }, {
+        "adjective": "Dense",
+        "adjectiveSpanish": "Denso",
+        "state": "A"
+    }, {
+        "adjective": "Dirty",
+        "adjectiveSpanish": "Sucio",
+        "state": "A"
+    }, {
+        "adjective": "Dry",
+        "adjectiveSpanish": "Seco",
+        "state": "A"
+    }, {
+        "adjective": "Dull",
+        "adjectiveSpanish": "Aburrido, sonso, apagado",
+        "state": "A"
+    }, {
+        "adjective": "Dumb",
+        "adjectiveSpanish": "Tonto",
+        "state": "A"
+    }, {
+        "adjective": "Early",
+        "adjectiveSpanish": "Temprano",
+        "state": "A"
+    }, {
+        "adjective": "Easy",
+        "adjectiveSpanish": "Facíl",
+        "state": "A"
+    }, {
+        "adjective": "Faint",
+        "adjectiveSpanish": "Leve, tenue, pálido, ligero",
+        "state": "A"
+    }, {
+        "adjective": "Fancy",
+        "adjectiveSpanish": "Lujoso",
+        "state": "A"
+    }, {
+        "adjective": "Far",
+        "adjectiveSpanish": "Lejos, distante",
+        "state": "A"
+    }, {
+        "adjective": "Fast",
+        "adjectiveSpanish": "Rápido",
+        "state": "A"
+    }, {
+        "adjective": "Fat",
+        "adjectiveSpanish": "Gordo",
+        "state": "A"
+    }, {
+        "adjective": "Few",
+        "adjectiveSpanish": "Pocos",
+        "state": "A"
+    }, {
+        "adjective": "Firm",
+        "adjectiveSpanish": "Firme, estricto",
+        "state": "A"
+    }, {
+        "adjective": "Fit",
+        "adjectiveSpanish": "Apto, en forma",
+        "state": "A"
+    }, {
+        "adjective": "Fresh",
+        "adjectiveSpanish": "Fresco, nuevo, original",
+        "state": "A"
+    }, {
+        "adjective": "Friendly",
+        "adjectiveSpanish": "Agradable, amable, amistoso",
+        "state": "A"
+    }, {
+        "adjective": "Full",
+        "adjectiveSpanish": "Lleno, completo",
+        "state": "A"
+    }, {
+        "adjective": "Funny",
+        "adjectiveSpanish": "Gracioso, curioso, raro",
+        "state": "A"
+    }, {
+        "adjective": "Gloomy",
+        "adjectiveSpanish": "Pesimista, abatido, decaído",
+        "state": "A"
+    }, {
+        "adjective": "Good",
+        "adjectiveSpanish": "Bueno",
+        "state": "A"
+    }, {
+        "adjective": "Grand",
+        "adjectiveSpanish": "Grandioso, ambicioso, impotente",
+        "state": "A"
+    }, {
+        "adjective": "Greasy",
+        "adjectiveSpanish": "Grasiento",
+        "state": "A"
+    }, {
+        "adjective": "Great",
+        "adjectiveSpanish": "Grande, genial",
+        "state": "A"
+    }, {
+        "adjective": "Gross",
+        "adjectiveSpanish": "Asqueroso, grosero, craso",
+        "state": "A"
+    }, {
+        "adjective": "Guilty",
+        "adjectiveSpanish": "Culpable",
+        "state": "A"
+    }, {
+        "adjective": "Hairy",
+        "adjectiveSpanish": "Velludo, peludo",
+        "state": "A"
+    }, {
+        "adjective": "Happy",
+        "adjectiveSpanish": "Feliz, contento, alegre",
+        "state": "A"
+    }, {
+        "adjective": "Hard",
+        "adjectiveSpanish": "Duro, difícil",
+        "state": "A"
+    }, {
+        "adjective": "Healthy",
+        "adjectiveSpanish": "Sano, saludable",
+        "state": "A"
+    }, {
+        "adjective": "Heavy",
+        "adjectiveSpanish": "Pesado, grueso, fuerte, duro",
+        "state": "A"
+    }, {
+        "adjective": "High",
+        "adjectiveSpanish": "Alto, elevado, agudo",
+        "state": "A"
+    }, {
+        "adjective": "Hot",
+        "adjectiveSpanish": "Caliente, caluroso, picante",
+        "state": "A"
+    }, {
+        "adjective": "Hungry",
+        "adjectiveSpanish": "Hambriento",
+        "state": "A"
+    }, {
+        "adjective": "Icy",
+        "adjectiveSpanish": "Helado, frío",
+        "state": "A"
+    }, {
+        "adjective": "Itchy",
+        "adjectiveSpanish": "Pica",
+        "state": "A"
+    }, {
+        "adjective": "Kind",
+        "adjectiveSpanish": "Amable, bueno, bondadoso",
+        "state": "A"
+    }, {
+        "adjective": "Large",
+        "adjectiveSpanish": "Grande",
+        "state": "A"
+    }, {
+        "adjective": "Lazy",
+        "adjectiveSpanish": "Perezoso",
+        "state": "A"
+    }, {
+        "adjective": "Light",
+        "adjectiveSpanish": "Ligero, claro",
+        "state": "A"
+    }, {
+        "adjective": "Little",
+        "adjectiveSpanish": "Pequeño, poco",
+        "state": "A"
+    }, {
+        "adjective": "Lonely",
+        "adjectiveSpanish": "Solitario",
+        "state": "A"
+    }, {
+        "adjective": "Long",
+        "adjectiveSpanish": "Largo",
+        "state": "A"
+    }, {
+        "adjective": "Lovely",
+        "adjectiveSpanish": "Precioso, bello, lindo",
+        "state": "A"
+    }, {
+        "adjective": "Low",
+        "adjectiveSpanish": "Bajo",
+        "state": "A"
+    }, {
+        "adjective": "Mad",
+        "adjectiveSpanish": "Enfadado, enojado, loco",
+        "state": "A"
+    }, {
+        "adjective": "Mean",
+        "adjectiveSpanish": "Malo, mezquino, tacaño",
+        "state": "A"
+    }, {
+        "adjective": "Messy",
+        "adjectiveSpanish": "Sucio, desordenado, desastroso",
+        "state": "A"
+    }, {
+        "adjective": "Nasty",
+        "adjectiveSpanish": "Repugnante, desagradable",
+        "state": "A"
+    }, {
+        "adjective": "Naughty",
+        "adjectiveSpanish": "Malo, travieso, pícaro",
+        "state": "A"
+    }, {
+        "adjective": "Near",
+        "adjectiveSpanish": "Cercano, próximo",
+        "state": "A"
+    }, {
+        "adjective": "Neat",
+        "adjectiveSpanish": "Ordenado, aseado, pulcro",
+        "state": "A"
+    }, {
+        "adjective": "Needy",
+        "adjectiveSpanish": "Necesitado",
+        "state": "A"
+    }, {
+        "adjective": "New",
+        "adjectiveSpanish": "Nuevo, fresco, reciente, moderno",
+        "state": "A"
+    }, {
+        "adjective": "Nice",
+        "adjectiveSpanish": "Simpatico, agradable, bueno",
+        "state": "A"
+    }, {
+        "adjective": "Noisy",
+        "adjectiveSpanish": "Ruidoso, clamoroso",
+        "state": "A"
+    }, {
+        "adjective": "Old",
+        "adjectiveSpanish": "Viejo, anciano, antiguo",
+        "state": "A"
+    }, {
+        "adjective": "Plain",
+        "adjectiveSpanish": "Claro, sencillo",
+        "state": "A"
+    }, {
+        "adjective": "Polite",
+        "adjectiveSpanish": "Educado, cortés",
+        "state": "A"
+    }, {
+        "adjective": "Poor",
+        "adjectiveSpanish": "Pobre",
+        "state": "A"
+    }, {
+        "adjective": "Pretty",
+        "adjectiveSpanish": "Bonito, lindo, hermoso",
+        "state": "A"
+    }, {
+        "adjective": "Proud",
+        "adjectiveSpanish": "Orgulloso, soberbio, digno",
+        "state": "A"
+    }, {
+        "adjective": "Pure",
+        "adjectiveSpanish": "Puro",
+        "state": "A"
+    }, {
+        "adjective": "Quick",
+        "adjectiveSpanish": "Rápido",
+        "state": "A"
+    }, {
+        "adjective": "Quiet",
+        "adjectiveSpanish": "Tranquilo, silencioso",
+        "state": "A"
+    }, {
+        "adjective": "Rare",
+        "adjectiveSpanish": "Raro",
+        "state": "A"
+    }, {
+        "adjective": "Rich",
+        "adjectiveSpanish": "Rico, abundante",
+        "state": "A"
+    }, {
+        "adjective": "Risky",
+        "adjectiveSpanish": "Arriesgado, peligroso",
+        "state": "A"
+    }, {
+        "adjective": "Roomy",
+        "adjectiveSpanish": "Espacioso",
+        "state": "A"
+    }, {
+        "adjective": "Rough",
+        "adjectiveSpanish": "�?spero, tosco, bruto, ronco",
+        "state": "A"
+    }, {
+        "adjective": "Rude",
+        "adjectiveSpanish": "Maleducado, grosero, tosco",
+        "state": "A"
+    }, {
+        "adjective": "Sad",
+        "adjectiveSpanish": "Triste, lamentable, penoso",
+        "state": "A"
+    }, {
+        "adjective": "Safe",
+        "adjectiveSpanish": "Seguro",
+        "state": "A"
+    }, {
+        "adjective": "Salty",
+        "adjectiveSpanish": "Salado",
+        "state": "A"
+    }, {
+        "adjective": "Sane",
+        "adjectiveSpanish": "Cuerdo, sensato",
+        "state": "A"
+    }, {
+        "adjective": "Scary",
+        "adjectiveSpanish": "Espantoso, asustadizo",
+        "state": "A"
+    }, {
+        "adjective": "Shallow",
+        "adjectiveSpanish": "Superficial, poco profundo",
+        "state": "A"
+    }, {
+        "adjective": "Shiny",
+        "adjectiveSpanish": "Brillante, reluciente",
+        "state": "A"
+    }, {
+        "adjective": "Short",
+        "adjectiveSpanish": "Corto, bajo, chaparro",
+        "state": "A"
+    }, {
+        "adjective": "Shy",
+        "adjectiveSpanish": "Tímido",
+        "state": "A"
+    }, {
+        "adjective": "Silly",
+        "adjectiveSpanish": "Tonto",
+        "state": "A"
+    }, {
+        "adjective": "Simple",
+        "adjectiveSpanish": "Sencillo, simple, facíl",
+        "state": "A"
+    }, {
+        "adjective": "Sincere",
+        "adjectiveSpanish": "Sincero, genuino",
+        "state": "A"
+    }, {
+        "adjective": "Skinny",
+        "adjectiveSpanish": "Flaco",
+        "state": "A"
+    }, {
+        "adjective": "Sleepy",
+        "adjectiveSpanish": "Adormilado, soñoliento",
+        "state": "A"
+    }, {
+        "adjective": "Slim",
+        "adjectiveSpanish": "Delgado, fino",
+        "state": "A"
+    }, {
+        "adjective": "Slimy",
+        "adjectiveSpanish": "Viscoso, pegajoso, empalagoso",
+        "state": "A"
+    }, {
+        "adjective": "Slow",
+        "adjectiveSpanish": "Lento",
+        "state": "A"
+    }, {
+        "adjective": "Small",
+        "adjectiveSpanish": "Pequeño",
+        "state": "A"
+    }, {
+        "adjective": "Smart",
+        "adjectiveSpanish": "Listo, inteligente, agudo",
+        "state": "A"
+    }, {
+        "adjective": "Smelly",
+        "adjectiveSpanish": "Apestoso",
+        "state": "A"
+    }, {
+        "adjective": "Smooth",
+        "adjectiveSpanish": "Liso, suave, llano, fluido",
+        "state": "A"
+    }, {
+        "adjective": "Soft",
+        "adjectiveSpanish": "Blando, suave",
+        "state": "A"
+    }, {
+        "adjective": "Soon",
+        "adjectiveSpanish": "Pronto",
+        "state": "A"
+    }, {
+        "adjective": "Sorry",
+        "adjectiveSpanish": "Lamentable",
+        "state": "A"
+    }, {
+        "adjective": "Spicy",
+        "adjectiveSpanish": "Picante, especiado, sazonado",
+        "state": "A"
+    }, {
+        "adjective": "Stingy",
+        "adjectiveSpanish": "Tacaño, rácano, raquítico",
+        "state": "A"
+    }, {
+        "adjective": "Strange",
+        "adjectiveSpanish": "Raro, extraño, desconocido",
+        "state": "A"
+    }, {
+        "adjective": "Strict",
+        "adjectiveSpanish": "Estricto, rígido",
+        "state": "A"
+    }, {
+        "adjective": "Strong",
+        "adjectiveSpanish": "Fuerte, sólido, intenso, marcado",
+        "state": "A"
+    }, {
+        "adjective": "Sunny",
+        "adjectiveSpanish": "Soleado, radiante",
+        "state": "A"
+    }, {
+        "adjective": "Sweaty",
+        "adjectiveSpanish": "Sudoroso",
+        "state": "A"
+    }, {
+        "adjective": "Sweet",
+        "adjectiveSpanish": "Dulce",
+        "state": "A"
+    }, {
+        "adjective": "Tall",
+        "adjectiveSpanish": "Alto",
+        "state": "A"
+    }, {
+        "adjective": "Tan",
+        "adjectiveSpanish": "Bronceado, moreno",
+        "state": "A"
+    }, {
+        "adjective": "Tasty",
+        "adjectiveSpanish": "Rico, sabroso, apetitoso",
+        "state": "A"
+    }, {
+        "adjective": "Thin",
+        "adjectiveSpanish": "Delgado, fino",
+        "state": "A"
+    }, {
+        "adjective": "Thirsty",
+        "adjectiveSpanish": "Sediento",
+        "state": "A"
+    }, {
+        "adjective": "Tiny",
+        "adjectiveSpanish": "Diminuto, minúsculo",
+        "state": "A"
+    }, {
+        "adjective": "Ugly",
+        "adjectiveSpanish": "Feo",
+        "state": "A"
+    }, {
+        "adjective": "Warm",
+        "adjectiveSpanish": "Caliente, templado, cálido",
+        "state": "A"
+    }, {
+        "adjective": "Weak",
+        "adjectiveSpanish": "Débil, flojo",
+        "state": "A"
+    }, {
+        "adjective": "Weird",
+        "adjectiveSpanish": "Raro, extraño",
+        "state": "A"
+    }, {
+        "adjective": "Wet",
+        "adjectiveSpanish": "Mojado, húmedo, lluvioso",
+        "state": "A"
+    }, {
+        "adjective": "Wide",
+        "adjectiveSpanish": "Ancho, amplio, extenso",
+        "state": "A"
+    }, {
+        "adjective": "Wild",
+        "adjectiveSpanish": "Salvaje, silvestre, descontrolado",
+        "state": "A"
+    }, {
+        "adjective": "Windy",
+        "adjectiveSpanish": "Ventoso",
+        "state": "A"
+    }, {
+        "adjective": "Wise",
+        "adjectiveSpanish": "Sabio, sensato, prudente",
+        "state": "A"
+    }, {
+        "adjective": "Worldly",
+        "adjectiveSpanish": "Mundano, terreno",
+        "state": "A"
+    }, {
+        "adjective": "Young",
+        "adjectiveSpanish": "Joven",
+        "state": "A"
+    }, {
+        "adjective": "Aaapastvern",
+        "adjectiveSpanish": "Aadjective",
+        "state": "I"
+    }, {
+        "adjective": "Aadjectiveaaa",
+        "adjectiveSpanish": "Aadjective",
+        "state": "I"
+    }]

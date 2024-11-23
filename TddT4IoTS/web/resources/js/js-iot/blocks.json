@@ -1,0 +1,110 @@
+{
+  "kind": "categoryToolbox",
+  "contents": [
+    {
+      "kind": "category",
+      "name": "Board",
+      "colour": "230",
+      "contents": [
+        {
+          "kind": "block",
+          "type": "setup"
+        },
+        {
+          "kind": "block",
+          "type": "loop"
+        }
+      ]
+    },
+    {
+      "kind": "category",
+      "name": "Input/Output",
+      "colour": "230",
+      "contents": [
+        {
+          "kind": "block",
+          "type": "status"
+        },
+        {
+          "kind": "block",
+          "type": "digital_write"
+        }
+      ]
+    },
+    {
+      "kind": "category",
+      "name": "Logic",
+      "colour": "230",
+      "contents": [
+        {
+          "kind": "block",
+          "type": "logic_operation"
+        },
+        {
+          "kind": "block",
+          "type": "logic_negate"
+        },
+        {
+          "kind": "block",
+          "type": "logic_boolean"
+        }
+      ]
+    },
+    {
+      "kind": "category",
+      "name": "Control",
+      "colour": "210",
+      "contents": [
+        {
+          "kind": "block",
+          "type": "controls_if"
+        },
+        {
+          "kind": "block",
+          "type": "controls_whileUntil"
+        },
+        {
+          "kind": "block",
+          "type": "controls_for"
+        }
+      ]
+    },
+    {
+      "kind": "category",
+      "name": "Math",
+      "colour": "210",
+      "contents": [
+        {
+          "kind": "block",
+          "type": "math_number"
+        },
+        {
+          "kind": "block",
+          "type": "math_arithmetic"
+        },
+        {
+          "kind": "block",
+          "type": "math_single"
+        },
+        {
+          "kind": "block",
+          "type": "math_number_property"
+        }
+      ]
+    },
+    {
+      "kind": "category",
+      "name": "Text",
+      "colour": "210",
+      "contents": [
+      ]
+    },
+    {
+      "kind": "category",
+      "name": "Variables",
+      "colour": "210",
+      "contents": [
+      ]
+    }
+  ]
+}

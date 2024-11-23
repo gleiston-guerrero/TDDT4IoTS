@@ -1,0 +1,2028 @@
+<div class="container-fluid" ng-show="flag_selected_entregable === true && flag_selected_component === false && flag_selected_task === false">
+    <!-- Page Heading -->
+    <div class="page-title d-flex flex-column me-5 w-75 m-auto">
+        <h5 class="d-flex flex-column text-dark fw-bolder fs-3 mb-0">Project - Deliverables</h5>
+        <ul class="breadcrumb fw-bold fs-7 small">
+            <li class="breadcrumb-item text-muted">
+                <a href="app.html#!/home" class="text-muted text-hover-primary">Home</a>
+            </li>
+            <li class="breadcrumb-item text-muted">
+                <a href="app.html#!/myprojects" class="text-muted text-hover-primary">My Projects</a>
+            </li>
+        </ul>
+        <!--end::Breadcrumb-->
+    </div>
+
+
+    <!--Tareas de entrgable !-->
+    <div class="card shadow mb-4 w-75 m-auto  mb-3">
+        <!-- Card Header - Dropdown -->
+
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <div class="float-right">
+                <h3 class="font-weight-bold text-dark">{{alldata_selected_project.name_mp}}</h3>          
+            </div>  
+            <div class="">
+                <button ng-click="returnToMyProjects()" type="button" class="btn button-ds btn-sm float-right">
+                    <i class="fas fa-chevron-circle-left float-end"></i> Return  
+                </button>
+                <div class="float-right mr-4">
+                    <button class="btn button-d btn-sm" ng-click="openEntregableModal('create', -5)">
+                        <i class="fas fa-file-contract"></i> Create Deliverable
+                    </button>
+                </div>
+                <div class="float-right mr-4">
+                    <button class="btn button-pe btn-sm" ng-click="openModalEntregablesBasePercentage()" ng-show="project_entregable.length > 0">
+                        <i class="fas fa-percentage"></i> Percentages
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+
+            <h3 class="m-0 font-weight-bold text-dark">Reports</h3> 
+            <div class="">
+                <button class="btn button-perc btn-sm float-right" ng-click="viewFile(1, selected_project, null, null)">
+                    <i class="fas fa-file-invoice"></i> Only Deliverables
+                </button>
+                <div class="float-right mr-4">
+                    <button class="btn button-perc btn-sm float-right"  ng-click="viewFile(4, selected_project, true, null)">
+                        <i class="fas fa-file-alt"></i> All Elements
+                    </button>
+                </div>
+                <div class="float-right mr-4">
+                    <button class="btn button-perc btn-sm float-right">
+                        <i class="fas fa-file-download"></i><a style="text-decoration: none; color: #fff" ng-href="/Tddm4IoTbsServer/webapis/reportes/exportarPdf?select=1&type={{selected_project}}&cad={{cadena}}"> Download Report</a>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <!-- Card Body -->
+        <div class="card-body">
+            <div class="col-12 mb-3">
+                <h4 class="col-sm-12">General project progress</h4>
+
+                <div class="progress">
+                    <div class="progress-bar"  id="progress_bar_master_project"
+                         ng-class="alldata_selected_project.general_percent < 25 ? 'progress-bar bg-danger' :
+                                                 alldata_selected_project.general_percent < 50 ? 'progress-bar bg-warning' :
+                                                 alldata_selected_project.general_percent < 75 ? 'progress-bar bg-info' :
+                                                 'progress-bar bg-success'"
+                         role="progressbar" style="width: {{alldata_selected_project.general_percent}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{alldata_selected_project.general_percent}}%</div>
+                </div>
+
+                <strong> Description: </strong> {{alldata_selected_project.description_mp}}
+                <br>
+
+                <strong> Creation date: </strong> {{alldata_selected_project.creationdate_mp}}
+                <br>
+                <strong> Update date: </strong> {{alldata_selected_project.updatedate_mp}}
+                <br>
+            </div>
+
+
+
+
+            <div class="media" ng-show="project_entregable.length === 0">
+                <div class="media-body">
+                    <div class="text-center">
+                        <img class="mb-4" src="resources/img/img-app/nodata.svg" alt="..." width="150">
+                        <br>
+                        <h5>No data currently available</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="alert alert-primary" ng-repeat="entregables in project_entregable" ng-show="project_entregable.length > 0" role="alert">
+                <div class="media mb-2">
+                    <img src="resources/img/img-app/entregables.svg" class="align-self-center mr-3" alt="..."
+                         width="70">
+                    <!-- tarea 1  -->
+                    <div class="media-body">
+
+                        <div style="font-size: 12px mb-3">
+
+                            <div class="col-12 mb-3">
+
+                                <div class="">
+                                    <h5 class="col-sm-12">{{entregables.name_entregable}}
+                                        <span class="badge {{getDevelopStatus(entregables.develop_status_entregable).data[0].Class}}"
+                                              >{{getDevelopStatus(entregables.develop_status_entregable).data[0].Status}}</span></h5>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar {{getDevelopStatus(entregables.develop_status_entregable).data[0].Class}}"                                          
+                                         role="progressbar" style="width: {{entregables.actual_percentage_entregable}}%;"
+                                         aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+
+                                        {{entregables.actual_percentage_entregable}}%
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <strong> Description: </strong> {{entregables.description_entregable}}
+                            <br>    
+                            <strong> Creation date: </strong> {{entregables.creationdate_entregable}}
+                            <br>
+                            <strong> Update date: </strong> {{entregables.updatedate_entregable}}
+                            <br>
+                            <strong> Start develop date: </strong> {{entregables.startdate_entregable}}
+                            <br>
+                            <strong> Estimated finish date: </strong>{{entregables.stimateddate_entregable}}
+
+                        </div>
+
+
+                        <div class="row justify-content-center">
+                            <div class="col-xl-4 col-md-3 mb-2">
+                                <button class="btn button-d btn-sm w-100" ng-click="selectProjectEntregable(entregables.id_entregable, entregables,entregables.name_entregable)">
+                                    View Components
+                                </button>
+                            </div>
+
+                            <div class="col-xl-4 col-md-3 mb-2" ng-hide="!hideButtons(entregables.members)">
+                                <button class="btn button-dt btn-sm w-100" ng-click="openModalViewMembers(entregables, 0)">
+                                    View Members
+                                </button>
+                            </div>    
+
+                            <div class="col-xl-4 col-md-3 mb-2" ng-hide="!hideButtons(entregables.members)">
+                                <button class="btn button-ds btn-sm w-100" ng-click="openEntregableEditModal('edit', entregables)">
+                                    Edit Deliverable
+                                </button>
+                            </div>    
+                        </div>
+                        <div class="row justify-content-end" ng-hide="!hideButtons(entregables.members)">
+                            <div class="col-xl-4 col-md-3 mb-2">
+                                <button class="btn button-perc btn-sm w-100" ng-click="viewFile(4, entregables.id_entregable, false, entregables.name_entregable)">
+                                    View Report
+                                </button>
+                            </div>
+                            <div class="col-xl-4 col-md-3 mb-2">
+                                <button class="btn button-perc btn-sm w-100" >
+                                   <a style="color:#fff; text-decoration: none" ng-href="/Tddm4IoTbsServer/webapis/reportes/exportarPdf?select=4&type={{entregables.id_entregable}}&part=false&cad={{cadena}}">Download Report</a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!------------------------------EENN------------------------------------>
+
+
+<!--modal to see the general members in the entregables -->
+<div class="modal fade" id="modalViewMembers" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered sha" role="document">
+        <div class="modal-content">
+            <form name="form_new_project">
+                <div class="modal-header">
+                    <h5 class="modal-title"  id="modal_title_view_members">{{alldata_selected_project.name_mp}}: Members</h5>
+                </div>
+                <div class="modal-body">
+                    <!-- Members in proyect:  -->
+                    <div class="form-group" ng-repeat="members in project_members_entregable" ng-show="project_members_entregable.length > 0">
+                        
+                        <label class="col-form-label col-form-label-sm">Full name: </label>
+                        <input name="name_np" class="form-control form-control-sm" maxlength="30" value="{{members.name_person + ' ' + members.lastname_person}}" disabled/>
+                        <div class="invalid-feedback">
+                        </div>
+                        
+                        <label class="col-form-label col-form-label-sm">Email: </label>
+                        <input name="name_np" class="form-control form-control-sm" maxlength="30" value="{{members.email_person}}" disabled/>
+                        <div class="invalid-feedback">
+                        </div>
+
+                        <label  id="modal_members_role_show_label" class="col-form-label col-form-label-sm"
+                                ng-hide="typeMemberViewSelected !== 2"> Role:  </label>
+                        <select class="form-control" id="modal_members_role_show_select" style="font-size: 15px"  name="role_view_member"
+                                ng-value="'{{members.role_member}}'" ng-hide="typeMemberViewSelected !== 2"
+                                disabled >
+                            <option value="U">Final user</option>
+                            <option value="F">Project facilitator</option>
+                            <option value="A">Project facilitator</option>
+                            <option value="C">Advisor</option>
+                            <option value="E">Develop team</option>
+                        </select>   
+                        
+                        <label class="col-form-label col-form-label-sm" ng-hide="typeMemberViewSelected !== 2"> Status:</label>
+                        <select class="form-control" style="font-size: 15px" name="status_task_create" ng-value="'{{members.status_member}}'"
+                                ng-hide="typeMemberViewSelected !== 2" disabled
+                                >
+                            <option value="A" >Active </option>
+                            <option value="I">Inactive </option>
+                        </select>
+                        
+                        <br>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" ng-click="closeModalViewMembers()">Close</button>                    
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modalEditMembersTask" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-dialog-centered sha" role="document">
+        <div class="modal-content">
+            <form name="form_update_members" ng-submit="updateMembers(form_update_members)">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit member in task: {{entregable_component_task_selected.name_task}}</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> User email:</label>
+                        <input name="email_member_edit"
+                               type="email"
+                               ng-model="email_member_edit"
+                               ng-class="(form_update_members.email_member_edit.$invalid &&
+                                                       form_update_members.email_member_edit.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" maxlength="70" required/>
+                        <div class="invalid-feedback">
+                            Enter your partner's email
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Role: </label>
+                         <div class="d-flex flex-row">
+                            <select name="role_member_edit" ng-model="role_member_edit" style="font-size: 15px"
+                                   ng-class="(form_update_members.role_member_edit.$invalid &&
+                                                           form_update_members.role_member_edit.$dirty) ?
+                                                           'form-control form-control-sm is-invalid'
+                                                           : 'form-control form-control-sm'" required ng-init="role_member_edit = 'C'">
+                               <option value="U">Final user</option>
+                               <option value="F">Project facilitator</option>
+                               <option value="C">Advisor</option>
+                               <option value="E">Develop team</option>
+                            </select>
+                            <button type="button" class="col-sm-1 btn btn-sm btn-primary"
+                                           ng-click="openModalInformationMembers('edit')">i</button>
+                       </div>
+
+                        <div class="invalid-feedback">
+                            Select a permission for the user to share
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Status of the member: </label>
+                        <select name="status_member_edit" ng-model="status_member_edit" style="font-size: 15px"
+                                ng-class="(form_update_members.status_member_edit.$invalid &&
+                                                        form_update_members.status_member_edit.$dirty) ?
+                                                        'form-control form-control-sm is-invalid'
+                                                        : 'form-control form-control-sm'" required ng-init="status_member_edit = 'A'">                          
+                            <option value="A">Active</option>
+                            <option value="I">Inactive</option>                           
+                        </select>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" ng-click="closeEditMembers()">Cancel</button>
+                    <button type="submit" class="btn btn-sm btn-primary"> 
+                        Share
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- COMPONENTS -->
+<!--modal edit progress-->
+<div class="modal fade" id="modalTaskEditProccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered sha" role="document">
+        <div class="modal-content">
+            <form name="form_edit_percentage_task" ng-submit="updateActualPercentageTask(form_edit_percentage_task)">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit progress: {{entregable_component_task_selected.name_task}}</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Current progress(%):</label>
+                        <input type="number" name="actual_percentage_task_before_edit" ng-model="actual_percentage_task_before_edit"
+                               disabled
+                               class="form-control"
+                               />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Edit progress(%): </label>
+                        <input type="number" name="actual_percentage_task_after_edit"                               
+                               ng-model="actual_percentage_task_after_edit"
+                               min="0" max="100" class="form-control"
+                               ng-class="(form_edit_percentage_task.actual_percentage_task_after_edit.$invalid &&
+                                                       form_edit_percentage_task.actual_percentage_task_after_edit.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" 
+                               required
+                               />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Description: </label>
+                        <textarea name="description_task_after_edit"                               
+                                  ng-model="description_task_after_edit"
+                                  class="form-control"
+                                  ng-class="(form_edit_percentage_task.description_task_after_edit.$invalid &&
+                                                          form_edit_percentage_task.description_task_after_edit.$dirty) ?
+                                                          'form-control form-control-sm is-invalid'
+                                                          : 'form-control form-control-sm'" 
+                                  required> </textarea>                               
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" ng-click="closeModalTaskEditProccess()">Cancelar</button>
+                    <button type="submit" class="btn btn-sm btn-primary">
+                        Save changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--MODAL CREATE ENTREGABLE-->
+
+<div class="modal fade" id="modalCreateEntre" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered sha" role="document">
+        <div class="modal-content">
+            <form name="form_new_entre" ng-submit="newEntregable(form_new_entre)">
+                <div class="modal-header">
+                    <h5 class="modal-title">New Deliverable</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+
+
+                        <input name="id_entregable" value="0"
+                               ng-model="id_entregable"
+                               ng-class="(form_new_entre.id_entregable.$invalid &&
+                                                       form_new_entre.id_entregable.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" 
+                               maxlength="30" hidden />
+                        <input name="id_masterproject" value="{{alldata_selected_project.idproj}}"
+                               ng-model="id_masterproject"
+                               ng-class="(form_new_entre.id_masterproject.$invalid &&
+                                                       form_new_entre.id_entregable.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" 
+                               maxlength="30" hidden />
+
+                    </div>
+
+
+
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Deliverable name:</label>
+                        <input name="name_entregable"
+                               ng-model="name_entregable"
+                               ng-class="(form_new_entre.name_entregable.$invalid &&
+                                                       form_new_entre.name_task.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" maxlength="30" required/>
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Deliverable description:</label>
+                        <textarea name="description_entregable"
+                                  ng-model="description_entregable"
+                                  ng-class="(form_new_entre.description_entregable.$invalid &&
+                                                          form_new_entre.description_entregable.$dirty) ?
+                                                          'form-control form-control-sm is-invalid'
+                                                          : 'form-control form-control-sm'" maxlength="200" required>
+
+                        </textarea>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Start develop date: </label>
+                        <input name="startdate_entregable" type="date" id="startdate_entregable"
+                               ng-model="startdate_entregable"
+                               ng-class="(form_new_entre.startdate_entregable.$invalid &&
+                                                       form_new_entre.startdate_entregable.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" maxlength="200" 
+                               required
+                               />                        
+
+                    </div>
+
+                    <label class="col-form-label col-form-label-sm"> Deliverable date finish: </label>                    
+                    <input name="stimateddate_entregable" type="date"
+                           id="stimateddate_entregable_create" ng-click="checkValidDate('startdate_entregable', 'stimateddate_entregable_create')"
+                           ng-class="(form_new_entre.stimateddate_entregable.$invalid &&
+                                                   form_new_entre.stimateddate_entregable.$dirty) ?
+                                                   'form-control form-control-sm is-invalid'
+                                                   : 'form-control form-control-sm'" maxlength="200"
+                           min="2023-01-01"
+                           required />
+                    <br>
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Deliverable status: </label>
+                        <select class="form-control" name="status_entregable" style="font-size: 15px"
+                                ng-model="status_entregable"
+                                ng-class="(form_new_entre.status_entregable.$invalid &&
+                                                        form_new_entre.status_entregable.$dirty) ?
+                                                        'form-select form-select-sm is-invalid'
+                                                        : 'form-select form-select-sm'" required ng-init="status_entregable = 'A'"
+
+                                >
+                            <option value="A" >Active </option>
+                            <option value="I">Inactive</option>                                
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Priority level:</label>
+                        <select class="form-control"  name="prioritylevel_entregable"  style="font-size: 15px"
+                                ng-model="prioritylevel_entregable"
+                                ng-class="(form_new_entre.prioritylevel_entregable.$invalid &&
+                                                        form_new_entre.prioritylevel_entregable.$dirty) ?
+                                                        'form-select form-select-sm is-invalid'
+                                                        : 'form-select form-select-sm'" required ng-init="prioritylevel_entregable = '1'"
+                                >
+                            <option value="1">Hight</option>
+                            <option value="2">Medium</option>
+                            <option value="3">Low</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Percentage of the project (%):</label>
+                        <input name="base_percentage_entregable" value="Path" type="number" min="0" max="100"
+                               ng-model="base_percentage_entregable"
+                               ng-class="(form_new_entre.base_percentage_entregable.$invalid &&
+                                                       form_new_entre.base_percentage_entregable.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" maxlength="200" 
+                               required />
+                    </div>
+
+                    <input name="path_entregable" value="Path"
+                           ng-model="path_entregable"
+                           ng-class="(form_new_entre.path_entregable.$invalid &&
+                                                   form_new_entre.path_entregable.$dirty) ?
+                                                   'form-control form-control-sm is-invalid'
+                                                   : 'form-control form-control-sm'" maxlength="200" 
+                           hidden />
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" ng-click="closeEntregableModal()">Cancel</button>
+                    <button type="submit" class="btn btn-sm btn-primary"  >
+                        Save changes
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalError" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-dialog-centered sha">
+        <div class="modal-content">           
+            <div class="modal-header">
+                <h5 class="modal-title">Error</h5>
+            </div>
+            <div class="modal-body">                   
+                <p>{{dataError}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-danger" ng-click="closeErrorModal()">Ok</button>                   
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--MODAL EDIT ENTREGABLE-->
+
+
+<div class="modal fade" id="modalEditEntre" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered sha" role="document">
+        <div class="modal-content">
+            <form *ngIf="load" name="form_new_update" ng-submit="updateEntregable(form_new_update)">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit deliverable: {{selected_entregable.name_entregable}}</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+
+
+                        <input name="id_entregable"
+                               ng-model="id_entregable"
+                               ng-class="(form_new_update.id_entregable.$invalid &&
+                                                       form_new_entre.id_entregable.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" 
+                               maxlength="30" hidden />
+
+                        <input name="id_masterproject" value="{{alldata_selected_project.idproj}}"
+                               ng-model="id_masterproject_edit"
+                               ng-class="(form_new_update.id_masterproject_edit.$invalid &&
+                                                       form_new_entre.id_masterproject_edit.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" 
+                               maxlength="30" hidden />
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Deliverable name:</label>
+                        <input name="name_entregable_edit"
+                               ng-model="name_entregable_edit"
+                               ng-class="(form_new_update.name_entregable_edit.$invalid &&
+                                                       form_new_update.name_entregable_edit.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" maxlength="200" required/>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Deliverable description:</label>
+                        <textarea name="description_entregable_edit"
+                                  ng-model="description_entregable_edit"
+                                  ng-class="(form_new_update.description_entregable_edit.$invalid &&
+                                                          form_new_update.description_entregable_edit.$dirty) ?
+                                                          'form-control form-control-sm is-invalid'
+                                                          : 'form-control form-control-sm'" maxlength="200" required>
+                        </textarea>                        
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Start develop date: </label>
+                        <input name="startdate_entregable_edit" type="date" id="startdate_entregable_edit"
+                               ng-model="startdate_entregable_edit"
+                               ng-class="(form_new_update.startdate_entregable_edit.$invalid &&
+                                                       form_new_update.startdate_entregable_edit.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" maxlength="200" 
+                               required />                        
+
+                    </div>
+
+                    <label class="col-form-label col-form-label-sm"> Estimated date finish</label>
+                    <input name="stimateddate_entregable_edit" type="date" id="stimateddate_entregable_edit"
+                           ng-model="stimateddate_entregable_edit" ng-click="checkValidDate('startdate_entregable_edit', 'stimateddate_entregable_edit')"
+                           ng-class="(form_new_update.stimateddate_entregable_edit.$invalid &&
+                                                   form_new_update.stimateddate_entregable_edit.$dirty) ?
+                                                   'form-control form-control-sm is-invalid'
+                                                   : 'form-control form-control-sm'" 
+                           required />
+
+                    <br>
+                    <label class="col-form-label col-form-label-sm"> Deliverable status: </label>
+                    <select class="form-control" style="font-size: 15px"  name="status_entregable_edit" ng-model="status_entregable_edit"
+                            ng-class="(form_new_update.status_entregable_edit.$invalid &&
+                                                    form_new_update.status_entregable_edit.$dirty) ?
+                                                    'form-select form-select-sm is-invalid'
+                                                    : 'form-select form-select-sm'"  required ng-init="status_entregable_edit = 'A'"
+
+                            >
+                        <option value="A">Active </option>
+                        <option value="I">Inactive</option>     
+                    </select>
+
+                    <br>
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Priority level: </label>
+                        <select style="font-size: 15px" class="form-control"  name="prioritylevel_entregable_edit" ng-model="prioritylevel_entregable_edit"                           
+                                ng-class="(form_new_update.prioritylevel_entregable_edit.$invalid &&
+                                                        form_new_update.prioritylevel_entregable_edit.$dirty) ?
+                                                        'form-select form-select-sm is-invalid'
+                                                        : 'form-select form-select-sm'" required
+                                >
+                            <option value="1" >Hight</option>
+                            <option value="2" >Medium</option>
+                            <option value="3" >Low</option>
+                        </select>
+
+                        <div class="form-group">
+                            <label class="col-form-label col-form-label-sm"> Percentage of the project (%): </label>
+                            <input name="base_percentage_entregable_edit" value="Path" type="number" min="0" max="100"
+                                   ng-model="base_percentage_entregable_edit"
+                                   ng-class="(form_new_update.base_percentage_entregable_edit.$invalid &&
+                                                           form_new_update.base_percentage_entregable_edit.$dirty) ?
+                                                           'form-control form-control-sm is-invalid'
+                                                           : 'form-control form-control-sm'" maxlength="200" 
+                                   required/>
+                        </div>
+
+                    </div>
+                    <input name="path_entregable_edit" value="Path"
+                           ng-model="path_entregable_edit"
+                           ng-class="(form_new_update.path_entregable_edit.$invalid &&
+                                                   form_new_update.path_entregable_edit.$dirty) ?
+                                                   'form-control form-control-sm is-invalid'
+                                                   : 'form-control form-control-sm'" maxlength="200" 
+                           hidden />
+
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" ng-click="closeEntregableEditModal()">Cancel</button>
+                    <button type="submit" class="btn btn-sm btn-primary"  >
+                        Save changes
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- COMPONENTS -->
+<div class="container-fluid" ng-show="flag_selected_entregable === true && flag_selected_component === true && flag_selected_task === false">
+    <!-- Page Heading -->
+    <div class="page-title d-flex flex-column me-5 w-75 m-auto">
+        <h5 class="d-flex flex-column text-dark fw-bolder fs-3 mb-0">Project - Deliverables - Components</h5>
+        <ul class="breadcrumb fw-bold fs-7 small">
+            <li class="breadcrumb-item text-muted">
+                <a href="app.html#!/home" class="text-muted text-hover-primary">Home</a>
+            </li>
+            <li class="breadcrumb-item text-muted">
+                <a href="app.html#!/myprojects" class="text-muted text-hover-primary">My Projects</a>
+            </li>            
+        </ul>
+        <!--end::Breadcrumb-->
+    </div>
+
+
+
+    <!--Tareas de entrgable !-->
+
+
+    <div class="card shadow mb-4 w-75 m-auto  mb-3">
+        <!-- Card Header - Dropdown -->
+        <div class="card-header py-3 d-flex flex-column align-items-stretch justify-content-between">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h3 class="m-0 font-weight-bold text-dark">{{selected_entregable.name_entregable}}</h3>                         
+                <div class="">
+                    <button type="button" ng-click="flag_selected_component = false; executeLoadEntregables();" class="btn button-ds btn-sm float-right">
+                        <i class="fas fa-chevron-circle-left float-end"></i> Return  
+                    </button>  
+                    <div class="float-right mr-4">
+                        <button class="btn button-d btn-sm" ng-click="openCreateTask()">
+                            <i class="fas fa-file-archive"></i> Create Component
+                        </button>
+                    </div>
+                    <div class="float-right mr-4">
+                        <button class="btn button-pe btn-sm" ng-click="openModalComponentBasePercentage()" ng-show="project_entregable_components.length > 0">
+                            <i class="fas fa-percentage"></i> Percentages
+                        </button>
+                    </div>
+                </div>
+
+            </div>  
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h3 class="m-0 font-weight-bold text-dark">Reports</h3> 
+                <div class="">
+                    <button class="btn button-perc btn-sm float-right"  ng-click="viewFile(2, selected_entregable.id_entregable, true, null)">
+                        <i class="fas fa-percentage"></i> View Report
+                    </button>
+                    <div class="float-right mr-4">
+                        <button class="btn button-perc btn-sm float-right" >
+                            <i class="fas fa-tasks"></i><a style="color:#fff; text-decoration: none" ng-href="/Tddm4IoTbsServer/webapis/reportes/exportarPdf?select=2&type={{selected_entregable.id_entregable}}&cad={{cadena}}">Download Report</a>
+                        </button>
+                    </div> 
+                </div>
+            </div>
+        </div>
+
+        <!-- Card Body -->
+        <div class="card-body">
+            <div class="col-12 mb-3">
+                <h4 class="col-sm-12">General deliverable progress</h4>
+
+                <div class="progress">
+                    <div class="progress-bar {{getDevelopStatus(selected_entregable.develop_status_entregable).data[0].Class}}" role="progressbar" id="progress_bar_project_entregable"
+                         style="width: {{selected_entregable.actual_percentage_entregable}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{selected_entregable.actual_percentage_entregable}}%</div>
+                </div>               
+
+                <strong>  Description: </strong> {{selected_entregable.description_entregable}}
+                <br>
+
+                <strong> Creation date: </strong> {{selected_entregable.creationdate_entregable}}
+                <br>
+                <strong> Update date: </strong> {{selected_entregable.updatedate_entregable}}
+                <br>
+                <strong> Start develop date: </strong> {{selected_entregable.startdate_entregable}}
+                <br>
+                <strong> Estimated finish date: </strong> {{selected_entregable.stimateddate_entregable}}
+                <br>
+            </div>
+
+            <div class="media" ng-show="project_entregable_components.length === 0">
+                <div class="media-body">
+                    <div class="text-center">
+                        <img class="mb-4" src="resources/img/img-app/nodata.svg" alt="..." width="150">
+                        <br>
+                        <h5>No data currently available</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div id="all_components" class="alert alert-primary" role="alert" ng-repeat="component in project_entregable_components" >
+                <div class="media mb-2">
+                    <img src="resources/img/img-app/component_entregable.svg" class="align-self-center mr-3" alt="..."
+                         width="70">
+
+
+                    <!-- tarea 1  -->
+                    <div class="media-body">
+
+                        <div style="font-size: 12px mb-3">
+
+                            <div class="col-12 mb-3">
+
+                                <h5 class="col-sm-12">{{component.name_component}} 
+                                    <span class="badge {{getDevelopStatus(component.develop_status_component).data[0].Class}}">
+                                        {{getDevelopStatus(component.develop_status_component).data[0].Status}}
+                                    </span> 
+                                </h5>
+
+                                <div class="progress" id="progress_bar_entregable_component">
+                                    <div class="progress-bar {{getDevelopStatus(component.develop_status_component).data[0].Class}}"                                          
+                                         role="progressbar" style="width: {{component.actual_percentage_component}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{component.actual_percentage_component}}%</div>
+                                </div>
+
+                            </div>
+
+                            <strong> Description: </strong> {{component.description_component}}
+                            <br>    
+                            <strong> Creation date: </strong> {{component.creationdate_component}}
+                            <br>                            
+                            <strong> Update date: </strong> {{component.updatedate_component}}
+                            <br>
+                            <strong> Start develop date: </strong> {{component.startdate_component}}
+                            <br>
+                            <strong> Estimated finish date: </strong> {{component.stimateddate_component}}
+                            <br>
+                            <!--<button class="btn btn-info my-1" ng-click="openModalViewMembers(component, 1)"> 
+                                <i class="oi oi-fork"></i> Team
+                            </button>-->
+
+
+                        </div>
+
+
+                        <div class="row justify-content-center">
+
+                            <div class="col-xl-4 col-md-3 mb-2">
+                                <button class="btn button-d btn-sm w-100" ng-click="viewTasks(component,component.name_component)">
+                                    View Tasks
+                                </button>
+                            </div>
+
+                            <div class="col-xl-4 col-md-3 mb-2" ng-hide="!hideButtons(component.rol)">
+                                <button class="btn button-ds btn-sm w-100" ng-click="openModalViewMembers(component, 1)">
+                                    View Members
+                                </button>
+                            </div>
+
+                            <div class="col-xl-4 col-md-3 mb-2" ng-hide="!hideButtons(component.rol)">
+                                <button class="btn button-dt btn-sm w-100" ng-click="openModalEditComponent(component)">
+                                    Edit Component
+                                </button>
+                            </div>
+
+                            <!--<div class="col-xl-4 col-md-3 mb-2">
+                                <button class="btn button-ds btn-sm w-100" ng-click="openModalTaskEditProccess(component)">
+                                    Edit progress
+                            </div>-->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- fin de tareas -->
+
+    </div>
+</div>
+
+
+<!-- TASKS -->
+<div class="container-fluid" ng-show="flag_selected_task === true && flag_selected_component === true && flag_selected_entregable === true">
+    <!-- Page Heading -->
+    <div class="page-title d-flex flex-column me-5 w-75 m-auto">
+        <h5 class="d-flex flex-column text-dark fw-bolder fs-3 mb-0">Project - Entregables - Components - Tasks</h5>
+        <ul class="breadcrumb fw-bold fs-7 small">
+            <li class="breadcrumb-item text-muted">
+                <a href="app.html#!/home" class="text-muted text-hover-primary">Home</a>
+            </li>
+            <li class="breadcrumb-item text-muted">
+                <a href="app.html#!/myprojects" class="text-muted text-hover-primary">My Projects</a>
+            </li>            
+        </ul>
+        <!--end::Breadcrumb-->
+    </div>
+    <!-- Tasks of component selected !-->  
+
+    <div class="card shadow mb-4 w-75 m-auto  mb-3">
+        <!-- Card Header - Dropdown -->
+        <div class="card-header py-3 d-flex flex-column align-items-stretch justify-content-between">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h3 class="m-0 font-weight-bold text-dark">{{project_entregable_component_selected.name_component}}</h3>                         
+                <div class="">
+                    <button type="button" ng-click="flag_selected_task = false; executeLoadComponents();" class="btn button-ds btn-sm float-right">
+                        <i class="fas fa-chevron-circle-left float-end"></i> Return  
+                    </button>  
+                    <div class="float-right mr-4">
+                        <button class="btn button-d btn-sm" ng-click="openCreateComponentTask()">
+                            <i class="fas fa-tasks"></i> Create Task
+                        </button>
+                    </div>
+                    <div class="float-right mr-4">
+                        <button class="btn button-pe btn-sm" ng-click="openModalTaskBasePercentage()" ng-show="project_entregable_components_tasks.length > 0">
+                            <i class="fas fa-percentage"></i> Percentages
+                        </button>
+                    </div>
+                </div>
+            </div>      
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h3 class="m-0 font-weight-bold text-dark">Reports</h3> 
+                <div class="">
+                     <button class="btn button-perc btn-sm float-right"  ng-click="viewFile(3, idcomponenteSelectedViewTask, true, null)">
+                        <i class="fas fa-percentage"></i> View Report
+                    </button>
+                    <div class="float-right mr-4">
+                        <button class="btn button-perc btn-sm float-right" >
+                            <i class="fas fa-tasks"></i><a style="color:#fff; text-decoration: none" ng-href="/Tddm4IoTbsServer/webapis/reportes/exportarPdf?select=3&type={{idcomponenteSelectedViewTask}}&rutap={{pathProj}}&cad={{cadena}}">Download Report</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Card Body -->
+        <div class="card-body">
+            <div class="col-12 mb-3">
+                <h4 class="col-sm-12">General component progress</h4>
+
+                <div class="progress">
+                    <div class="progress-bar {{getDevelopStatus(project_entregable_component_selected.develop_status_component).data[0].Class}}" role="progressbar" id="progress_bar_component_task"
+                         style="width: {{project_entregable_component_selected.actual_percentage_component}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                        {{project_entregable_component_selected.actual_percentage_component}}%
+                    </div>
+                </div>
+
+                <strong> Description: </strong> {{project_entregable_component_selected.description_component}}
+                <br>
+
+                <strong> Creation date: </strong> {{project_entregable_component_selected.creationdate_component}}
+                <br>
+                <strong> Update date: </strong> {{project_entregable_component_selected.updatedate_component}}
+                <br>
+                <strong> Start develop date: </strong> {{project_entregable_component_selected.startdate_component}}
+                <br>
+                <strong> Estimated finish date: </strong> {{project_entregable_component_selected.stimateddate_component}}
+                <br>
+            </div>    
+
+            <div class="media" ng-show="project_entregable_components_tasks.length === 0">
+                <div class="media-body">
+                    <div class="text-center">
+                        <img class="mb-4" src="resources/img/img-app/nodata.svg" alt="..." width="150">
+                        <br>
+                        <h5>No data currently available</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-primary" role="alert" ng-repeat="task in project_entregable_components_tasks" >
+                <div class="media mb-2">
+                    <img src="resources/img/img-app/component_task.svg" class="align-self-center mr-3" alt="..."
+                         width="70">
+
+
+                    <!-- tarea 1  -->
+                    <div class="media-body">
+
+                        <div style="font-size: 12px mb-3">
+
+                            <div class="col-12 mb-3">
+
+                                <h5 class="col-sm-12">{{task.name_task}} <span class="badge {{getDevelopStatus(task.develop_status_task).data[0].Class}}">
+                                        {{getDevelopStatus(task.develop_status_task).data[0].Status}}
+                                    </span>  </h5>
+
+                                <div class="progress">
+                                    <div class="progress-bar {{getDevelopStatus(task.develop_status_task).data[0].Class}}"                                         
+                                         role="progressbar" style="width:{{task.actual_percentage_task}}%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                        {{task.actual_percentage_task}}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <strong> Description: </strong> {{task.description_task}}
+                            <br>    
+                            <strong> Creation date: </strong> {{task.creationdate_task}}
+                            <br>
+                            <strong> Update date: </strong> {{task.updatedate_task}}
+                            <br>
+                            <strong> Start develop date: </strong> {{task.startdate_task}}
+                            <br>
+                            <strong> Estimated finish date: </strong> {{task.stimateddate_task}}
+                            <br>
+                            <!--<button class="btn btn-info my-1" ng-click="openModalViewMembers(component.id_entregable_component, 2)"> <i class="oi oi-fork"></i> Team</button>-->
+
+
+                        </div>
+
+
+                        <div class="row justify-content-center">
+
+                            <div class="col-xl-4 col-md-3 mb-2">
+                                <button class="btn button-d btn-sm w-100" ng-click="openModalViewHistoryTask(task)">
+                                    View History
+                                </button>
+                            </div>
+
+                            <div class="col-xl-4 col-md-3 mb-2">
+                                <button class="btn button-ds btn-sm w-100" ng-click="openModalTaskEditProccess(task)">
+                                    Set Advance
+                                </button>
+                            </div>
+
+                            <div class="col-xl-4 col-md-3 mb-2"  ng-hide="!hideButtons(task.role_member)">
+                                <button class="btn button-dt btn-sm w-100" ng-click="openEditTaskModal(task)">
+                                    Edit Task
+                                </button>
+                            </div>
+
+                            <div class="col-xl-4 col-md-3 mb-2"  ng-hide="!hideButtons(task.role_member)">
+                                <button class="btn button-d btn-sm w-100" ng-click="openModalViewMembers(task, 2)">
+                                    View Members
+                                </button>
+                            </div>
+
+                            <div class="col-xl-4 col-md-3 mb-2 check_permit"  ng-hide="!hideButtons(task.role_member)">
+                                <button class="btn button-ds btn-sm w-100" ng-click="openCreateMembers(task)">
+                                    Add Members
+                                </button>
+                            </div>
+
+                            <div class="col-xl-4 col-md-3 mb-2 check_permit" ng-hide="!hideButtons(task.role_member)">
+                                <button class="btn button-dt btn-sm w-100" ng-click="openEditMembers(task)">
+                                    Edit Members
+                                </button>
+                            </div> 
+
+
+                            <!--<div class="col-xl-4 col-md-3 mb-2">
+                                <button class="btn button-ds btn-sm w-100" ng-click="openModalTaskEditProccess(component)">
+                                    Edit progress
+                            </div>-->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- fin de tareas -->
+
+    </div>
+</div>
+
+<!-- ----------------------------Modal Team---------------------------------- -->
+<div class="modal fade" id="modalTeam" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered sha" role="document">
+        <div class="modal-content">
+            <form name="form_new_task" ng-submit="newTask(form_new_task)">
+                <div class="modal-header">
+                    <h5 class="modal-title">Team - "task name"</h5>
+                </div>
+                <div id="team_list" class=" modal-body">
+                    <div class="d-flex justify-content-end col-12">
+
+                        <button class="btn btn-info my-1 btn-sm my-2" ng-click="addTeamInput()" > <i> <image src="resources/img/img-app/group.svg"> </i>add</button>
+                    </div>
+
+                    <div class="alert alert-success row ">
+
+                        <div class="col-7 ">
+                            <label class="col-form-label col-form-label-sm"> Email</label>
+                            <input name="id_entregable"
+                                   ng-model="id_entregable"
+                                   ng-class="(form_new_task.id_entregable.$invalid &&
+                                                           form_new_task.id_entregable.$dirty) ?
+                                                           'form-control form-control-sm is-invalid'
+                                                           : 'form-control form-control-sm'" 
+                                   maxlength="30"
+                                   placeholder="Email"/>
+                        </div>
+
+                        <div class="col-5">
+                            <label class="col-form-label col-form-label-sm"> Role</label>
+
+                            <select  name="visibility_task"  style="font-size: 15px"
+                                     >
+                                <option value="PF" >Project facilitator </option>
+                                <option value="CO">Counselor</option>
+                                <option value="CU">Customer/End user</option>
+                                <option value="DT">Development team</option>
+
+                            </select>       
+                        </div> 
+
+                        <button class="btn btn-danger my-1 btn-sm my-2" ng-click="" > <i class="fa fa-trash"></i></button>
+
+
+                    </div>
+
+                    <div class="alert alert-success row ">
+                        <div class="col-7 ">
+                            <label class="col-form-label col-form-label-sm"> Email</label>
+                            <input name="id_entregable"
+                                   ng-model="id_entregable"
+                                   ng-class="(form_new_task.id_entregable.$invalid &&
+                                                           form_new_task.id_entregable.$dirty) ?
+                                                           'form-control form-control-sm is-invalid'
+                                                           : 'form-control form-control-sm'" 
+                                   maxlength="30"
+                                   placeholder="Email"/>
+                        </div>
+
+                        <div class="col-5">
+                            <label class="col-form-label col-form-label-sm"> Role</label>
+
+                            <select  name="visibility_task" style="font-size: 15px"
+                                     >
+                                <option value="PF" >Project facilitator </option>
+                                <option value="CO">Counselor</option>
+                                <option value="CU">Customer/End user</option>
+                                <option value="DT">Development team</option>
+
+                            </select>       
+                        </div> 
+
+
+                    </div>
+
+
+
+
+
+
+
+
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" ng-click="openCloseTeamModal(0)">Cancel</button>
+                    <button type="submit" class="btn btn-sm btn-primary"  >
+                        Save changes
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- CREATE COMPONENT MODAL -->
+<!-- Modal para agregar tarea -->
+<div class="modal fade" id="modalEditComponent" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-dialog-centered sha">
+        <div class="modal-content">
+            <form name="form_edit_component" ng-submit="updateComponent(form_edit_component)">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit component: {{project_entregable_component_selected.name_component}}</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input name="id_entregable_edit" value="{{project_entregable_component_selected.id_entregable_component}}"
+                               ng-model="id_entregable_edit"
+                               ng-class="(form_edit_component.id_entregable_edit.$invalid &&
+                                                       form_edit_component.id_entregable_edit.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" 
+                               maxlength="30" hidden />
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Component name:</label>
+                        <input name="name_component_edit"
+                               ng-model="name_component_edit"
+                               ng-class="(form_edit_component.name_component_edit.$invalid &&
+                                                       form_edit_component.name_component_edit.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" maxlength="30" required/>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Component description:</label>
+                        <textarea name="description_component_edit"
+                                  ng-model="description_component_edit"
+                                  ng-class="(form_edit_component.description_component_edit.$invalid &&
+                                                          form_edit_component.description_component_edit.$dirty) ?
+                                                          'form-control form-control-sm is-invalid'
+                                                          : 'form-control form-control-sm'" maxlength="200" required>
+
+                        </textarea>
+
+                    </div>
+                    
+                    <input name="path_component_edit" 
+                           ng-model="path_component_edit"
+                           ng-class="(form_edit_component.path_component_edit.$invalid &&
+                                                   form_edit_component.path_component_edit.$dirty) ?
+                                                   'form-control form-control-sm is-invalid'
+                                                   : 'form-control form-control-sm'" maxlength="200" 
+                           hidden />
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Start develop date: </label>
+                        <input name="startdate_component_edit" type="date" id="startdate_component_edit"
+                               ng-model="startdate_component_edit"
+                               ng-class="(form_edit_component.startdate_component_edit.$invalid &&
+                                                       form_edit_component.startdate_component_edit.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" maxlength="200" 
+                               />
+                    </div>
+
+                    <label class="col-form-label col-form-label-sm"> Estimated date finish:</label>
+                    <input name="stimateddate_component_edit" type="date" id="stimateddate_component_edit"
+                           ng-model="stimateddate_component_edit"  ng-click="checkValidDate('startdate_component_edit', 'stimateddate_component_edit')"
+                           ng-class="(form_edit_component.stimateddate_component_edit.$invalid &&
+                                                   form_edit_component.stimateddate_component_edit.$dirty) ?
+                                                   'form-control form-control-sm is-invalid'
+                                                   : 'form-control form-control-sm'" maxlength="200" 
+                           required />
+
+                    <label class="col-form-label col-form-label-sm"> Percentage of the entregable (%):</label>
+                    <input name="base_percentage_component_edit" type="number"
+                           ng-model="base_percentage_component_edit"
+                           ng-class="(form_edit_component.base_percentage_component_edit.$invalid &&
+                                                   form_edit_component.base_percentage_component_edit.$dirty) ?
+                                                   'form-control form-control-sm is-invalid'
+                                                   : 'form-control form-control-sm'" min="0" max="100" 
+                           required />
+                    
+                    <label class="col-form-label col-form-label-sm"> Status: </label>
+                    <select class="form-control" name="status_component_edit" value="A" style="font-size: 15px"
+                            ng-model="status_component_edit"
+                            ng-class="(form_edit_component.status_component_edit.$invalid &&
+                                                    form_edit_component.status_component_edit.$dirty) ?
+                                                    'form-select form-select-sm is-invalid'
+                                                    : 'form-select form-select-sm'"
+                            >
+                        <option value="A" selected>Active </option>
+                        <option value="I">Inactive </option>
+                    </select>
+
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" ng-click="closeModalEditComponent()">Cancel</button>
+                    <button type="submit" class="btn btn-sm btn-primary">
+                        Save changes
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- MODAL ALL ENTREGABLES WITH ONLY PERCENTAGES TO EDIT -->
+<div class="modal fade" id="modalEntregablesBasePercentage" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-dialog-centered sha">
+        <div class="modal-content">
+            <form name="form_edit_entregable_base_percentage" ng-submit="updateBasePercentagesGeneralEntregable(form_edit_entregable_base_percentage)">
+                <div class="modal-header">
+                    <h5 class="modal-title">Deliverables percentages: {{alldata_selected_project.name_mp}}</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Deliverable</th>
+                                    <th>Percentage</th>
+                                </tr>
+                            </thead>
+                            <tbody>                        
+                                <tr ng-repeat="entregable in project_entregable" ng-show="project_entregable.length > 0">
+                                    <td>{{entregable.name_entregable}}</td>
+                                    <!-- comment<td>{{entregable.base_percentage_entregable}}</td> -->
+                                    <td>
+                                        <input class="form-control" type="number" min="0" max="100" onblur="onChangeBasePercentage(1, false)" onchange="onChangeBasePercentage(1, true)"
+                                               ng-model="base_percentage_entregable_edit_all" name="base_percentage_entregable_edit_all"
+                                               value="{{entregable.base_percentage_entregable}}"  />
+                                    </td>
+                                </tr>                        
+                            </tbody>
+                        </table>
+                        <div class="form-group">
+                            <label class="form-label">Total percentage (%)</label>
+                            <input class="form-control" type="number" min="0" max="100" 
+                                   id="base_percentage_entregable_sum"
+                                   name="base_percentage_entregable_sum"
+                                   min="0" max="100" 
+                                   value="{{getSumBasePercentages(1)}}" disabled />
+                        </div>
+                    </div>                   
+                </div> 
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" ng-click="closeModalEntregablesBasePercentage()">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-sm btn-primary"  >
+                        Save changes
+                    </button>
+                </div>                
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- MODAL ALL COMPONENTS WITH ONLY PERCENTAGES TO EDIT -->
+<div class="modal fade" id="modalComponentsBasePercentage" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-dialog-centered sha">
+        <div class="modal-content">
+            <form name="form_edit_component_base_percentage" ng-submit="updateBasePercentagesGeneralComponents(form_edit_component_base_percentage)">
+                <div class="modal-header">
+                    <h5 class="modal-title">Component percentages :{{selected_entregable.name_entregable}}</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Component</th>
+                                    <th>Percentage</th>
+                                </tr>
+                            </thead>
+                            <tbody>                        
+                                <tr ng-repeat="component in project_entregable_components" ng-show="project_entregable_components.length > 0">
+                                    <td>{{component.name_component}}</td>
+                                    <!-- comment<td>{{entregable.base_percentage_entregable}}</td> -->
+                                    <td>
+                                        <input class="form-control" type="number" min="0" max="100" onblur="onChangeBasePercentage(2, false)" onchange="onChangeBasePercentage(2, true)"
+                                               ng-model="base_percentage_component_edit_all" name="base_percentage_component_edit_all"
+                                               value="{{component.base_percentage_component}}"  />
+                                    </td>
+                                </tr>                        
+                            </tbody>
+                        </table>
+                        <div class="form-group">
+                            <label class="form-label">Total percentage (%)</label>
+                            <input class="form-control" type="number" min="0" max="100" 
+                                   id="base_percentage_component_sum"
+                                   name="base_percentage_component_sum"
+                                   min="0" max="100" 
+                                   value="{{getSumBasePercentages(2)}}" disabled />
+                        </div>
+                    </div>                   
+                </div> 
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" ng-click="closeModalComponentBasePercentage()">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-sm btn-primary"  >
+                        Save changes
+                    </button>
+                </div>                
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- MODAL ALL TASKS WITH ONLY PERCENTAGES TO EDIT -->
+<div class="modal fade" id="modalTasksBasePercentage" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-dialog-centered sha">
+        <div class="modal-content">
+            <form name="form_edit_task_base_percentage" ng-submit="updateBasePercentagesGeneralTasks(form_edit_task_base_percentage)">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tasks percentages: {{project_entregable_component_selected.name_component}}</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Task</th>
+                                    <th>Percentage</th>
+                                </tr>
+                            </thead>
+                            <tbody>                        
+                                <tr ng-repeat="task in project_entregable_components_tasks" ng-show="project_entregable_components_tasks.length > 0">
+                                    <td>{{task.name_task}}</td>
+                                    <!-- comment<td>{{entregable.base_percentage_entregable}}</td> -->
+                                    <td>
+                                        <input class="form-control" type="number" min="0" max="100" onblur="onChangeBasePercentage(3, false)" onchange="onChangeBasePercentage(3, true)"
+                                               ng-model="base_percentage_task_edit_all" name="base_percentage_task_edit_all"
+                                               value="{{task.base_percentage_task}}"  />
+                                    </td>
+                                </tr>                        
+                            </tbody>
+                        </table>
+                        <div class="form-group">
+                            <label class="form-label">Total percentage (%)</label>
+                            <input class="form-control" type="number" min="0" max="100" 
+                                   id="base_percentage_task_sum"
+                                   name="base_percentage_task_sum"
+                                   min="0" max="100" 
+                                   value="{{getSumBasePercentages(3)}}" disabled />
+                        </div>
+                    </div>                   
+                </div> 
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" ng-click="closeModalTaskBasePercentage()">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-sm btn-primary"  >
+                        Save changes
+                    </button>
+                </div>                
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<!--MODAL TO UPDATE A COMPONENT -->
+<div class="modal fade" id="modalCreateComponent" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-dialog-centered sha">
+        <div class="modal-content">
+            <form name="form_new_task" ng-submit="newComponent(form_new_task)">
+                <div class="modal-header">
+                    <h5 class="modal-title">New component</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input name="id_entregable" value="{{selected_entregable.id_entregable_task}}"
+                               ng-model="id_entregable"
+                               ng-class="(form_new_task.id_entregable.$invalid &&
+                                                       form_new_task.id_entregable.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" 
+                               maxlength="30" hidden />
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Component name:</label>
+                        <input name="name_component"
+                               ng-model="name_component"
+                               ng-class="(form_new_task.name_component.$invalid &&
+                                                       form_new_task.name_component.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" maxlength="200" required/>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Component description:</label>
+                        <textarea name="description_component"
+                                  ng-model="description_component"
+                                  ng-class="(form_new_task.description_component.$invalid &&
+                                                          form_new_task.description_component.$dirty) ?
+                                                          'form-control form-control-sm is-invalid'
+                                                          : 'form-control form-control-sm'" maxlength="200" required>
+
+                        </textarea>
+
+                    </div>
+                    
+                    <input name="path_component" 
+                           ng-model="path_component"
+                           ng-class="(form_new_task.path_component.$invalid &&
+                                                   form_new_task.path_component.$dirty) ?
+                                                   'form-control form-control-sm is-invalid'
+                                                   : 'form-control form-control-sm'" maxlength="200" 
+                           hidden />
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Start develop date: </label>
+                        <input name="startdate_component" type="date" id="startdate_component"
+                               ng-model="startdate_component"
+                               ng-class="(form_new_task.startdate_component.$invalid &&
+                                                       form_new_task.startdate_component.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" maxlength="200"
+                               ng-init="startdate_component = '12-12-2023'"
+                               />
+                    </div>
+
+                    <label class="col-form-label col-form-label-sm"> Estimated date finish:</label>
+                    <input name="stimateddate_component" type="date" id="stimateddate_component"
+                           ng-model="stimateddate_component" ng-click="checkValidDate('startdate_component', 'stimateddate_component')"
+                           ng-class="(form_new_task.stimateddate_component.$invalid &&
+                                                   form_new_task.stimateddate_component.$dirty) ?
+                                                   'form-control form-control-sm is-invalid'
+                                                   : 'form-control form-control-sm'" maxlength="200" 
+                           required />
+
+                    <label class="col-form-label col-form-label-sm"> Percentage of the entregable (%):</label>
+                    <input name="base_percentage_component" type="number"
+                           ng-model="base_percentage_component"
+                           ng-class="(form_new_task.base_percentage_component.$invalid &&
+                                                   form_new_task.base_percentage_component.$dirty) ?
+                                                   'form-control form-control-sm is-invalid'
+                                                   : 'form-control form-control-sm'" min="0" max="100" 
+                           required />
+                    
+                    <label class="col-form-label col-form-label-sm"> Status:</label>
+                    <select class="form-control" name="status_component" value="P" style="font-size: 15px"
+                            ng-model="status_component"
+                            ng-class="(form_new_task.status_component.$invalid &&
+                                                    form_new_task.status_component.$dirty) ?
+                                                    'form-select form-select-sm is-invalid'
+                                                    : 'form-select form-select-sm'" ng-init="status_component = 'A'"
+
+
+                            >
+                        <option value="A" selected>Active </option>
+                        <option value="I">Inactive </option>
+                    </select>
+
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" ng-click="closeCreateTask()">Cancel</button>
+                    <button type="submit" class="btn btn-sm btn-primary">
+                        Save changes
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- MODAL TO CREATE TASK -->
+<!--MODAL TO UPDATE A COMPONENT -->
+<div class="modal fade" id="modalCreateTask" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-dialog-centered sha">
+        <div class="modal-content">
+            <form name="form_new_component_task" ng-submit="newTask(form_new_component_task)">
+                <div class="modal-header">
+                    <h5 class="modal-title">New task</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input name="id_entregable" value="{{selected_entregable.id_entregable_task}}"
+                               ng-model="id_entregable"
+                               ng-class="(form_new_component_task.id_entregable.$invalid &&
+                                                       form_new_component_task.id_entregable.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" 
+                               maxlength="30" hidden />
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Task name:</label>
+                        <input name="name_task_create"
+                               ng-model="task_name_create"
+                               ng-class="(form_new_component_task.name_task_create.$invalid &&
+                                                       form_new_component_task.name_task_create.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" maxlength="200" required/>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Task description:</label>
+                        <textarea name="description_task_create"
+                                  ng-model="description_task_create"
+                                  ng-class="(form_new_component_task.description_task_create.$invalid &&
+                                                          form_new_component_task.description_task_create.$dirty) ?
+                                                          'form-control form-control-sm is-invalid'
+                                                          : 'form-control form-control-sm'" maxlength="200" required>
+
+                        </textarea>
+
+                    </div>
+                    
+                    <input name="path_task_create" 
+                           ng-model="path_task_create"
+                           ng-class="(form_new_component_task.path_task_create.$invalid &&
+                                                   form_new_component_task.path_task_create.$dirty) ?
+                                                   'form-control form-control-sm is-invalid'
+                                                   : 'form-control form-control-sm'" maxlength="200" 
+                           hidden />
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Start develop date: </label>
+                        <input name="startdate_task" type="date" id="startdate_task"
+                               ng-model="startdate_task"
+                               ng-class="(form_new_component_task.startdate_task.$invalid &&
+                                                       form_new_component_task.startdate_task.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" maxlength="200" 
+                               />
+                    </div>
+
+                    <label class="col-form-label col-form-label-sm"> Estimated date finish: </label>
+                    <input name="stimateddate_task_create" type="date" id="stimateddate_task_create"
+                           ng-model="stimateddate_task_create" ng-click="checkValidDate('startdate_task', 'stimateddate_task_create')"
+                           ng-class="(form_new_component_task.stimateddate_task_create.$invalid &&
+                                                   form_new_component_task.stimateddate_task_create.$dirty) ?
+                                                   'form-control form-control-sm is-invalid'
+                                                   : 'form-control form-control-sm'" maxlength="200" 
+                           required />
+
+                    <label class="col-form-label col-form-label-sm"> Percentage of the component (%): </label>
+                    <input name="base_percentage_task_create" type="number"
+                           ng-model="base_percentage_task_create"
+                           ng-class="(form_new_component_task.base_percentage_task_create.$invalid &&
+                                                   form_new_component_task.base_percentage_task_create.$dirty) ?
+                                                   'form-control form-control-sm is-invalid'
+                                                   : 'form-control form-control-sm'" min="0" max="100" 
+                           required />
+                    
+                     <label class="col-form-label col-form-label-sm"> Status:</label>
+                    <select class="form-control" name="status_task_create" value="P" style="font-size: 15px"
+                            ng-model="status_task_create"
+                            ng-class="(form_new_component_task.status_task_create.$invalid &&
+                                                    form_new_component_task.status_task_create.$dirty) ?
+                                                    'form-select form-select-sm is-invalid'
+                                                    : 'form-select form-select-sm'" ng-init="status_task_create = 'A'"
+
+
+                            >
+                        <option value="A">Active </option>
+                        <option value="I">Inactive </option>
+                    </select>
+                     
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" ng-click="closeCreateComponentTask()">Cancel</button>
+                    <button type="submit" class="btn btn-sm btn-primary">
+                        Save changes
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL TO UPDATE TASK -->
+<div class="modal fade" id="modalUpdateComponentTask" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-dialog-centered sha">
+        <div class="modal-content">
+            <form name="form_update_component_task" ng-submit="updateTask(form_update_component_task)">
+                <div class="modal-header">
+                    <h5 class="modal-title">Update task: {{entregable_component_task_selected.name_task}}</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input name="id_entregable_edit" 
+                               ng-model="id_entregable_edit"
+                               ng-class="(form_update_component_task.id_entregable_edit.$invalid &&
+                                                       form_update_component_task.id_entregable_edit.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" 
+                               maxlength="30" hidden />
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Task name:</label>
+                        <input name="name_task_edit"
+                               ng-model="name_task_edit"
+                               ng-class="(form_update_component_task.name_task_edit.$invalid &&
+                                                       form_update_component_task.name_task_edit.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" maxlength="200" required/>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Task description:</label>
+                        <textarea name="description_task_edit"
+                                  ng-model="description_task_edit"
+                                  ng-class="(form_update_component_task.description_task_edit.$invalid &&
+                                                          form_update_component_task.description_task_edit.$dirty) ?
+                                                          'form-control form-control-sm is-invalid'
+                                                          : 'form-control form-control-sm'" maxlength="200" required>
+
+                        </textarea>
+
+                    </div>
+
+
+                    <input name="path_task_edit" 
+                           ng-model="path_task_edit"
+                           ng-class="(form_update_component_task.path_task_edit.$invalid &&
+                                                   form_update_component_task.path_task_edit.$dirty) ?
+                                                   'form-control form-control-sm is-invalid'
+                                                   : 'form-control form-control-sm'" maxlength="200" 
+                           hidden />
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Start develop date: </label>
+                        <input name="startdate_task_edit" type="date"
+                               ng-model="startdate_task_edit" id="startdate_task_edit"
+                               ng-class="(form_update_component_task.startdate_task_edit.$invalid &&
+                                                       form_update_component_task.startdate_task_edit.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" maxlength="200" 
+                               />
+                    </div> 
+
+                    <label class="col-form-label col-form-label-sm"> Estimated date finish:</label>
+                    <input name="stimateddate_task_edit" type="date" id="stimateddate_task_edit"
+                           ng-model="stimateddate_task_edit" ng-click="checkValidDate('startdate_task_edit', 'stimateddate_task_edit')"
+                           ng-class="(form_update_component_task.stimateddate_task_edit.$invalid &&
+                                                   form_update_component_task.stimateddate_task_edit.$dirty) ?
+                                                   'form-control form-control-sm is-invalid'
+                                                   : 'form-control form-control-sm'" maxlength="200" 
+                           required />
+
+                    <label class="col-form-label col-form-label-sm"> Percentage of the component (%):</label>
+                    <input name="base_percentage_task_edit" type="number"
+                           ng-model="base_percentage_task_edit"
+                           ng-class="(form_update_component_task.base_percentage_task_edit.$invalid &&
+                                                   form_update_component_task.base_percentage_task_edit.$dirty) ?
+                                                   'form-control form-control-sm is-invalid'
+                                                   : 'form-control form-control-sm'" min="0" max="100" 
+                           required />
+                    
+                    
+
+                    <label class="col-form-label col-form-label-sm"> Status:</label>
+                    <select class="form-control" name="status_task_edit" value="P" style="font-size: 15px"
+                            ng-model="status_task_edit"
+                            ng-class="(form_update_component_task.status_task_edit.$invalid &&
+                                                    form_update_component_task.status_task_edit.$dirty) ?
+                                                    'form-select form-select-sm is-invalid'
+                                                    : 'form-select form-select-sm'" ng-init="status_component = 'A'"
+
+
+                            >
+                        <option value="A" selected>Active </option>
+                        <option value="I">Inactive </option>
+                    </select>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" ng-click="closeEditTaskModal()">Cancel</button>
+                    <button type="submit" class="btn btn-sm btn-primary">
+                        Save changes
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- HISTORY OF THE TASK -->
+<div class="modal fade" id="modalViewHistoryTask" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    s
+    <div class="modal-dialog modal-dialog-centered sha">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">History of task - {{entregable_component_task_selected.name_task}}</h5>
+            </div>
+            <div class="modal-body">
+                <div ng-repeat="taskUpdated in history_update_task" ng-show="history_update_task.length > 0">
+                    <label class="col-form-label col-form-label-sm"> Date </label>
+                    <input type="datetime-local" class="form-control form-control-sm" 
+                           value="{{taskUpdated.update_date}}" disabled/>
+
+
+                    <label class="col-form-label col-form-label-sm"> Percentage (%)</label>
+                    <input type="number" class="form-control form-control-sm" min="0" max="100" 
+                           value="{{taskUpdated.percentage}}" disabled />
+
+                    <label class="col-form-label col-form-label-sm"> Description</label>
+                    <textarea class="form-control form-control-sm" min="0" max="100" 
+                              value="{{taskUpdated.description}}" disabled>{{taskUpdated.description}}</textarea>
+
+                    <br>
+                </div>
+            </div>
+            <div class="modal-footer">                
+                <button type="submit" class="btn btn-sm btn-primary" ng-click="closeModalViewHistoryTask()">
+                    Close
+                </button>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<!--MODAL PARA AÑADIR MIEMBROS-->
+<div class="modal fade" id="modalAddMember" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-dialog-centered sha">
+        <div class="modal-content">
+            <form name="form_add_member" ng-submit="addMember(form_add_member)">
+                <div class="modal-header">
+                    <h5 class="modal-title">New task</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+
+
+                        <input name="id_entregable" value="{{selected_entregable.id_entregable_task}}"
+                               ng-model="id_entregable"
+                               ng-class="(form_new_task.id_entregable.$invalid &&
+                                                       form_new_task.id_entregable.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" 
+                               maxlength="30" hidden />
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Task name</label>
+                        <input name="name_task"
+                               ng-model="name_task"
+                               ng-class="(form_new_task.name_task.$invalid &&
+                                                       form_new_task.name_task.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" maxlength="200" required/>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Task description</label>
+                        <textarea name="description_task"
+                                  ng-model="description_task"
+                                  ng-class="(form_new_task.description_task.$invalid &&
+                                                          form_new_task.description_task.$dirty) ?
+                                                          'form-control form-control-sm is-invalid'
+                                                          : 'form-control form-control-sm'" maxlength="200" required>
+
+                        </textarea>
+
+                    </div>
+
+
+                    <label class="col-form-label col-form-label-sm"> Status</label>
+                    <select class="form-control" name="status_task" value="P" style="font-size: 15px"
+                            ng-model="status_task"
+                            ng-class="(form_new_task.status_task.$invalid &&
+                                                    form_new_task.status_task.$dirty) ?
+                                                    'form-select form-select-sm is-invalid'
+                                                    : 'form-select form-select-sm'"
+
+
+                            >
+                        <option value="P" selected>On proccess </option>
+                    </select>
+
+                    <input name="path_task" 
+                           ng-model="path_task"
+                           ng-class="(form_new_task.path_task.$invalid &&
+                                                   form_new_task.path_task.$dirty) ?
+                                                   'form-control form-control-sm is-invalid'
+                                                   : 'form-control form-control-sm'" maxlength="200" 
+                           hidden />
+
+                    <label class="col-form-label col-form-label-sm"> Estimated date finish</label>
+                    <input name="stimateddate_task" type="date"
+                           ng-model="stimateddate_task" 
+                           ng-class="(form_new_task.stimateddate_task.$invalid &&
+                                                   form_new_task.stimateddate_task.$dirty) ?
+                                                   'form-control form-control-sm is-invalid'
+                                                   : 'form-control form-control-sm'" maxlength="200" 
+                           required />
+
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" ng-click="closeCreateTask()">Cancel</button>
+                    <button type="submit" class="btn btn-sm btn-primary">
+                        Save changes
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<!--MODAL PARA AÑADIR MIEMBROS-->
+<div class="modal fade" id="addMembers" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered sha" role="document">
+        <div class="modal-content">
+            <form name="form_member_add" ng-submit="saveMembers(form_member_add)">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add member to task: {{entregable_component_task_selected.name_task}}</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> User email:</label>
+                        <input name="email"
+                               type="email"
+                               ng-model="email"
+                               ng-class="(form_member_add.email.$invalid &&
+                                                       email.shared_np.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" maxlength="70" required/>
+                        <div class="invalid-feedback">
+                            Enter your partner's email
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Role: </label>
+                        
+                            <div class="d-flex flex-row">
+                                <select name="role" ng-model="role" class="col-sm mr-2" style="font-size: 15px"
+                                        ng-class="(form_member_add.role.$invalid &&
+                                                                form_member_add.role.$dirty) ?
+                                                                'form-control form-control-sm is-invalid'
+                                                                : 'form-control form-control-sm'" required ng-init="role = 'C'">
+                                    <option value="U">Final user</option>
+                                    <option value="F">Project facilitator</option>
+                                    <option value="C">Advisor</option>
+                                    <option value="E">Develop team</option>
+                                </select>
+                                <button type="button" class="col-sm-1 btn btn-sm btn-primary"
+                                        ng-click="openModalInformationMembers('create')">i</button>
+                            </div>
+                        
+                        <div class="invalid-feedback">
+                            Select a permission for the user to share
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Status of the member: </label>
+                        <select name="status_new_member" ng-model="status_new_member" style="font-size: 15px"
+                                ng-class="(form_member_add.status_new_member.$invalid &&
+                                                        form_member_add.status_new_member.$dirty) ?
+                                                        'form-control form-control-sm is-invalid'
+                                                        : 'form-control form-control-sm'" required ng-init="status_new_member = 'A'">                          
+                            <option value="A">Active</option>
+                            <option value="I">Inactive</option>                           
+                        </select>
+                        <div class="invalid-feedback">
+                            Select a permission for the user to share
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" ng-click="closeCreateMembers()">Cancel</button>
+                    <button type="submit" class="btn btn-sm btn-primary" ng-disabled="form_member_add.$invalid" ng-click="closeCreateMembers()"> 
+                        Share
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- abrir pdf -->
+
+<div class="modal fade" id="modalpdf" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div  role="document">
+        <div class="modal-dialog modal-lg modal-dialog-centered" >
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="tituloReport"></h5>
+                </div>
+                <div class="modal-body">
+                    <iframe id="obj" width="100%" height="700px" ></iframe>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" ng-click="closeModalpdf()">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- MODAL TO SHOW THE TYPES OF MEMBERS -->
+<div class="modal fade" id="modalInformationMembers" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-dialog-centered sha">
+        <div class="modal-content">
+            
+                <div class="modal-header">
+                    <h5 class="modal-title">Information: Members roles</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Role</th>
+                                    <th>Description</th>                                   
+                                </tr>
+                            </thead>
+                            <tbody>                        
+                                <tr>
+                                    <td>Final user</td>
+                                    <td>Expert with extensive experience in project management and in the 
+                                        agile development of IoTS.</td>                                  
+                                </tr>
+                                <tr>
+                                    <td>Project facilitator</td>
+                                    <td>Member of the development team that becomes a “leader”
+                                        (without a formal designation) because of his performance.</td>
+                                </tr>
+                                <tr>
+                                    <td>Advisor</td>
+                                    <td>Person with good communication and knowledge of all the
+                                    functionality of the IoTS who commissions the development team
+                                    to develop it
+                                    </td>                                    
+                                </tr>
+                                <tr>
+                                    <td>Develop team</td>
+                                    <td>Multidisciplinary group of experts with knowledge of the different
+                                    project domains, and which is responsible for the development of
+                                    the IoTS.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>                       
+                    </div>                   
+                </div> 
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" ng-click="closeModalInformationMembers()">
+                        Close
+                    </button>                    
+                </div>
+        </div>
+    </div>
+</div>
+

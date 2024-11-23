@@ -1,0 +1,124 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/*
+    Created on : 18/07/2020, 16:19:42
+    Author     : CARVAJAL
+*/
+
+*{
+    margin: 0px;
+    padding: 0px;
+    /*font-family: 'Nunito','Segoe UI', sans-serif;*/
+}
+
+/*clase para estilos del menu*/
+.menu-header{
+    height: 70px;
+    padding: 10px;
+    background: #0082D7;
+    font-family: 'Nunito','Segoe UI', sans-serif !important;
+}
+
+/*items del menu de informacion*/
+.itemDuvca{
+    color: white !important;
+    font-family: 'Nunito','Segoe UI', sans-serif !important;
+}
+
+.itemDuvca:hover{
+    background: white;
+    border-radius: 50px;
+    color: #0082D7 !important;
+    font-family: 'Nunito','Segoe UI', sans-serif !important;
+}
+
+.rowDuvca{    font-family: 'Nunito','Segoe UI', sans-serif !important;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+.menu-header-circuitName{    font-family: 'Nunito','Segoe UI', sans-serif !important;
+    position: absolute; margin-left: 55px; margin-top: -45px
+}
+
+.tittle-circuit{    font-family: 'Nunito','Segoe UI', sans-serif !important;
+    margin-left: 10px; margin-top: -10px; color: white
+}
+
+.itemMenu-duvca{    font-family: 'Nunito','Segoe UI', sans-serif !important;
+    font-size: 14px !important; padding: 2px 6px !important; border: 0px;
+    cursor: pointer; color: white !important; border-radius: 30px
+}
+
+.itemMenu-duvca:hover
+{    font-family: 'Nunito','Segoe UI', sans-serif !important;
+    color: #0082D7 !important
+}
+
+.itemMenu-share{    font-family: 'Nunito','Segoe UI', sans-serif !important;
+    font-size: 14px;
+    padding: 5px 10px 5px 10px;
+    background: white;
+    color: #0082D7 !important;
+    border-radius: 30px
+}
+
+.menuCenter{    font-family: 'Nunito','Segoe UI', sans-serif !important;
+    position: absolute; margin-left: 60px; margin-top:  -25px
+}
+
+.dataUser{    font-family: 'Nunito','Segoe UI', sans-serif !important;
+    float: right; padding: 10px 0px 0px 0px; margin-top: -10px
+}
+
+.divPhotoUser{    font-family: 'Nunito','Segoe UI', sans-serif !important;
+    float: right; border-radius: 50%; margin-top: 5px; margin-left: 20px
+}
+
+.nameUser{    font-family: 'Nunito','Segoe UI', sans-serif !important;
+    margin-top: 10px; margin-right: 10px !important
+}
+
+.divParameters{
+    font-family: 'Nunito','Segoe UI', sans-serif !important;
+    height: 95%;
+    width: 600px;
+    background: white;
+    position: absolute !important;
+    z-index: 10 !important;
+    border-top: 1px solid #DDE0E6;
+    /*margin-top: -85vh;*/
+    border-bottom: 1px solid #DDE0E6;
+    display: none;
+
+    box-shadow: 8px 0px 10px -5px rgba(0,0,0,0.61);
+    -webkit-box-shadow: 8px 0px 10px -5px rgba(0,0,0,0.61);
+    -moz-box-shadow: 8px 0px 10px -5px rgba(0,0,0,0.61);
+}
+
+/* Makes our label white. */
+.blocklyTreeLabel {
+    color: black;
+}
+
+.blocklyTreeLabel:hover{
+    color: white;
+}
+/* Adds padding around the group of categories and separators. */
+.blocklyToolboxContents {
+    padding: .5em;
+}
+/* Adds space between the categories, rounds the corners and adds space around the label. */
+.blocklyTreeRow {
+    padding: 0px 3px;
+    margin-bottom: .5em;
+    border-radius: 4px;
+}
+
+.header-code{
+    background: #F8F9FC;
+    padding: 5px;
+}

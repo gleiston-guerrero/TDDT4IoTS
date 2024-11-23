@@ -1,0 +1,146 @@
+[
+    {
+        "simbol": "*",
+        "ascii": "",
+        "description": "Hidden class",
+        "example": "<span class='badge badge-danger'>*</span>(ClassName)"
+    }, 
+    {
+        "simbol": "()",
+        "ascii": "",
+        "description": "Class",
+        "example": "<span class='badge badge-danger'>(</span>ClassName<span class='badge badge-danger'>)</span>"
+    }, 
+    {
+        "simbol": "[]",
+        "ascii": "",
+        "description": "Method",
+        "example": "(ClassName <span class='badge badge-danger'>[</span>+methodname=empty<span class='badge badge-danger'>]</span>)"
+    },
+    {
+        "simbol": "/",
+        "ascii": "",
+        "description": "Visible part",
+        "example": "(ClassName &+<span class='badge badge-danger'>/</span>name<span class='badge badge-danger'>/</span>=string)"
+    }, 
+    {
+        "simbol": "{.}",
+        "ascii": "",
+        "description": "Method parameter",
+        "example": "(ClassName [+methodname=empty<span class='badge badge-danger'>{</span><span class='badge badge-danger'>.</span>param1=string<span class='badge badge-danger'>.</span>param2=int<span class='badge badge-danger'>}</span>])"
+    }, 
+    {
+        "simbol": "&",
+        "ascii": "",
+        "description": "Attribute",
+        "example": "(ClassName <span class='badge badge-danger'>&</span>+atrb1=string<span class='badge badge-danger'>&</span>-atrb2=string<span class='badge badge-danger'>&</span>$atrb3=float)"
+    }, 
+    {
+        "simbol": "+",
+        "ascii": "",
+        "description": "Public",
+        "example": "(ClassName &<span class='badge badge-danger'>+</span>atrb1=string&<span class='badge badge-danger'>+</span>atrb2=string&<span class='badge badge-danger'>+</span>atrb3=float)"
+    }, 
+    {
+        "simbol": "-",
+        "ascii": "",
+        "description": "Private",
+        "example": "(ClassName &<span class='badge badge-danger'>-</span>atrb1=string&<span class='badge badge-danger'>-</span>atrb2=string&<span class='badge badge-danger'>-</span>atrb3=float)"
+    }, 
+    {
+        "simbol": "#",
+        "ascii": "",
+        "description": "Protected",
+        "example": "(ClassName &<span class='badge badge-danger'>#</span>atrb1=string&<span class='badge badge-danger'>#</span>atrb2=string&<span class='badge badge-danger'>#</span>atrb3=float)"
+    }, 
+    {
+        "simbol": "$",
+        "ascii": "",
+        "description": "Static",
+        "example": "(ClassName &<span class='badge badge-danger'>$</span>atrb1=string&<span class='badge badge-danger'>$</span>atrb2=string&<span class='badge badge-danger'>$</span>atrb3=float)"
+    }, 
+    {
+        "simbol": "=",
+        "ascii": "",
+        "description": "Data type",
+        "example": "(ClassName &+atrb1<span class='badge badge-danger'>=</span>string&+atrb2<span class='badge badge-danger'>=</span>string&+atrb3<span class='badge badge-danger'>=</span>float)"
+    },
+    {
+        "simbol": "||",
+        "ascii": "",
+        "description": "Data array / ArrayList ",
+        "example": "Data array example: *(ClassName &-atrb1=Object|1,2,n| [-method=Object|1,2,n|{.param1=Object|1,2,n|}]) </br> </br> ArrayList example: *(ClassName &-atrb1=Array|Object| [-method=ArrayList|Object|{.param1=Array|Object|}])"
+    },
+    {
+        "simbol": "@",
+        "ascii": "",
+        "description": "Interface",
+        "example": "(<span class='badge badge-danger'>@</span>InterfaceName)"
+    }, 
+    {
+        "simbol": "¿?",
+        "ascii": "",
+        "description": "Enumeration",
+        "example": "<span class='badge badge-danger'>*¿</span>Status »Disabled »Enabled <span class='badge badge-danger'>?</span>"
+    },
+    {
+        "simbol": "%",
+        "ascii": "",
+        "description": "Constructor",
+        "example": "(+<span class='badge badge-danger'>%</span> .className=ClassName <span class='badge badge-danger'>%</span>)"
+    },
+    {
+        "simbol": "uu",
+        "ascii": "",
+        "description": "No cardinality",
+        "example": "<span class='badge badge-danger'>*¡</span>ClassName1 u<span class='badge badge-danger'>>[cardinalidate_text]></span>u ClassName2<span class='badge badge-danger'>!</span>"
+    },
+    {
+        "simbol": "11",
+        "ascii": "-",
+        "description": "One to one",
+        "example": "<span class='badge badge-danger'>*¡</span>ClassName1 1<span class='badge badge-danger'>>[cardinalidate_text]></span>1 ClassName2<span class='badge badge-danger'>!</span>"
+    },
+    {
+        "simbol": "1n",
+        "ascii": "",
+        "description": "One to many",
+        "example": "<span class='badge badge-danger'>*¡</span>ClassName1 1<span class='badge badge-danger'>>[cardinalidate_text]></span>n ClassName2<span class='badge badge-danger'>!</span>"
+    },
+    {
+        "simbol": "n1",
+        "ascii": "",
+        "description": "Many to one",
+        "example": "<span class='badge badge-danger'>*¡</span>ClassName1 n<span class='badge badge-danger'>>[cardinalidate_text]></span>1 ClassName2<span class='badge badge-danger'>!</span>"
+    },
+    {
+        "simbol": ">>",
+        "ascii": "",
+        "description": "Aggregation Relationship",
+        "example": "<span class='badge badge-danger'>*¡</span>ClassName1 1<span class='badge badge-danger'>>[cardinalidate_text]></span>n ClassName2<span class='badge badge-danger'>!</span>"
+    },
+    {
+        "simbol": "<<",
+        "ascii": "",
+        "description": "Dependency Relationship",
+        "example": "<span class='badge badge-danger'>*¡</span>ClassName1 1<span class='badge badge-danger'><[cardinalidate_text]<</span>n ClassName2<span class='badge badge-danger'>!</span>"
+    },
+    {
+        "simbol": "<>",
+        "ascii": "",
+        "description": "Generalization Relationship",
+        "example": "<span class='badge badge-danger'>*¡</span>ClassName1 1<span class='badge badge-danger'><[cardinalidate_text]></span>n ClassName2<span class='badge badge-danger'>!</span>"
+    },
+    {
+        "simbol": "><",
+        "ascii": "",
+        "description": "Association Relationship",
+        "example": "<span class='badge badge-danger'>*¡</span>ClassName1 1<span class='badge badge-danger'>>[cardinalidate_text]<</span>n ClassName2<span class='badge badge-danger'>¡</span>"
+    },
+    {
+        "simbol": "<:>",
+        "ascii": "",
+        "description": "Composition Relationship",
+        "example": "<span class='badge badge-danger'>*¡</span>ClassName1 1<span class='badge badge-danger'><:[cardinalidate_text]></span>n ClassName2<span class='badge badge-danger'>¡</span>"
+    }
+]

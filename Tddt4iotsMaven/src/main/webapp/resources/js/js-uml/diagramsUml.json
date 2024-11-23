@@ -1,0 +1,18 @@
+[
+    {
+        "type": "UMLUseCaseDiagram",
+        "name": "Use Case Diagram",
+        "interaction": true,
+        "draw": true,
+        "status": "O",
+        "btnactive": "btn btn-sm button-active mr-2 mt-1"
+    },
+    {
+        "type": "UMLClassDiagram",
+        "name": "Class Diagram",
+        "interaction": false,
+        "draw": false,
+        "status": "C",
+        "btnactive": "btn btn-sm button-dt mr-2 mt-1"
+    }
+]

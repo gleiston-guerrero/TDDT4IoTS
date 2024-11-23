@@ -1,0 +1,317 @@
+<div class="modal fade" id="modalCreateProject" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered sha" role="document">
+        <div class="modal-content">
+            <form name="form_new_project" ng-submit="newProject(form_new_project)">
+                <div class="modal-header">
+                    <h5 class="modal-title">New project</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Name project:</label>
+                        <input name="name_np"
+                               ng-model="name_np"
+                               ng-class="(form_new_project.name_np.$invalid &&
+                                                       form_new_project.name_np.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" maxlength="30" required/>
+                        <div class="invalid-feedback">
+                            Please enter the name project
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Description project:</label>
+                        <textarea name="description_np"
+                                  ng-model="description_np"
+                                  ng-class="(form_new_project.description_np.$invalid &&
+                                                          form_new_project.description_np.$dirty) ?
+                                                          'form-control form-control-sm is-invalid'
+                                                          : 'form-control form-control-sm'" maxlength="200" required
+                                  cols="30">
+                        </textarea>
+                        <div class="invalid-feedback">
+                            Please enter the description project
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" ng-click="cancelProject()">Cancel</button>
+                    <button type="submit" class="btn btn-sm btn-primary" ng-disabled="form_new_project.$invalid">
+                        Save changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--modal para compartir un proyecto-->
+<div class="modal fade" id="modalShareProject" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered sha" role="document">
+        <div class="modal-content">
+            <form name="form_share_project" ng-submit="shareProject(form_share_project)">
+                <div class="modal-header">
+                    <h5 class="modal-title">Share project whith</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> User email:</label>
+                        <input name="shared_np"
+                               type="email"
+                               ng-model="shared_np"
+                               ng-class="(form_share_project.shared_np.$invalid &&
+                                                       form_share_project.shared_np.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" maxlength="70" required/>
+                        <div class="invalid-feedback">
+                            Enter your partner's email
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm"> Permit: </label>
+                        <select name="shared_sp" ng-model="shared_sp"
+                                ng-class="(form_share_project.shared_sp.$invalid &&
+                                                       form_share_project.shared_sp.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" required>
+                            <option value="">----</option>
+                            <option value="SHARE_WRITER">Write</option>
+                            <option value="SHARE_READER">Read</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Select a permission for the user to share
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" ng-click="cancelShareProject()">Cancel</button>
+                    <button type="submit" class="btn btn-sm btn-primary" ng-disabled="form_share_project.$invalid">
+                        Share
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="page-title d-flex flex-column me-5 w-75 m-auto">
+        <h5 class="d-flex flex-column text-dark fw-bolder fs-3 mb-0">Projects</h5>
+        <ul class="breadcrumb fw-bold fs-7 small">
+            <li class="breadcrumb-item text-muted">
+                <a href="app.html#!/home" class="text-muted text-hover-primary">Home</a>
+            </li>
+            <li class="breadcrumb-item text-muted">
+                <a href="app.html#!/home" class="text-muted text-hover-primary">Projects</a>
+            </li>
+        </ul>
+        <!--end::Breadcrumb-->
+    </div>
+
+    <div class="card shadow mb-4 w-75 m-auto  mb-3" ng-show="flag_selected_project === false">
+        <!-- Card Header - Dropdown -->
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-dark">Projects List - Click on "Open Project" to see its respective
+                modules</h6>
+            <button type="button" ng-click="openInsertProject()" class="btn button-d btn-sm float-right">
+                New Project
+            </button>
+        </div>
+
+        <!-- Card Body -->
+        <div class="card-body">
+            <div class="media" ng-show="myprojects.length === 0">
+                <div class="media-body">
+                    <div class="text-center">
+                        <img class="mb-4" src="resources/img/img-app/nodata.svg" alt="..." width="150">
+                        <br>
+                        <h5>No data currently available</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="alert alert-primary" role="alert"
+                 ng-repeat="dom_myprojects in myprojects" ng-show="myprojects.length > 0">
+                <div class="media mb-2">
+                    <img src="resources/img/img-app/proyecto.svg" class="align-self-center mr-3" alt="..."
+                         width="70">
+                    <div class="media-body">
+                        <div style="font-size: 12px">
+                            <strong> Creation date: </strong> {{dom_myprojects.creationdate_mp.split('T')[0]}} -
+                            <strong> Update date: </strong> {{dom_myprojects.updatedate_mp.split('T')[0]}}
+                        </div>
+                        <h5 class="mt-0 text-dark"><strong> {{dom_myprojects.name_mp}} </strong></h5>
+                        <div class="row">
+                            <div class="col-xl-4 col-md-3 mb-2">
+                                <button class="btn button-d btn-sm w-100" ng-click="selectProject(dom_myprojects)">
+                                    Open Project
+                                </button>
+                            </div>
+                            <div class="col-xl-4 col-md-3 mb-2">
+                                <button class="btn button-dt btn-sm w-100" ng-click="openShareProject(dom_myprojects)">
+                                    Share Project
+                                </button>
+                            </div>
+                            <div class="col-xl-4 col-md-3 mb-2">
+                                <button class="btn button-ds btn-sm w-100" ng-click="deleteProject(dom_myprojects)">
+                                    Delete Project
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow mb-4 w-75 m-auto mb-3" ng-show="flag_selected_project === true">
+        <!-- Card Header - Dropdown -->
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-dark">Projects Modules</h6>
+            <button type="button" ng-click="flag_selected_project = false" class="btn button-ds btn-sm float-right">
+                <i class="fas fa-chevron-circle-left"></i> Return
+            </button>
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+            <div class="media" ng-show="flag_selected_project === false">
+                <div class="media-body">
+                    <div class="text-center">
+                        <img class="mb-4" src="resources/img/img-app/selelctProject.svg" alt="..." width="150">
+                        <br>
+                        <h5>Select Project</h5>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="flag_selected_project === true">
+                <div style="font-size: 12px">
+                    <strong> Creation date: </strong> {{selected_project.creationdate_mp.split('T')[0]}} -
+                    <strong> Update date: </strong> {{selected_project.updatedate_mp.split('T')[0]}}
+                </div>
+                <h5 class="mt-0 text-dark"><strong> Project name: {{selected_project.name_mp}} </strong></h5>
+            </div>
+            <div class="media" ng-show="selected_project.uml.data.length === 0">
+                <div class="media-body">
+                    <h5 class="mt-0"><strong> Modeling Uml Diagramas </strong></h5>
+                    <div class="text-center">
+                        <img class="mb-4" src="resources/img/img-app/newModuleUml.svg" alt="..." width="225">
+                        <br>
+                        <button class="btn button-ds btn-sm" ng-click="createModuleUml(selected_project)">Create
+                            Uml
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="media" ng-show="selected_project.uml.data.length > 0">
+                <div class="media-body">
+                    <div class="float-right" style="display: flex; margin-top: -3.3rem">
+                        <button ng-click="openUml()" class="btn button-d d-block mr-3">
+                            <i class="fas fa-folder-open mr-3"></i>
+                            Open module
+                        </button>
+                        <button class="btn button-ds d-block"
+                                ng-click="deleteModule(selected_project, 1)">
+                            <i class="fas fa-minus-square mr-3"></i>
+                            Delete module
+                        </button>
+                    </div>
+                    <h5 class="mt-0"><strong> Module Diagramas Uml </strong></h5>
+                    <span>Generate and edit class diagrams by entering the respective descriptions of a use case diagram.</span>
+                    <div class="row mt-2 mb-2" style="margin-left: 0.01rem">
+                        <div class="col-3 border mr-3 pl-0">
+                            <img src="resources/img/img-app/useCaseDPro.png" class="w-100 border-dark" alt="useCaseExample">
+                        </div>
+                        <div class="col-3 border pl-0">
+                            <img src="resources/img/img-app/classDiagramPro.png" class="w-100 border-dark" alt="useCaseExample">
+                        </div>
+                    </div>
+                    <span>Download an executable project with the logic applied to the generated class diagram.</span>
+                    <div class="alert alert-success mt-2" role="alert">
+                        <div class="media mb-2">
+                            <img src="resources/img/img-app/projectJava.png" class="align-self-center mr-3" alt="..."
+                                 width="70">
+                            <div class="media-body">
+                                <div style="font-size: 12px">
+                                    <strong> Language: </strong> Java /
+                                    <strong> Framework: </strong> Spring Boot /
+                                    <strong> Package management </strong> Maven /
+                                </div>
+                                <h5 class="mt-0 text-dark"><strong> Source code for web application (business logic for mobile) with Maven and Spring Boot </strong></h5>
+                                <div class="row">
+                                    <div class="col-xl-4 col-md-3 mb-2">
+                                        <a class="btn button-dt btn-sm w-100" download='ProjectMvnSpr.zip'
+                                           ng-href="{{mavenProject}}">
+                                            Download  Project
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="sidebar-divider d-none d-md-block">
+            <div class="media" ng-show="selected_project.iot.data.length === 0">
+                <div class="media-body">
+                    <h5 class="mt-0"><strong> Desing System IoT </strong></h5>
+                    <div class="text-center">
+                        <img class="mb-4" src="resources/img/img-app/newModuleIoT.svg" alt="..." width="225">
+                        <br>
+                        <button class="btn button-ds btn-sm" ng-click="createModuleIoT(selected_project)">Create
+                            Desing
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="media" ng-show="selected_project.iot.data.length > 0">
+                <div class="media-body">
+                    <div ng-show="flag_selected_project === true">
+                        <div style="font-size: 12px">
+                            <strong> Creation date: </strong> {{selected_project.creationdate_mp.split('T')[0]}} -
+                            <strong> Update date: </strong> {{selected_project.updatedate_mp.split('T')[0]}}
+                        </div>
+                        <h5 class="mt-0 text-dark"><strong> Project name: {{selected_project.name_mp}} </strong></h5>
+                    </div>
+                    <div class="float-right" style="display: flex; margin-top: -3.3rem">
+                        <button ng-click="openIoT()" class="btn button-d d-block mr-3">
+                            <i class="fas fa-folder-open mr-3"></i>
+                            Open module
+                        </button>
+                        <button class="btn button-ds d-block"
+                                ng-click="deleteModule(selected_project, 2)">
+                            <i class="fas fa-minus-square mr-3"></i>
+                            Delete module
+                        </button>
+                    </div>
+                    <h5 class="mt-0"><strong> Desing System IoT </strong></h5>
+                    <span>Design the system of your IoT device and generate a code base for its operation.</span>
+                    <div class="row mt-2 mb-2" style="margin-left: 0.01rem">
+                        <div class="col-4 border mr-3 pl-0">
+                            <img src="resources/img/img-app/TddM4IoTs_IoT(6).png" class="w-100 border-dark" alt="IoTExample">
+                        </div>
+                    </div>
+                    <span>Download a file containing java code based on class diagram.</span>
+                    <div class="alert alert-success mt-2" role="alert">
+                        <div class="media mb-2">
+                            <img src="resources/img/img-app/projectArduino.png" class="align-self-center mr-3" alt="..."
+                                 width="70">
+                            <div class="media-body">
+                                <div style="font-size: 12px">
+                                    <strong> Language: </strong> C
+                                </div>
+                                <h5 class="mt-0 text-dark"><strong> Code Device IoT </strong></h5>
+                                <div class="row">
+                                    <div class="col-xl-4 col-md-3 mb-2">
+                                        <button class="btn button-dt btn-sm w-100" ng-click="openShareProject(dom_myprojects)">
+                                            Download  Code
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

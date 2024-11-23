@@ -1,0 +1,92 @@
+<div class="modal fade" id="modal_Symbols" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Symbols to describe use cases</h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body" style="overflow: auto">
+                <table class="table table-sm table-bordered">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Simbol</th>
+                        <th scope="col">Ascii</th>
+                        <th scope="col">Description</th>
+                        <th>  </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="keyinterpret in interpret">
+                        <th scope="row">{{keyinterpret.simbol}}</th>
+                        <td>{{keyinterpret.ascii}}</td>
+                        <td>{{keyinterpret.description}}</td>
+                        <td> <button class="btn btn-success btn-sm" ng-click="loadExample(keyinterpret)"> Example </button> </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary rounded-pill btn-sm" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="page-title d-flex flex-column me-5 w-75 m-auto">
+        <h5 class="d-flex flex-column text-dark fw-bolder fs-3 mb-0">Interpret</h5>
+        <ul class="breadcrumb fw-bold fs-7 small">
+            <li class="breadcrumb-item text-muted">
+                <a href="app.html#!/home" class="text-muted text-hover-primary">Home</a>
+            </li>
+            <li class="breadcrumb-item text-muted">
+                <a href="app.html#!/home" class="text-muted text-hover-primary">Interpret</a>
+            </li>
+        </ul>
+        <!--end::Breadcrumb-->
+    </div>
+
+    <div class="card shadow mb-4 w-75 m-auto">
+
+        <div  class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-dark">Interpret</h6>
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+            <div class="form-group ">
+                <button class="btn badge badge-light float-right" id="Symbols_use_cases"> <i class="fab fa-symfony"></i> Symbols to describe use cases</button>
+                <label class="col-form-label col-form-label-sm"> Enter the description or actions of use cases </label>
+                <textarea style="font-size: 12px;" class="form-control" ng-model="interprete.newstring" rows="10"></textarea>
+            </div>
+            <button type="button" class="btn button-d w-100" ng-click="interprete.transform()">
+                <i class="fas fa-retweet"></i> Convert
+            </button>
+            <div class="row mt-3" ng-show="flagJson">
+                <div class="col-4">
+                    <h6>Descripciones:</h6>
+                    <ul class="list-group scroll" style="height: auto;">
+                        <li class="list-group-item " ng-repeat="item in interpretador">{{item[0]}}</li>
+                    </ul>
+                </div>
+                <div class="col-8">
+                    <h6>Json Generado:</h6>
+                    <!--<div class="scroll" style="background-color: blanchedalmond; height: 85%;">-->
+                    <pre>
+                    <code id="codef" class="scroll json" style="height: 365px; margin-top: -20px">
+
+                    </code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+

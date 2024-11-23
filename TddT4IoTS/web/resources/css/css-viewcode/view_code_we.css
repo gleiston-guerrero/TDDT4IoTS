@@ -1,0 +1,33 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 06-feb-2021, 0:50:15
+    Author     : tonyp
+*/
+
+/*mio dijo el gato*/
+.hljs-ln-numbers{
+    border-right: 1px solid #707277;
+    padding-right: 3px!important;
+}
+
+.hljs-ln-code{
+    padding-left: 5px!important;
+}
+
+.paginimg{
+    padding: 0px 0px 0px 0px!important;
+}
+
+.hljs-ln-line{
+  -webkit-touch-callout: none !important; /* iOS Safari */
+    -webkit-user-select: none !important; /* Safari */
+     -khtml-user-select: none !important; /* ; Konqueror HTML */
+       -moz-user-select: none !important; /* Old versions of Firefox */
+        -ms-user-select: none !important; /* Internet Explorer/Edge */
+            user-select: none !important; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}

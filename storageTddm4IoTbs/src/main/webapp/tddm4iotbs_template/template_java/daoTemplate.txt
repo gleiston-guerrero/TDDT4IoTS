@@ -1,0 +1,9 @@
+package com.app.tddt4iots.repository;{$s} 
+{$s} 
+import com.app.tddt4iots.entities.{$nameClass};{$s} 
+import org.springframework.data.jpa.repository.JpaRepository;{$s} 
+import java.util.*;{$s}
+import java.lang.*;{$s}
+{$s} 
+public interface {$nameClass}Repository extends JpaRepository<{$nameClass}, Long> {{$s} 
+}

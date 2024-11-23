@@ -1,0 +1,16 @@
+#SETTINGS#{$s}
+spring.application.name={$nameApp}{$s}
+server.servlet.context-path=/{$pathApp}{$s}
+server.port={$portApp}{$s}
+spring.mvc.pathmatch.matching-strategy = ANT_PATH_MATCHER{$s}
+{$s}
+spring.datasource.url={$jdbcApp}{$s}
+spring.datasource.username={$userdatabase}{$s}
+spring.datasource.password={$passworddatabase}{$s}
+{$s}
+spring.jackson.serialization.fail-on-empty-beans=false{$s}
+spring.main.allow-circular-references = true{$s}
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect{$s}
+spring.jpa.show-sql=true{$s}
+spring.jpa.open-in-view=false{$s}
+spring.jpa.hibernate.ddl-auto={$create-drop-table}

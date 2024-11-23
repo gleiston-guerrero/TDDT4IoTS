@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+    <head>
+        <meta charset="UTF-8">
+        <title>TDDT4IoTS - System IoT</title>
+        <link rel="preconnect" href="https://fonts.gstatic.com"/>
+        <link href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400&display=swap" rel="stylesheet">
+        <link rel="shortcut icon" href="resources/img/logo-app/logoOficial.ico">
+
+        <link rel="stylesheet" href="resources/css/css-library/sb-admin-2.css" type="text/css"/>
+        <link rel="stylesheet" href="resources/css/css-app/jobsAreaIoT.css" type="text/css">
+        <link href="resources/css/css-library/animations.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="resources/css/css-library/open-iconic-bootstrap.css" type="text/css"/>
+        <link rel="stylesheet" href="resources/css/css-library/all.min.css" type="text/css"/>
+        <link rel="stylesheet" href="resources/css/css-library/UDStyle.css" type="text/css"/>
+        <link rel="stylesheet" href="resources/css/css-library/animate.min.css">
+        <link href="resources/css/css-library/toastr.min.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/css/css-viewcode/view-code_default.min.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/css/css-viewcode/view-code_atom-one-light.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/css/css-viewcode/view_code_we.css" rel="stylesheet" type="text/css"/>
+
+        <link href="resources/css/css-app/utils.css" rel="stylesheet" type="text/css"/>
+
+
+        <link rel="stylesheet" href="resources/codemirror/codemirror.css" type="text/css">
+        <link rel="stylesheet" href="resources/codemirror/eclipse.min.css" type="text/css">
+
+        <script src="resources/js/js-library/jquery.min.js"></script>
+        <script src="resources/js/js-library/bootstrap.bundle.min.js"></script>
+        <script src="resources/js/js-library/angular.js" type="text/javascript"></script>
+        <script src="resources/js/js-library/angular-route.min.js" type="text/javascript"></script>
+        <script src="resources/js/js-library/sweetalert2.min.js" type="text/javascript"></script>
+
+        <script src="resources/codemirror/codemirror.js" type="text/javascript"></script>
+        <script src="resources/codemirror/clike.min.js" type="text/javascript"></script>
+        <script src="resources/codemirror/matchbrackets.js" type="text/javascript"></script>
+
+        <script src="resources/js/js-library/goJs_.js" type="text/javascript"></script>
+
+        <script src="resources/js/js-library/store2.min.js" type="text/javascript"></script>
+        <script src="resources/js/js-library/toastr.min.js" type="text/javascript"></script>
+
+        <style>
+            html, body{
+                display: flex;
+                flex-direction: column;
+                height:100vh;
+                margin: 0;
+            }
+        </style>
+    </head>
+    <body ng-controller="controllerWorkIoT">
+        <div id="wrapper">
+            <div id="content-wrapper" class="d-flex flex-column" style="height: 100vh">
+                <!-- Main Content -->
+                <div id="content">
+                    <!-- Topbar -->
+                    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-0 static-top shadow" style="z-index: 1000;">
+                        <div class="">
+                            <img class="" src="resources/img/logo-app/logoTDDT4IOTSicon.svg" width="50" alt="logo"/>
+                        </div>
+                        <div class="ml-3" >
+                            <h5 class="position-absolute font-weight-bold" style="color: #39297C !important; margin-left: 2px">
+                                {{dataProject.name_mp}} - <span class="text-dark"> Permit : </span>
+                                <span class="badge badge-success">{{dataProject.permit_pm === 'A' ? 'OWNER' : dataProject.permit_pm === 'R' ? 'READER' : 'WRITER'}}</span>
+                            </h5>
+                            <div class="" style="margin-top: 25px">
+                                <button ng-click="saveDispositive()" class="btn badge badge-light">
+                                    <i class="fas fa-save"></i> Save Dispositive</button>
+                                <button ng-click="exportPng()" class="btn badge badge-light"> <i class="fas fa-file-image"></i> Export file.png</button>
+                                <button class="btn badge badge-light"> <i class="fas fa-code"></i> View Code</button>
+                                <button class="btn badge badge-light"> <i class="fas fa-download"></i> Download Code</button>
+                                <a onclick="location.href = 'app.html#!/myprojects'" class="btn badge badge-danger"> <i class="fas fa-sign-out-alt"></i> Exit</a>
+                            </div>
+                        </div>
+
+                        <!-- Sidebar Toggle (Topbar) -->
+                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                            <i class="fa fa-bars"></i>
+                        </button>
+
+                        <!-- Topbar Tittle -->
+                        <!--<h1 class="h3 mb-0 text-gray-800">{{appPage.tittle}}</h1>-->
+                        <!-- Topbar Navbar -->
+                        <ul class="navbar-nav ml-auto">
+
+                            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                            <li class="nav-item dropdown no-arrow d-sm-none">
+                                <a class="nav-link dropdown-toggle" id="searchDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-search fa-fw"></i>
+                                </a>
+                                <!-- Dropdown - Messages -->
+                                <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                     aria-labelledby="searchDropdown">
+                                    <form class="form-inline mr-auto w-100 navbar-search">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control bg-light border-0 small"
+                                                   placeholder="Search for..." aria-label="Search"
+                                                   aria-describedby="basic-addon2">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary" type="button">
+                                                    <i class="fas fa-search fa-sm"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </li>
+
+                            <!-- Nav Item - Alerts -->
+                            <li class="nav-item dropdown no-arrow mx-1">
+                                <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-users"></i>
+                                    <!-- Counter - Alerts -->
+                                    <span class="badge badge-danger badge-counter">3+</span>
+                                </a>
+                                <!-- Dropdown - Alerts -->
+                                <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                     aria-labelledby="alertsDropdown">
+                                    <h6 class="dropdown-header">
+                                        Alerts Center
+                                    </h6>
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="mr-3">
+                                            <div class="icon-circle bg-primary">
+                                                <i class="fas fa-file-alt text-white"></i>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="small text-gray-500">December 12, 2019</div>
+                                            <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="mr-3">
+                                            <div class="icon-circle bg-success">
+                                                <i class="fas fa-donate text-white"></i>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="small text-gray-500">December 7, 2019</div>
+                                            $290.29 has been deposited into your account!
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="mr-3">
+                                            <div class="icon-circle bg-warning">
+                                                <i class="fas fa-exclamation-triangle text-white"></i>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="small text-gray-500">December 2, 2019</div>
+                                            Spending Alert: We've noticed unusually high spending for your account.
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                                </div>
+                            </li>
+
+
+                            <div class="topbar-divider d-none d-sm-block"></div>
+
+                            <!-- Nav Item - User Information -->
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" id="userDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                        {{DatoUsuario.name_person + ' ' + DatoUsuario.lastname_person}}</span>
+                                    <img class="img-profile rounded-circle" alt="..."
+                                         ng-src="{{rutaImgUser + DatoUsuario.pathimg_person}}">
+                                </a>
+                                <!-- Dropdown - User Information -->
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                     aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Profile
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Settings
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Activity Log
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" ng-click="logOut()">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Logout
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
+                    <!-- End of Topbar -->
+                </div>
+                <div style="margin-right: 0px; height: 100%" class="row">
+                    <div style="padding: 0px; width: 20%;z-index: 1000" class="col-md-3 col-xl-2 bd-sidebar">
+                        <div id="myPalette" style=" height: 80%; border-right: 1px solid #DDE0E6; border-top: 1px solid #DDE0E6;">
+                        </div>
+                        <div id="overView"
+                             style=" height: 20%; border-top: 1px solid #DDE0E6; border-right: 1px solid #DDE0E6;
+                             border-bottom: 1px solid #DDE0E6">
+                        </div>
+                    </div>
+                    <main style="padding: 0px !important; width: 80%; height: 100%" class="col-md-9 col-xl-10 py-md-3 pl-md-5 bd-content">
+                        <div style="width: 100%; padding: 5px; background: #F8F9FC; display: flex; z-index: 100;
+                             position: relative; height: 5%">
+                            <button class="btn btn-sm"> <i class="fas fa-undo-alt"></i> </button>
+                            <button class="btn btn-sm"> <i class="fas fa-redo-alt"></i> </button>
+                            <div class="dropdown">
+                                <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenu2"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-square"></i> Cable color
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                    <button ng-click="changeColorCable(domArrayColors.hexadecimal)"
+                                            ng-repeat="domArrayColors in arrayColors" class="dropdown-item" type="button">
+                                        <i class="fas fa-square" ng-style="{'color' :'{{domArrayColors.hexadecimal}}'}"></i>
+                                        {{domArrayColors.name}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- BLOQUES PARA CONFIGURAR LOS DISPOSITIVOS -->
+                        <div id="moduleParam" class="animate__animated animate__slideOutUp divParameters" style="display: block">
+                            <div class="header-code">
+                                <button ng-click="closeBlockCode()" class="btn btn-sm btn-light float-lg-right"
+                                        style="position: relative;display: flex;">
+                                    <i class="fas fa-window-close"></i>
+                                </button>
+                                <span class="small" style="padding: 0.25rem 0.5rem"> Configuration and parameterization </span>
+                            </div>
+                            <div class="container" style="height: 46%;overflow: auto;">
+                                <br>
+                                <button ng-class="cofigParam === 0 ? 'btn btn-sm btn-success' : 'btn btn-sm btn-outline-success'" ng-click="cofigParam = 0"> Configuration </button>
+                                <button ng-class="cofigParam === 1 ? 'btn btn-sm btn-success' : 'btn btn-sm btn-outline-success'" ng-click="cofigParam = 1"> Parameters Code </button>
+                                <br>
+                                <div ng-show="cofigParam === 1">
+                                    <!--SECCION PARA PARAMETRIZAR CODIGO DE CADA COMPONENTE-->
+                                    <strong> Libraries </strong>
+                                    <div class="border">
+                                        <pre>{{codeParameter.Libraries}}</pre>
+                                    </div>
+
+                                    <strong> Variables </strong>
+                                    <div class="border">
+                                        <pre>{{codeParameter.Variables}}</pre>
+                                    </div>
+
+                                    <strong> Setup </strong>
+                                    <div class="border">
+                                        <pre>{{codeParameter.Setup}}</pre>
+                                    </div>
+
+                                    <strong> Loop </strong>
+                                    <div class="border">
+                                        <pre>{{codeParameter.Loop}}</pre>
+                                    </div>
+
+                                    <strong> Methods </strong>
+                                    <div class="border">
+                                        <pre>{{codeParameter.Methods}}</pre>
+                                    </div>
+                                </div>
+
+                                <!--SECCION PARA PARAMETRIZAR CADA COMPONENTE SELECCIONADO-->
+                                <div class="form-group" ng-repeat="domArrayParameters in arrayParameters" ng-show="cofigParam === 0">
+                                    <!-- formulario para ingresar los puertos que estan conectados y poder generar el codigo arduino -->
+                                    <div class="row">
+                                        <div class="col">
+                                            <label class="col-form-label col-form-label-sm"> Port </label>
+                                            <input readonly="" id="{{domArrayParameters.key}}" value="{{domArrayParameters.idComponent}} {{domArrayParameters.name_port}}" type="text" class="form-control form-control-sm">
+                                        </div>
+                                        <div style="display: none" id="data{{domArrayParameters.key}}" class="col">
+                                            <label class="col-form-label col-form-label-sm"> Value to consider: </label>
+                                            <input  id="input{{domArrayParameters.key}}"  type="text" class="form-control form-control-sm">
+                                        </div>
+                                        <div style="display: none" id="portDigital{{domArrayParameters.key}}" class="col">
+                                            <label class="col-form-label col-form-label-sm"> Digital </label>
+                                            <select id="selectPD{{domArrayParameters.key}}" class="form-control form-control-sm">
+                                                <option value="---">---</option>
+                                                <option value="digitalWrite"> Digital Write </option>
+                                                <option value="digitalRead"> Digital Read </option>
+                                            </select>
+                                        </div>
+                                        <div style="display: none" id="statDigital{{domArrayParameters.key}}" class="col">
+                                            <label class="col-form-label col-form-label-sm"> Stat </label>
+                                            <select id="selectSD{{domArrayParameters.key}}" class="form-control form-control-sm">
+                                                <option>---</option>
+                                                <option>HIGH</option>
+                                                <option>LOW</option>
+                                            </select>
+                                        </div>
+                                        <div style="display: none" id="portAnalog{{domArrayParameters.key}}" class="col">
+                                            <label class="col-form-label col-form-label-sm"> Analog </label>
+                                            <select id="selectPA{{domArrayParameters.key}}" class="form-control form-control-sm">
+                                                <option value="---">---</option>
+                                                <option value="analogWrite"> Analog Write </option>
+                                                <option value="analogRead"> Analog Read </option>
+                                            </select>
+                                        </div>
+                                        <div style="display : none" id="btnDigitalAnalog{{domArrayParameters.key}}" class="col">
+                                            <label class="col-form-label col-form-label-sm"> Action </label> <br>
+                                            <a href="#" ng-click="addPortsDigitalAnalog($index)" class="badge badge-success">Add </a>
+                                        </div>
+                                        <div style="display : none" id="btnData{{domArrayParameters.key}}" class="col">
+                                            <label class="col-form-label col-form-label-sm"> Action </label> <br>
+                                            <a href="#" ng-click="addValueData($index)" class="badge badge-success">Add </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border" id="codeGeneral" style="position: absolute;bottom: 0;right: 0;left: 0;height: 50%;"></div>
+                        </div>
+
+                        <!-- BLOQUES PARA DIBUJAR LOS DISPOSITIVOS -->
+                        <div style="height: 95%; width: 100%; position: relative;border-bottom: 1px solid #DDE0E6;
+                             border-top: 1px solid #DDE0E6;" id="lienzo">
+
+
+                        </div>
+                        <!-- BLOQUES PARA GENERAR EL CODIGO -->
+                    </main>
+                </div>
+            </div>
+        </div>
+        <script src="resources/js/js-global/js_global.js" type="text/javascript"></script>
+        <script src="resources/js/js-iot/jsDrawDiagram.js" type="text/javascript"></script>
+        <script src="resources/js/js-iot/jsIoTData.js" type="text/javascript"></script>
+        <script src="resources/js/js-iot/jsPorts.js" type="text/javascript"></script>
+        <script src="resources/js/js-global/jsAlertPersonalize.js" type="text/javascript"></script>
+        <script src="resources/js/js-codeedit.js" type="text/javascript"></script>
+        <script src="resources/js/js-view/js-drawcomponent.js" type="text/javascript"></script>
+        <script src="resources/js/js-functions/view-code_highlight.min.js" type="text/javascript"></script>
+        <script src="resources/js/js-functions/view-code_highlightjs-line-numbers.min.js" type="text/javascript"></script>
+    </body>
+</html>

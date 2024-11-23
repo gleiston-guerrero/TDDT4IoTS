@@ -1,0 +1,21 @@
+package com.app.tddt4iots.service.impl;{$s}
+{$s}
+import com.app.tddt4iots.service.*;{$s}
+import com.app.tddt4iots.repository.*;{$s}
+import org.springframework.beans.factory.annotation.Autowired;{$s}
+import org.springframework.stereotype.Service;{$s}
+import org.springframework.transaction.annotation.Transactional;{$s}
+import com.app.tddt4iots.entities.*;{$s}
+import java.util.*;{$s}
+import java.lang.*;{$s}
+import java.io.*;{$s}
+{$s}
+@Service{$s}
+public class {$className}ServiceImpl implements {$className}Service { 
+    {$s}
+    @Autowired{$s}
+    {$className}Repository {$classNameMinuscula}Repository;{$s}
+    {$s}
+{$methosClass}
+    {$s}
+}

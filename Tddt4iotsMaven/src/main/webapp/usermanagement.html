@@ -1,0 +1,81 @@
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Users Management</h1>
+    </div>
+    <div class="form-group">
+        <label class="col-form-label col-form-label-sm"> Search: </label>
+        <input name="name_user" id="name_user" class="form-control form-control-sm" type="text">
+    </div>
+    <div id="listComponent">
+        <h4><span class="badge badge-primary">Administrators</span></h4>
+        <div style="overflow:scroll; height:300px; ">
+            <table id="administratos_table" class="table table-sm table-striped table-bordered user_table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Fecha Registro</th>
+                        <th scope="col" ng-show="DatoUsuario.type_person === 'R'"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="arraayadmins in arrayAdmins">
+                        <td >{{arraayadmins.name_person}}</td>
+                        <td>{{arraayadmins.lastname_person}}</td>
+                        <td>{{arraayadmins.email_person}}</td>
+                        <td>{{arraayadmins.datereg_person}}</td>
+                        <td>
+                            <button ng-show="DatoUsuario.type_person === 'R'" ng-click="stateUser('DEGRADE', arraayadmins.id_person)" 
+                                    class="btn btn-outline-danger btn-sm"> Degrade
+                            </button>                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <hr>
+        <br>
+        <h4><span class="badge badge-success">Usuarios</span></h4>
+        <div style="overflow:scroll; height:300px; ">
+            <table id="users_tableAll" class="table table-sm table-striped table-bordered user_table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Fecha Registro</th>
+                        <th scope="col">Rol</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="arrayusers in arrayUsers">
+                        <td >{{arrayusers.name_person}}</td>
+                        <td>{{arrayusers.lastname_person}}</td>
+                        <td>{{arrayusers.email_person}}</td>
+                        <td>{{arrayusers.datereg_person}}</td>                     
+                        <td> 
+                            <h5 ng-show="arrayusers.type_person === 'U'"><span class="badge badge-pill badge-success"> User </span></h5>
+                            <h5 ng-show="arrayusers.type_person === 'S'"><span class="badge badge-pill badge-info"> On hold </span></h5>
+                            <h5 ng-show="arrayusers.type_person === 'I'"><span class="badge badge-pill badge-danger"> Inactive </span></h5>
+                        </td>
+                        <td>
+                            <button ng-show="arrayusers.type_person === 'U' && DatoUsuario.type_person === 'R'" ng-click="stateUser('PROMOTE', arrayusers.id_person)" 
+                                    class="btn btn-outline-success btn-sm"> Promote </button>
+                            <button ng-show="arrayusers.type_person === 'I'"  ng-click="stateUser('ACTIVATE', arrayusers.id_person)" 
+                                    class="btn btn-outline-primary btn-sm"> Activate </button>     
+                            <button ng-show="arrayusers.type_person === 'S'"  ng-click="stateUser('ACTIVATE', arrayusers.id_person)" 
+                                    class="btn btn-outline-primary btn-sm"> Activate </button> 
+                            <button ng-show="arrayusers.type_person === 'U'"  ng-click="stateUser('INACTIVATE', arrayusers.id_person)" 
+                                    class="btn btn-outline-danger btn-sm"> Inactivate </button>     
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

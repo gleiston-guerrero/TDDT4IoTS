@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+    <head>
+        <meta charset="UTF-8">
+        <title>TDDT4IoTS - Sing Up</title>
+        <link rel="shortcut icon" href="resources/img/logo-app/logoOficial.ico">
+        <link rel="stylesheet" href="resources/css/css-library/bootstrap.css">
+        <link rel="stylesheet" href="resources/css/css-library/open-iconic-bootstrap.css">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="resources/css/css-app/index-app.css">
+        <link href="resources/css/css-library/toastr.min.css" rel="stylesheet" type="text/css"/>
+
+        <script src="resources/js/js-library/jquery.min.js"></script>
+        <script src="resources/js/js-library/bootstrap.bundle.min.js"></script>
+        <script src="resources/js/js-library/angular.js" type="text/javascript"></script>
+        <script src="resources/js/js-library/angular-route.min.js" type="text/javascript"></script>
+        <script src="resources/js/js-library/sweetalert2.min.js" type="text/javascript"></script>
+        <script src="resources/js/js-global/jsAlertPersonalize.js" type="text/javascript"></script>
+
+        <script src="resources/js/js-library/store2.min.js" type="text/javascript"></script>
+        <script src="resources/js/js-library/toastr.min.js" type="text/javascript"></script>
+    </head>
+    <body ng-controller="controllerSingUp">
+        <div class="container mt-4">
+            <img src="resources/img/logo-app/logoTDDT4IOTSicon.svg" width="150" alt="logo"/>
+
+            <div class="container-fluid mt-4 mb-4 w-50">
+                <h2> <strong> Create your account </strong> </h2>
+                <p class="small">
+                    Start using our world-class design and development tools for apps, navigation, AR, and data visualization. Already have an account?
+                    <a href="index.html">Log In</a>
+                </p>
+                <form name="form_singup" ng-submit="registerUser(form_singup)">
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm">First Name:</label>
+                        <input type="text"
+                               name="first_name"
+                               ng-model="first_name"
+                               ng-class="(form_singup.first_name.$invalid &&
+                                                       form_singup.first_name.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'"
+                               required maxlength="30" >
+                        <div class="invalid-feedback">
+                            Please choose a first name.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm">Last Name:</label>
+                        <input type="text"
+                               name="last_name"
+                               ng-model="last_name"
+                               ng-class="(form_singup.last_name.$invalid &&
+                                                       form_singup.last_name.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'" required maxlength="30">
+                        <div class="invalid-feedback">
+                            Please choose a last name.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm">Email:</label>
+                        <input type="email"
+                               name="email_sup"
+                               id="email_sup"
+                               ng-model="email_sup"
+                               ng-class="(form_singup.email_sup.$invalid &&
+                                                       form_singup.email_sup.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'"
+                               required maxlength="75">
+                        <div class="invalid-feedback">
+                            Please choose a email.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm">Password:</label>
+                        <input type="password"
+                               name="password_sup"
+                               id="password_sup"
+                               ng-model="password_sup"
+                               autocomplete="new-password"
+                               ng-class="(form_singup.password_sup.$invalid &&
+                                                       form_singup.password_sup.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'"
+                               ng-pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])\w{6,}/"
+                               required>
+                        <div class="invalid-feedback">
+                            Please choose a password.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm">Confirm Password:</label>
+                        <input type="password"
+                               name="password_confirm_sup"
+                               id="password_confirm_sup"
+                               ng-model="password_confirm_sup"
+                               ng-class="(form_singup.password_confirm_sup.$invalid &&
+                                                       form_singup.password_confirm_sup.$dirty) ?
+                                                       'form-control form-control-sm is-invalid'
+                                                       : 'form-control form-control-sm'"
+                               ng-pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])\w{6,}/"
+                               required>
+                        <div class="invalid-feedback">
+                            Please choose a password.
+                        </div>
+                    </div>
+
+                    <div style="font-size: 12px" ng-show="!form_singup.password_sup.$invalid && !form_singup.password_sup.$invalid.pattern">
+                        <p class="text-success">
+                            <span class="oi oi-circle-check small"></span> Must contain at least 6 characters </p>
+                        <p class="text-success">
+                            <span class="oi oi-circle-check small"></span> Must contain at least one capital letter </p>
+                        <p class="text-success">
+                            <span class="oi oi-circle-check small"></span> Must contain at least one number </p>
+                    </div>
+                    <div style="font-size: 12px" ng-show="!form_singup.password_sup.$pristine && form_singup.password_sup.$error.pattern && 
+                                form_singup.password_sup.$dirty">
+                        <p class="text-danger">
+                            <span class="oi oi-circle-x small"></span> Must contain at least 6 characters </p>
+                        <p class="text-danger">
+                            <span class="oi oi-circle-x small"></span> Must contain at least one capital letter </p>
+                        <p class="text-danger">
+                            <span class="oi oi-circle-x small"></span> Must contain at least one number </p>
+                    </div>
+
+                    <button type="submit" class="btn button-d" ng-disabled="form_singup.$invalid"> Sing Up </button>
+                </form>
+            </div>
+        </div>
+        <script src="resources/js/js-global/js_global.js" type="text/javascript"></script>
+        <script src="resources/js/js-singup.js" type="text/javascript"></script>
+    </body>
+</html>

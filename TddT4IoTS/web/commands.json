@@ -1,0 +1,28 @@
+{
+    "commands": [
+        {
+            "display": "list controller",
+            "value": "arduino-cli core list"
+        },
+        {
+            "display": "list device conected",
+            "value": "arduino-cli board list"
+        },
+        {
+            "display": "install manager nano",
+            "value": "arduino-cli core install arduino:samd"
+        },
+        {
+            "display": "install manager one",
+            "value": "arduino-cli core install arduino:avr"
+        },
+        {
+            "display": "compile program in avr one",
+            "value": "arduino-cli compile --fqbn arduino:avr:uno Blink"
+        },
+        {
+            "display": "upload program in avr one",
+            "value": "arduino-cli upload -p COM3 -b arduino:avr:uno \"Blink\""
+        }
+    ]
+}

@@ -1,0 +1,129 @@
+.abs-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.textcenter{
+    display: flex;
+    justify-content: center;	
+}
+.none{
+    display: none;
+}
+
+.aR{
+    font-size: 12px;
+    text-decoration: none;
+    color: #1C9391 !important
+}
+.spnR{
+    font-size: 12px;
+}
+.aA{
+    font-size: 12px;
+    text-decoration: none; 
+}
+
+.min-margin{
+    margin-bottom: 5px!important;
+}
+.centrar{
+    position: relative;
+    margin: auto;
+    /*top: 10vh;*/
+}
+
+.full-hight{
+    height: 100vh;
+}
+.margin-zero{
+    /*display: inherit;*/
+    margin: 0px 0px 0px 0px!important;
+}
+.padding-zero{
+    padding: 0px 0px 0px 0px!important;
+}
+
+span,strong,td,h1,h2,h3,h4,h5,h6{cursor: default;}
+span,strong,td,h1,h2,h3,h4,h5,h6,a,img,label,div{
+    -webkit-touch-callout: none !important; /* iOS Safari */
+    -webkit-user-select: none !important; /* Safari */
+    -khtml-user-select: none !important; /* ; Konqueror HTML */
+    -moz-user-select: none !important; /* Old versions of Firefox */
+    -ms-user-select: none !important; /* Internet Explorer/Edge */
+    user-select: none !important; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+a{cursor: pointer;}
+a span{cursor: pointer;}
+/*.titleMenu span{cursor: pointer;}*/
+
+/*scroll bonito*/
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #39297C rgba(0,0,0,0);
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0);
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #39297C;
+    /*border-radius: 20px;*/
+    border: 0px solid #39297C;
+}
+
+.scroll{
+    overflow: auto !important;
+}
+
+.fullprocent{
+    width: 100%;
+    height: 100%;
+}
+
+.padd-28-lr{
+    padding-left: 25px!important;
+    padding-right: 25px!important;
+}
+
+div::-webkit-scrollbar {
+    width: 8px;     /* Tamaño del scroll en vertical */
+    height: 8px;    /* Tamaño del scroll en horizontal */
+    /*display: none;*/  /* Ocultar scroll */
+}
+
+/* Ponemos un color de fondo y redondeamos las esquinas del thumb */
+div::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+/* Cambiamos el fondo y agregamos una sombra cuando esté en hover */
+div::-webkit-scrollbar-thumb:hover {
+    background: #b3b3b3;
+    box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+/* Cambiamos el fondo cuando esté en active */
+div::-webkit-scrollbar-thumb:active {
+    background-color: #999999;
+}
+
+/* Ponemos un color de fondo y redondeamos las esquinas del track */
+div::-webkit-scrollbar-track {
+    background: #e1e1e1;
+    border-radius: 4px;
+}
+
+/* Cambiamos el fondo cuando esté en active o hover */
+div::-webkit-scrollbar-track:hover,
+div::-webkit-scrollbar-track:active {
+    background: #d4d4d4;
+}

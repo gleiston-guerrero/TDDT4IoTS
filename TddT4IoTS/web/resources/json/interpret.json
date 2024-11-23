@@ -1,0 +1,116 @@
+[
+    {
+        "simbol": "!",
+        "ascii": "33",
+        "description": "New class",
+        "example": "<span class='badge badge-danger'>!</span>(ClassName)"
+    }, 
+    {
+        "simbol": "*",
+        "ascii": "42",
+        "description": "Hidden class",
+        "example": "<span class='badge badge-danger'>*</span>(ClassName)"
+    }, 
+    {
+        "simbol": "()",
+        "ascii": "40 - 41",
+        "description": "Class",
+        "example": "<span class='badge badge-danger'>(</span>ClassName<span class='badge badge-danger'>)</span>"
+    }, 
+    {
+        "simbol": "[]",
+        "ascii": "91-93",
+        "description": "Method",
+        "example": "(ClassName <span class='badge badge-danger'>[</span>+methodname=empty<span class='badge badge-danger'>]</span>)"
+    },
+    {
+        "simbol": "/",
+        "ascii": "47",
+        "description": "Visible part",
+        "example": "(ClassName &+<span class='badge badge-danger'>/</span>name<span class='badge badge-danger'>/</span>=string)"
+    }, 
+    {
+        "simbol": "{.}",
+        "ascii": "46",
+        "description": "Parameters for the methods",
+        "example": "(ClassName [+methodname=empty<span class='badge badge-danger'>{</span><span class='badge badge-danger'>.</span>param1=string<span class='badge badge-danger'>.</span>param2=int<span class='badge badge-danger'>}</span>])"
+    }, 
+    {
+        "simbol": "&",
+        "ascii": "38",
+        "description": "Attribute",
+        "example": "(ClassName <span class='badge badge-danger'>&</span>+atrb1=string<span class='badge badge-danger'>&</span>-atrb2=string<span class='badge badge-danger'>&</span>$atrb3=float)"
+    }, 
+    {
+        "simbol": "+",
+        "ascii": "43",
+        "description": "Public",
+        "example": "(ClassName &<span class='badge badge-danger'>+</span>atrb1=string&<span class='badge badge-danger'>+</span>atrb2=string&<span class='badge badge-danger'>+</span>atrb3=float)"
+    }, 
+    {
+        "simbol": "-",
+        "ascii": "45",
+        "description": "Private",
+        "example": "(ClassName &<span class='badge badge-danger'>-</span>atrb1=string&<span class='badge badge-danger'>-</span>atrb2=string&<span class='badge badge-danger'>-</span>atrb3=float)"
+    }, 
+    {
+        "simbol": "#",
+        "ascii": "35",
+        "description": "Protected",
+        "example": "(ClassName &<span class='badge badge-danger'>#</span>atrb1=string&<span class='badge badge-danger'>#</span>atrb2=string&<span class='badge badge-danger'>#</span>atrb3=float)"
+    }, 
+    {
+        "simbol": "$",
+        "ascii": "36",
+        "description": "Static",
+        "example": "(ClassName &<span class='badge badge-danger'>$</span>atrb1=string&<span class='badge badge-danger'>$</span>atrb2=string&<span class='badge badge-danger'>$</span>atrb3=float)"
+    }, 
+    {
+        "simbol": "=",
+        "ascii": "61",
+        "description": "Data type",
+        "example": "(ClassName &+atrb1<span class='badge badge-danger'>=</span>string&+atrb2<span class='badge badge-danger'>=</span>string&+atrb3<span class='badge badge-danger'>=</span>float)"
+    }, 
+    {
+        "simbol": "@",
+        "ascii": "64",
+        "description": "Interface",
+        "example": "(<span class='badge badge-danger'>@</span>InterfaceName)"
+    }, 
+    {
+        "simbol": "^",
+        "ascii": "64",
+        "description": "Ennumerations",
+        "example": "(<span class='badge badge-danger'>^</span>(Status «Disabled»,«Enabled»))"
+    },
+    {
+        "simbol": "%",
+        "ascii": "64",
+        "description": "New Constructors",
+        "example": "(+<span class='badge badge-danger'>%</span> .className=ClassName <span class='badge badge-danger'>%</span>)"
+    },
+    {
+        "simbol": "¡>>¡",
+        "ascii": "173-62",
+        "description": "Relation Agregation",
+        "example": "<span class='badge badge-danger'>¡</span>(ClassName1)<span class='badge badge-danger'>>></span>(ClassName2)<span class='badge badge-danger'>¡</span>"
+    },
+    {
+        "simbol": "¡<<¡",
+        "ascii": "173-62",
+        "description": "Relation Dependency",
+        "example": "<span class='badge badge-danger'>¡</span>(ClassName1)<span class='badge badge-danger'><<</span>(ClassName2)<span class='badge badge-danger'>¡</span>"
+    },
+    {
+        "simbol": "¡<>¡",
+        "ascii": "173-62",
+        "description": "Relation Generalization",
+        "example": "<span class='badge badge-danger'>¡</span>(ClassName1)<span class='badge badge-danger'><></span>(ClassName2)<span class='badge badge-danger'>¡</span>"
+    },
+    {
+        "simbol": "¡><¡",
+        "ascii": "173-62",
+        "description": "Relation Asociation",
+        "example": "<span class='badge badge-danger'>¡</span>(ClassName1)<span class='badge badge-danger'>><</span>(ClassName2)<span class='badge badge-danger'>¡</span>"
+    }
+]

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div style="border-radius: 5px; width: 500px; height: 500px; border: 1px solid white; background-image: url('https://res.cloudinary.com/dtkeikdwd/image/upload/v1622596724/public/tddm4IoTbs_iqtret.png')">
+            <div style="padding: 25px;font-size:13px;width:450px;margin-top:190px;">
+                <p>
+                    Welcome ${paramnames}.
+                    ${paramintro} in the <a href="${hosturl}" target="_blank">${hostname}</a> application.
+                </p>
+                <p>
+                    Below is the code that you must enter in the application to complete the ${paramdetail} process.
+                </p>
+                <div style="margin-top: 45px;text-align: center; ">
+                    <span style="text-align: center;background: #1B8A88;height: 20px; border-radius: 4px;padding: 10px 10px 20px 10px;font-size: 20px;font-family: sans-serif;color:white;">
+                        ${code}
+                    </span>
+                </div>
+                <p style="margin-top: 40px;">
+                    To skip some steps in the process, click on the link below <a href="${hosthackurl}" target="_blank">link</a>.
+                </p>
+            </div>
+        </div>
+    </body>
+</html>

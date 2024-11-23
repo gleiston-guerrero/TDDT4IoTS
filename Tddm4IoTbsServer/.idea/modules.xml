@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../Tddt4iotsMaven/Tddt4iotsMaven.iml" filepath="$PROJECT_DIR$/../Tddt4iotsMaven/Tddt4iotsMaven.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../storageTddm4IoTbs/storageTddm4IoTbs.iml" filepath="$PROJECT_DIR$/../storageTddm4IoTbs/storageTddm4IoTbs.iml" />
+    </modules>
+  </component>
+</project>

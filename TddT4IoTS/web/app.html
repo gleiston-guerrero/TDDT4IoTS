@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+    <head>
+        <meta charset="UTF-8">
+        <title>TDDT4IoTS</title>
+        <link rel="preconnect" href="https://fonts.gstatic.com"/>
+        <link href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400&display=swap" rel="stylesheet">
+        <link rel="shortcut icon" href="resources/img/logo-app/logoOficial.ico">
+        <link rel="stylesheet" href="resources/css/css-library/sb-admin-2.css" type="text/css"/>
+        <link rel="stylesheet" href="resources/css/css-app/index-app.css" type="text/css"/>
+        <link rel="stylesheet" href="resources/css/css-library/open-iconic-bootstrap.css" type="text/css"/>
+        <link rel="stylesheet" href="resources/css/css-library/all.min.css" type="text/css"/>
+        <link rel="stylesheet" href="resources/css/css-library/toastr.min.css" type="text/css">
+        <link rel="stylesheet" href="resources/codemirror/codemirror.css" type="text/css">
+        <link rel="stylesheet" href="resources/codemirror/eclipse.min.css" type="text/css">
+        <link href="resources/css/css-app/utils.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/css/css-viewcode/view-code_default.min.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/css/css-viewcode/view-code_atom-one-light.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/css/css-viewcode/view_code_we.css" rel="stylesheet" type="text/css"/>
+
+        <script src="resources/js/js-library/jquery.min.js"></script>
+        <script src="resources/js/js-library/bootstrap.bundle.min.js"></script>
+        <script src="resources/js/js-library/angular.js" type="text/javascript"></script>
+        <script src="resources/js/js-library/angular-route.min.js" type="text/javascript"></script>
+        <script src="resources/js/js-global/js_global.js" type="text/javascript"></script>
+        <script src="resources/js/js-global/jsAlertPersonalize.js" type="text/javascript"></script>
+        <script src="resources/js/js-library/sweetalert2.min.js" type="text/javascript"></script>
+
+        <script src="resources/js/js-view/ctrl_app.js" type="text/javascript"></script>
+        <script src="resources/js/js-library/store2.min.js" type="text/javascript"></script>
+        <script src="resources/js/js-library/toastr.min.js" type="text/javascript"></script>
+
+        <script src="resources/codemirror/codemirror.js" type="text/javascript"></script>
+        <script src="resources/codemirror/clike.min.js" type="text/javascript"></script>
+        <script src="resources/codemirror/matchbrackets.js" type="text/javascript"></script>
+        <script src="resources/js/js-library/goJs_.js" type="text/javascript"></script>
+    </head>
+    <body  ng-controller="application">
+        <div id="wrapper">
+            <!-- Sidebar -->
+            <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+                <!-- Sidebar - Brand -->
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                    <div class="sidebar-brand-text mx-3 mb-2" style="margin-top: 4rem !important;">
+                        <img src="resources/img/logo-app/logoTDDT4IOTSicon.svg" alt="TDDm4IoTBS" width="150">
+                    </div>
+                </a>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider my-0" style="margin-top: 3.5rem !important;margin-bottom: -4rem !important;">
+
+                <!-- Nav Item - Dashboard -->
+                <li style="margin-top: 5rem !important;" class="nav-item {{appPage.Select==='home'?'active activeMenu':''}}">
+                    <a class="nav-link" ng-click="redirect('home')">
+                        <i class="oi oi-dashboard"></i>
+                        <span>Dashboard</span></a>
+                </li>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    Projects
+                </div>
+
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item {{appPage.Select==='myprojects'?'active activeMenu':''}}">
+                    <a class="nav-link" ng-click="redirect('myprojects')">
+                        <i class="oi oi-folder" ></i>
+                        <span>Projects</span></a>
+                </li>
+
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item {{appPage.Select==='shareprojects'?'active activeMenu':''}}">
+                    <a class="nav-link" ng-click="redirect('shareprojects')">
+                        <i class="oi oi-fork" ></i>
+                        <span>Shared Projects</span></a>
+                </li>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+                <div ng-if="DatoUsuario.type_person === 'A' || DatoUsuario.type_person === 'R'" >
+                    <!-- Heading -->
+                    <div class="sidebar-heading">
+                        User Management
+                    </div>
+
+                    <!-- Nav Item - Pages Collapse Menu -->
+                    <li class="nav-item {{appPage.Select==='usermanagement'?'active activeMenu':''}}">
+                        <a class="nav-link" ng-click="redirect('usermanagement')">
+                            <i class="oi oi-hard-drive"></i>
+                            <span>Application users</span></a>
+                    </li>
+                    <hr class="sidebar-divider d-none d-md-block">
+                </div>
+
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    UML
+                </div>
+
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item {{appPage.Select==='interpret'?'active activeMenu':''}}">
+                    <a class="nav-link" ng-click="redirect('interpret')">
+                        <i class="oi oi-script"></i>
+                        <span>Interpret</span></a>
+                </li>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    IoT Systems
+                </div>
+
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item {{appPage.Select==='componentsiot'?'active activeMenu':''}}">
+                    <a class="nav-link" ng-click="redirect('componentsiot')">
+                        <i class="oi oi-wrench"></i>
+                        <span>IoT Components</span></a>
+                </li>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider d-none d-md-block">
+
+                <!-- Divider -->
+
+                <!-- Sidebar Message -->
+                <div class="sidebar-card d-none d-lg-flex">
+                    <img class="sidebar-card-illustration mb-2" src="resources/img/img-app/dowloandIoT.svg" alt="...">
+                    <p class="text-center mb-2"><strong>To compile and burn</strong> the code to your arduino board click on the button that says download to get the respective application.</p>
+                    <a class="btn button-ds btn-sm" href="#">Download</a>
+                </div>
+
+            </ul>
+
+            <div id="content-wrapper" class="d-flex flex-column">
+                <!-- Main Content -->
+                <div id="content">
+                    <!-- Topbar -->
+                    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                        <!-- Sidebar Toggle (Topbar) -->
+                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                            <i class="fa fa-bars"></i>
+                        </button>
+
+                        <!-- Topbar Tittle -->
+                        <!--<h1 class="h3 mb-0 text-gray-800">{{appPage.tittle}}</h1>-->
+                        <!-- Topbar Navbar -->
+                        <ul class="navbar-nav ml-auto">
+
+                            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                            <li class="nav-item dropdown no-arrow d-sm-none">
+                                <a class="nav-link dropdown-toggle" id="searchDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-search fa-fw"></i>
+                                </a>
+                                <!-- Dropdown - Messages -->
+                                <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                     aria-labelledby="searchDropdown">
+                                    <form class="form-inline mr-auto w-100 navbar-search">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control bg-light border-0 small"
+                                                   placeholder="Search for..." aria-label="Search"
+                                                   aria-describedby="basic-addon2">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary" type="button">
+                                                    <i class="fas fa-search fa-sm"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </li>
+
+                            <div class="topbar-divider d-none d-sm-block"></div>
+
+                            <!-- Nav Item - User Information -->
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" id="userDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="nameUser">
+                                    </span>
+                                    <img class="img-profile rounded-circle" alt="..."
+                                         src="resources/img/img-app/userMale.png">
+                                </a>
+                                <!-- Dropdown - User Information -->
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                     aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Profile
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" ng-click="logOut()">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Logout
+                                    </a>
+                                </div>
+                            </li>
+
+                        </ul>
+
+                    </nav>
+                    <!-- End of Topbar -->
+
+                    <!-- Begin Page Content -->
+
+                    <div ng-view></div>
+                    <!-- End Page Content -->
+                </div>
+
+                <!-- Footer -->
+                <footer class="sticky-footer bg-white mt-4">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; Aplication Web 2021</span>
+                        </div>
+                    </div>
+                </footer>
+                <!-- End of Footer -->
+
+            </div>
+        </div>
+        <script src="resources/js/js-view/ctrl_home.js" type="text/javascript"></script>
+        <script src="resources/js/js-view/ctrl_myprojects.js" type="text/javascript"></script>
+        <script src="resources/js/js-view/ctrl_notfound.js" type="text/javascript"></script>
+        <script src="resources/js/js-view/ctrl_components.js" type="text/javascript"></script>
+        <script src="resources/js/js-view/ctrl_sharedprojects.js" type="text/javascript"></script>
+        <script src="resources/js/js-view/ctrl_users.js" type="text/javascript"></script>
+        <script src="resources/js/js-view/ctrl_diagramsuml.js" type="text/javascript"></script>
+        <script src="resources/js/js-view/ctrl_dispositiveIoT.js" type="text/javascript"></script>
+        <script src="resources/js/js-functions/ctrl_interprete.js" type="text/javascript"></script>
+        <script src="resources/js/js-codeedit.js" type="text/javascript"></script>
+        <script src="resources/js/js-view/js-drawcomponent.js" type="text/javascript"></script>
+        <script src="resources/js/js-functions/view-code_highlight.min.js" type="text/javascript"></script>
+        <script src="resources/js/js-functions/view-code_highlightjs-line-numbers.min.js" type="text/javascript"></script>
+        <script src="resources/js/js-functions/RoyalCodex.js" type="text/javascript"></script>
+    </body>
+</html>

@@ -1,0 +1,150 @@
+/**
+ * @uthor: dcarvajals
+ */
+
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.opacity-d{
+    width: 100%;
+    background: #2B2B2B;
+    height: 25rem;
+    position: absolute;
+    opacity: 0.4;
+}
+
+
+/*estilo para el logo de la app*/
+.logoDuvca{
+    position: absolute;
+    margin-top: -5px;
+    cursor: pointer;
+}
+
+/*clase para estilos del menu*/
+.menu-header{
+    height: 25rem;
+    padding: 30px 0px 50px 0px;
+    background-image: url(../../img/img-app/fondo.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/*items del menu de informacion*/
+.itemDuvca{
+    color: white !important
+}
+
+.itemDuvca:hover{
+    background: white;
+    border-radius: 50px;
+    color: #006700 !important
+}
+
+.login{
+    padding: 20px;
+    background: white;
+    width: 20rem;
+}
+
+/*alteracion en un atributo del container de bootstrap*/
+.con-d{
+    margin-top: -11rem;
+}
+
+.center-d{
+    text-align: center;
+}
+
+.button-d{
+    background: #006700;
+    color: white;
+    box-shadow: 0 4px #dbab35;
+    letter-spacing: 1.28px;
+    border-radius: 2px 2px 0 0;
+    transition: box-shadow .1s ease-out,transform .1s ease-out;
+}
+
+.button-d:focus, .button-d:hover{
+    background: #006700;
+    color: white !important;
+    box-shadow: 0 2px #dbab35;
+    transform: translateY(2px);
+}
+
+/*boton active*/
+.button-active{
+    background: #bd5334;
+    color: white;
+    box-shadow: 0 4px #bd5334;
+    letter-spacing: 1.28px;
+    border-radius: 2px 2px 0 0;
+    transition: box-shadow .1s ease-out,transform .1s ease-out;
+}
+
+.button-active:focus, .button-active:hover{
+    background: #bd5334;
+    color: white !important;
+    box-shadow: 0 2px #bd5334;
+    transform: translateY(2px);
+}
+
+/*boton secundario*/
+.button-ds{
+    background: #bd5334;
+    color: white;
+    box-shadow: 0 4px #dbab35;
+    letter-spacing: 1.28px;
+    border-radius: 2px 2px 0 0;
+    transition: box-shadow .1s ease-out,transform .1s ease-out;
+}
+
+.button-ds:focus, .button-ds:hover{
+    background: #bd5334;
+    color: white !important;
+    box-shadow: 0 2px #dbab35;
+    transform: translateY(2px);
+}
+
+/*boton terciario*/
+.button-dt{
+    background: #dbab35;
+    color: black;
+    box-shadow: 0 4px #bd5334;
+    letter-spacing: 1.28px;
+    border-radius: 2px 2px 0 0;
+    transition: box-shadow .1s ease-out,transform .1s ease-out;
+}
+
+.button-dt:focus, .button-dt:hover{
+    background: #dbab35;
+    color: black !important;
+    box-shadow: 0 2px #bd5334;
+    transform: translateY(2px);
+}
+
+.info-d{
+    position:absolute;
+    bottom: 0;
+    text-align: center;
+}
+
+.info-d img{
+    margin-bottom: 2rem;
+}
+
+.activeMenu{
+    background: white;
+    border-right: 5px solid #EBAC21;
+}
+
+.activeMenu a{
+    color: #006700 !important;
+}
+
+.activeMenu i{
+    color: #006700 !important;
+}

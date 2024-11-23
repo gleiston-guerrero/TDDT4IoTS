@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Tddm4IoTbsServer" />
+        <module name="storageTddm4IoTbs" />
+        <module name="Tddt4iotsMaven" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Tddm4IoTbsServer" options="-endorseddirs D:\Repositorios\TddT4IoTs\Tddm4IoTbsServer\target/endorsed" />
+      <module name="Tddt4iotsMaven" options="-endorseddirs D:\Repositorios\TddT4IoTs\Tddt4iotsMaven\target/endorsed" />
+      <module name="storageTddm4IoTbs" options="-endorseddirs D:\Repositorios\TddT4IoTs\storageTddm4IoTbs\target/endorsed" />
+    </option>
+  </component>
+</project>

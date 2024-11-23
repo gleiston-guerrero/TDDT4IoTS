@@ -1,0 +1,2612 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+    <head>
+        <meta charset="UTF-8">
+        <title>TDDT4IoTS - Diagram UML</title>
+        <link rel="preconnect" href="https://fonts.gstatic.com"/>
+        <link href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400&display=swap" rel="stylesheet">
+        <link rel="shortcut icon" href="resources/img/logo-app/logoOficial.ico">
+        <link rel="stylesheet" href="resources/css/css-library/sb-admin-2.css" type="text/css"/>
+        <link rel="stylesheet" href="resources/css/css-app/index-app.css" type="text/css"/>
+        <link rel="stylesheet" href="resources/css/css-app/styleTdd.css" type="text/css"/>
+        <link rel="stylesheet" href="resources/css/css-app/jobsAeraUml.css" type="text/css"/>
+        <link rel="stylesheet" href="resources/css/css-library/open-iconic-bootstrap.css" type="text/css"/>
+        <link rel="stylesheet" href="resources/css/css-library/all.min.css" type="text/css"/>
+        <link rel="stylesheet" href="resources/css/css-library/UDStyle.css" type="text/css"/>
+        <link href="resources/css/css-library/toastr.min.css" rel="stylesheet" type="text/css"/>
+
+        <link rel="stylesheet" href="resources/codemirror/codemirror.css" type="text/css">
+        <link rel="stylesheet" href="resources/codemirror/eclipse.min.css" type="text/css">
+        <link href="resources/css/css-viewcode/view-code_default.min.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/css/css-viewcode/view-code_atom-one-light.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/css/css-viewcode/view_code_we.css" rel="stylesheet" type="text/css"/>
+
+        <link href="resources/css/css-app/utils.css" rel="stylesheet" type="text/css"/>
+
+        <link rel="stylesheet" href="resources/css/css-library/all.min.css" type="text/css"/>
+
+        <script src="resources/js/js-library/jquery.min.js"></script>
+        <script src="resources/js/js-library/bootstrap.bundle.min.js"></script>
+        <script src="resources/js/js-library/angular.js"></script>
+        <script src="resources/js/js-library/angular-route.min.js"></script>
+        <script src="resources/js/js-library/sweetalert2.min.js" ></script>
+        <script src="resources/js/js-library/toastr.min.js" ></script>
+
+        <script src="resources/js/js-library/store2.min.js" ></script>
+        <script src="resources/js/js-library/toastr.min.js" ></script>
+
+        <script src="resources/codemirror/codemirror.js" ></script>
+        <script src="resources/codemirror/clike.min.js" ></script>
+        <script src="resources/codemirror/matchbrackets.js"></script>
+
+        <script src="resources/js/js-library/UDCore.js"></script>
+        <script src="resources/js/js-library/UDModules.js"></script>
+        <style>
+            html, body {
+                display: flex;
+                flex-direction: column;
+                height: 100vh;
+                margin: 0;
+            }
+
+            .CodeMirror {
+                height: 37.9rem !important;
+            }
+        </style>
+    </head>
+    <body ng-controller="workAreaController">
+
+        <!-- Modal Symbols to describe use cases-->
+        <div class="modal fade" id="modal_Symbols" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+             aria-hidden="true" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Symbols to describe use cases</h6>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <table class="table table-sm table-bordered">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Simbol</th>
+                                    <th scope="col">Ascii</th>
+                                    <th scope="col">Description</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="keyinterpret in interpret">
+                                    <th scope="row">{{keyinterpret.simbol}}</th>
+                                    <td>{{keyinterpret.ascii}}</td>
+                                    <td>{{keyinterpret.description}}</td>
+                                    <td>
+                                        <button class="btn btn-success btn-sm" ng-click="loadExample(keyinterpret)"> Example
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary rounded-pill btn-sm" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal editar ms y fa de la descripcion del caso de uso -->
+        <div class="modal fade" id="modal_update_duc" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+             aria-hidden="true" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered sha" role="document">
+                <div class="modal-content">
+                    <form name="form_update_action" ng-submit="updateActionMSFA(form_update_action)">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Update Action</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <button type="button" href="" ng-click="interpretUseCaseAction()"
+                                        ng-disabled="form_update_action.usecase_description.$invalid"
+                                        class="btn btn-success btn-sm float-right"
+                                        style="padding: 0px 10px; margin-top: 6px; font-size: 0.8rem;">
+                                    Interpret
+                                </button>
+                                <label class="col-form-label col-form-label-sm"> Action:</label>
+                                <textarea name="action_original"
+                                          ng-model="action_original"
+                                          ng-class="(form_update_action.action_original.$invalid &&
+                                                                  form_update_action.action_original.$dirty) ?
+                                                                  'form-control form-control-sm is-invalid'
+                                                                  : 'form-control form-control-sm'" cols="30"
+                                          rows="5" ng-blur="interpretUseCaseAction()">
+                                </textarea>
+                                <div class="invalid-feedback">
+                                    Please enter the use case description
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <textarea name="action_interpret"
+                                          ng-model="action_interpret"
+                                          ng-class="(form_update_action.action_interpret.$invalid &&
+                                                                  form_update_action.action_interpret.$dirty) ?
+                                                                  'form-control form-control-sm is-invalid'
+                                                                  : 'form-control form-control-sm'" required name=""
+                                          cols="30"
+                                          readonly
+                                          rows="5">
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="btn_cancel_update_action" type="button" class="btn btn-sm btn-danger">Cancel</button>
+                            <button type="submit" class="btn btn-sm btn-primary" ng-disabled="form_update_action.$invalid">Save
+                                changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal new actor -->
+        <div class="modal fade" id="modal_actor" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+             aria-hidden="true" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <form id="form_actor" name="form_actor" ng-submit="createActor(form_actor, true)">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">New Actor</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="col-form-label col-form-label-sm">Actor name:</label>
+                                <input name="actor_name"
+                                       ng-model="actor_name"
+                                       ng-class="(form_actor.actor_name.$invalid &&
+                                                               form_actor.actor_name.$dirty) ?
+                                                               'form-control form-control-sm is-invalid'
+                                                               : 'form-control form-control-sm'" required>
+                                <div class="invalid-feedback">
+                                    Please choose a name actor.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="btn_close_actor" type="button" class="btn btn-sm btn-danger">Cancel</button>
+                            <button type="submit" class="btn btn-sm btn-primary" ng-disabled="form_actor.$invalid"
+                                    ng-hide="flag_update">Save changes
+                            </button>
+                            <button ng-click="updateActor(form_actor, true)" form="form_actor" type="button"
+                                    ng-show="flag_update"
+                                    class="btn btn-sm btn-primary">Update changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Inheritance among actors (herencia entre actores) -->
+        <div class="modal fade" id="modal_inheritance_actor" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle" data-backdrop="static" data-keyboard="false"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <form class="w-100" name="frmInheritanceActor" ng-submit="createInHeritanceActor(frmInheritanceActor)" novalidate>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"> Inheritance Actor </h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="col-form-label col-form-label-sm">From actor:</label>
+                                <select name="selecactor1"
+                                        ng-model="selecactor1"
+                                        ng-class="(formAssociation.selecactor1.$invalid
+                                                                && formAssociation.selecactor1.$dirty) ?
+                                                                'form-control form-control-sm is-invalid'
+                                                                : 'form-control form-control-sm'" required>
+                                    <option value="">Seleccione</option>
+                                    <option ng-repeat="data in jsonUseCase.actors"
+                                            ng-value="{{$index}}">
+                                        {{data.obj_actor.getName()}}
+                                    </option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Select a actor.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label col-form-label-sm">To actor:</label>
+                                <select name="selecactor2"
+                                        ng-model="selecactor2"
+                                        ng-class="(formAssociation.selecactor2.$invalid
+                                                                && formAssociation.selecactor2.$dirty) ?
+                                                                'form-control form-control-sm is-invalid'
+                                                                : 'form-control form-control-sm'" required>
+                                    <option value="">Seleccione</option>
+                                    <option ng-repeat="data in jsonUseCase.actors"
+                                            ng-value="{{$index}}">
+                                        {{data.obj_actor.getName()}}
+                                    </option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Select a actor.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
+                            <button ng-disabled="frmInheritanceActor.$invalid" type="submit"
+                                    class="btn btn-sm btn-primary">Save changes
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- Modal new usecase -->
+        <div class="modal fade" id="modal_usecase" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+             aria-hidden="true" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 ng-show="!flag_update" class="modal-title" id="exa">New Use Case</h5>
+                        <h5 ng-show="flag_update" class="modal-title" id="exa2">Update Use Case</h5>
+                    </div>
+                    <div class="modal-body overflow-auto" style="max-height: 500px;">
+                        <nav>
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home"
+                                   role="tab" aria-controls="nav-home" aria-selected="true">General</a>
+                                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
+                                   role="tab" aria-controls="nav-profile" aria-selected="false">Normal scenario</a>
+                                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact"
+                                   role="tab" aria-controls="nav-contact" aria-selected="false">Alternating flow</a>
+                                <a class="nav-item nav-link" id="nav-secuence-tab" data-toggle="tab" href="#nav-secuence"
+                                   role="tab" aria-controls="nav-secuence" aria-selected="false">Secuence</a>
+                            </div>
+                        </nav>
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                                 aria-labelledby="nav-home-tab">
+                                <div class="custom-control custom-checkbox mt-1 mb-1">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck1" checked>
+                                    <label class="custom-control-label" for="customCheck1">Show input not language symbol</label>
+                                </div>
+                                <form id="form_usecase" name="form_usecase" ng-submit="createUseCaseUC(form_usecase, true)">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label class="col-form-label col-form-label-sm">Use case name:</label>
+                                                <input name="usecase_name" ng-model="usecase_name"
+                                                       type="text" class="form-control form-control-sm mt-1"
+                                                       ng-class="(form_usecase.usecase_name.$invalid &&
+                                                                               form_usecase.usecase_name.$dirty) ?
+                                                                               'form-control form-control-sm is-invalid'
+                                                                               : 'form-control form-control-sm'"
+                                                       ng-blur="interpretUseCaseDescription(true, form_usecase.usecase_name, 'usecase_name_i')">
+                                                <input type="text" name="usecase_name_i" ng-model="usecase_name_i"
+                                                       class="form-control form-control-sm mt-1" readonly>
+                                                <div class="invalid-feedback">
+                                                    Please choose a use case name.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label class="col-form-label col-form-label-sm">Type:</label>
+                                                <select name="usecase_type"
+                                                        ng-model="usecase_type"
+                                                        ng-class="(form_usecase.usecase_type.$invalid &&
+                                                                                form_usecase.usecase_type.$dirty) ?
+                                                                                'form-control form-control-sm is-invalid'
+                                                                                : 'form-control form-control-sm'"
+                                                        required>
+                                                    <option value="">--------</option>
+                                                    <option>Primary</option>
+                                                    <option>Secundary</option>
+                                                    <option>Optional</option>
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    Please choose a use case name.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr class="sidebar-divider">
+                                    <h6><strong>Actors</strong></h6>
+                                    <div class="row">
+                                        <div class="col-2 text-right">
+                                            <label class="col-form-label col-form-label-sm">Name:</label>
+                                        </div>
+                                        <div class="col-5">
+                                            <input type="text" name="usecase_actorname"
+                                                   ng-model="usecase_actorname"
+                                                   class="form-control form-control-sm">
+                                            <div class="invalid-feedback">
+                                                Please enter the actor name.
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <button type="button" ng-click="createActorUC(true)"
+                                                    ng-disabled="form_usecase.usecase_actorname.$invalid"
+                                                    class="btn btn-sm btn-info w-100">
+                                                Add
+                                            </button>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="dropdown show">
+                                                <a class="btn btn-secondary btn-sm dropdown-toggle w-100" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Actors
+                                                </a>
+
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                    <a ng-repeat="data in jsonUseCase.actors" class="dropdown-item" href="#"
+                                                       ng-value="{{$index}}" ng-click="addActorCreated(data.obj_actor)">
+                                                        {{data.obj_actor.getName()}}
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="alert alert-danger mt-3" role="alert" ng-show="actorsUseCase.length === 0">
+                                        <span>There are no aggregated actors</span>
+                                    </div>
+                                    <table class="table table-sm table-bordered mt-3" ng-show="actorsUseCase.length > 0">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="dom_actorsUseCase in actorsUseCase"
+                                                ng-show="dom_actorsUseCase.obj_actor._type === 'UMLActor'">
+                                                <td> {{dom_actorsUseCase.obj_actor.getName()}}</td>
+                                                <td>
+                                                    <button class="btn btn-danger btn-sm" type="button"
+                                                            ng-click="removeActorUC(dom_actorsUseCase, $index)">
+                                                        <i class="fas fa-trash"></i> Remove
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <hr class="sidebar-divider">
+                                    <div class="form-group">
+                                        <label class="col-form-label col-form-label-sm"> Porpuse:</label>
+                                        <input name="usecase_porpuse" ng-model="usecase_porpuse"
+                                               type="text" class="form-control form-control-sm"
+                                               ng-blur="interpretUseCaseDescription(true, form_usecase.usecase_porpuse, 'usecase_porpuse_i')">
+                                        <input name="usecase_porpuse_i" ng-model="usecase_porpuse_i"
+                                               type="text" class="form-control form-control-sm mt-1" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-form-label col-form-label-sm"> Pre-condition:</label>
+                                        <input name="usecase_precondition" ng-model="usecase_precondition"
+                                               type="text" class="form-control form-control-sm"
+                                               ng-blur="interpretUseCaseDescription(true, form_usecase.usecase_precondition, 'usecase_precondition_i')">
+                                        <input name="usecase_precondition_i" ng-model="usecase_precondition_i"
+                                               type="text" class="form-control form-control-sm mt-1" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-form-label col-form-label-sm"> Post-condition:</label>
+                                        <input name="usecase_postcondition" ng-model="usecase_postcondition"
+                                               type="text" class="form-control form-control-sm"
+                                               ng-blur="interpretUseCaseDescription(true, form_usecase.usecase_postcondition, 'usecase_postcondition_i')">
+                                        <input name="usecase_postcondition_i" ng-model="usecase_postcondition_i"
+                                               type="text" class="form-control form-control-sm mt-1" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <!--<button type="button" href="" ng-click="interpretUseCaseDescription(true)"
+                                                ng-disabled="form_usecase.usecase_description.$invalid"
+                                                class="btn btn-success btn-sm float-right"
+                                                style="padding: 0px 10px; margin-top: 6px; font-size: 0.8rem;">
+                                            Interpret
+                                        </button> -->
+                                        <label class="col-form-label col-form-label-sm"> Description:</label>
+                                        <textarea name="usecase_description_interpret"
+                                                  ng-model="usecase_description_interpret"
+                                                  ng-class="(form_usecase.usecase_description_interpret.$invalid &&
+                                                                          form_usecase.usecase_description_interpret.$dirty) ?
+                                                                          'form-control form-control-sm is-invalid'
+                                                                          : 'form-control form-control-sm'" required
+                                                  cols="30"
+                                                  rows="5"
+                                                  ng-blur="interpretUseCaseDescription(true, form_usecase.usecase_description_interpret, 'usecase_description_original')"></textarea>
+                                        <div class="invalid-feedback">
+                                            Please enter the use case description
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea name="usecase_description_original"
+                                                  ng-model="usecase_description_original"
+                                                  ng-class="(form_usecase.usecase_description_original.$invalid &&
+                                                                          form_usecase.usecase_description_original.$dirty) ?
+                                                                          'form-control form-control-sm is-invalid'
+                                                                          : 'form-control form-control-sm'" cols="30"
+                                                  readonly
+                                                  rows="5"></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                <form name="form_main_stage" ng-submit="mainStage(form_main_stage)" novalidate>
+                                    <div class="form-group">
+                                        <label class="col-form-label col-form-label-sm"> Select actor:</label>
+                                        <select name="actor_ms"
+                                                ng-model="actor_ms"
+                                                ng-class="(form_main_stage.actor_ms.$invalid &&
+                                                                        form_main_stage.actor_ms.$dirty) ?
+                                                                        'form-control form-control-sm is-invalid'
+                                                                        : 'form-control form-control-sm'"
+                                                ng-disabled="form_main_stage.check_final_step.$viewValue === true"
+                                                class="form-control form-control-sm" required>
+                                            <option value="">--------</option>
+                                            <option value="System">System Response</option>
+                                            <option ng-repeat="dom_actorsAction in actorsUseCase"
+                                                    ng-show="dom_actorsAction.obj_actor._type === 'UMLActor'"
+                                                    value="{{dom_actorsAction.obj_actor.getName()}}">
+                                                {{dom_actorsAction.obj_actor.getName()}}
+                                            </option>
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Select an actor.
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-form-label col-form-label-sm"> Action:</label>
+                                        <textarea name="action_ms"
+                                                  ng-model="action_ms"
+                                                  ng-class="(form_main_stage.action_ms.$invalid &&
+                                                                          form_main_stage.action_ms.$dirty) ?
+                                                                          'form-control form-control-sm is-invalid'
+                                                                          : 'form-control form-control-sm'"
+                                                  class="form-control form-control-sm"
+                                                  cols="30" rows="5"
+                                                  required></textarea>
+                                        <div class="invalid-feedback">
+                                            Enter the actor's action.
+                                        </div>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input name="check_final_step" ng-model="check_final_step"
+                                               type="checkbox" class="custom-control-input" id="final_step"
+                                               ng-disabled="form_main_stage.actor_ms.$viewValue !== 'System'">
+                                        <label class="custom-control-label" style="cursor:pointer;"
+                                               for="final_step">Final step</label>
+                                    </div>
+                                    <button ng-disabled="form_main_stage.$invalid"
+                                            type="submit" class="btn btn-sm btn-info float-right">Add
+                                    </button>
+                                </form>
+
+                                <table class="table table-sm table-bordered mt-5"
+                                       ng-show="manager_maf.main_stage.length > 0">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th colspan="2" class="text-center">Normal Flow</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Actions the actor</strong></td>
+                                            <td><strong>System Response</strong></td>
+                                        </tr>
+                                        <tr ng-repeat="dom_main_stage in manager_maf.main_stage">
+                                            <td class="w-50">
+                                                <span ng-show="dom_main_stage.actor !== 'System'">
+                                                    <strong> {{($index + 1) + ') ' +
+                                                    dom_main_stage.actor + ': '}}</strong>
+                                                    {{dom_main_stage.action_interpret}}
+                                                    <div class="mt-2 mb-2 text-center">
+                                                        <button class="btn btn-success btn-sm"
+                                                                ng-click="openModalUpdateAction(dom_main_stage, 'M')">
+                                                            <i class="fas fa-edit"></i> Update
+                                                        </button>
+                                                        <button class="btn btn-danger btn-sm"
+                                                                ng-click="removeActionMS($index, 'M')">
+                                                            <i class="fas fa-trash"></i> Remove
+                                                        </button>
+                                                    </div>
+                                                </span>
+                                            </td>
+                                            <td class="w-50">
+                                                <span ng-show="dom_main_stage.actor === 'System'">
+                                                    <strong> {{($index + 1) + ') ' +
+                                                    dom_main_stage.actor + ': '}}</strong>
+                                                    {{dom_main_stage.action_interpret}}
+                                                    <div class="mt-2 mb-2 text-center">
+                                                        <button class="btn btn-success btn-sm"
+                                                                ng-click="openModalUpdateAction(dom_main_stage, 'M')">
+                                                            <i class="fas fa-edit"></i> Update
+                                                        </button>
+                                                        <button class="btn btn-danger btn-sm"
+                                                                ng-click="removeActionMS($index, 'M')">
+                                                            <i class="fas fa-trash"></i> Remove
+                                                        </button>
+                                                    </div>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                                <form name="form_flow_alternate" ng-submit="flowAlternate(form_flow_alternate)" novalidate>
+                                    <div class="form-group">
+                                        <label class="col-form-label col-form-label-sm">Step where the alternate flow
+                                            begins:</label>
+                                        <select name="alternate_flow_begins"
+                                                ng-model="alternate_flow_begins"
+                                                ng-class="(form_flow_alternate.alternate_flow_begins.$invalid &&
+                                                                        form_flow_alternate.alternate_flow_begins.$dirty) ?
+                                                                        'form-control form-control-sm is-invalid'
+                                                                        : 'form-control form-control-sm'"
+                                                class="form-control form-control-sm" required>
+                                            <option value="">--------</option>
+                                            <option ng-repeat="dom_main_stage in manager_maf.main_stage"
+                                                    value="{{$index + 1}}">
+                                                {{ ($index + 1).toString() + ')' + dom_main_stage.actor + ': ' + dom_main_stage.action_interpret}}
+                                            </option>
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Select an action where the alternative flow starts.
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-form-label col-form-label-sm">Reason for alternating flow:</label>
+                                        <textarea name="action_fa"
+                                                  ng-model="action_fa"
+                                                  ng-class="(form_flow_alternate.action_fa.$invalid &&
+                                                                          form_flow_alternate.action_fa.$dirty) ?
+                                                                          'form-control form-control-sm is-invalid'
+                                                                          : 'form-control form-control-sm'"
+                                                  class="form-control form-control-sm"
+                                                  cols="30" rows="5"
+                                                  required></textarea>
+                                        <div class="invalid-feedback">
+                                            Enter the actor's action.
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-form-label col-form-label-sm">Return step:</label>
+                                        <select name="return_step"
+                                                ng-model="return_step"
+                                                class="form-control form-control-sm" required="">
+                                            <option value="">--------</option>
+                                            <option ng-repeat="dom_main_stage in manager_maf.main_stage"
+                                                    value="{{$index + 1}}">
+                                                {{($index + 1).toString() + ') ' + dom_main_stage.actor + ': ' + dom_main_stage.action_interpret}}
+                                            </option>
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Select an action where the alternative flow returns.
+                                        </div>
+                                    </div>
+                                    <button ng-disabled="form_flow_alternate.$invalid"
+                                            type="submit" class="btn btn-sm btn-info float-right">Add
+                                    </button>
+                                </form>
+
+                                <table class="table table-sm table-bordered mt-5"
+                                       ng-show="manager_maf.main_stage.length > 0">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th colspan="2" class="text-center">Alternating Flow</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Actions the actor</strong></td>
+                                            <td><strong>System Response</strong></td>
+                                        </tr>
+                                        <tr ng-repeat="dom_alternative_flow in manager_maf.alternative_flow">
+                                            <td class="w-50">
+                                                <span ng-show="dom_alternative_flow.action_interpret === true">
+                                                    <strong> {{dom_alternative_flow.he_passed + '.' + ($index + 1)}}</strong>
+                                                    {{dom_alternative_flow.action_interpret}}
+                                                    <div class="mt-2 mb-2 text-center">
+                                                        <button class="btn btn-success btn-sm"
+                                                                ng-click="openModalUpdateAction(dom_alternative_flow, 'A')">
+                                                            <i class="fas fa-edit"></i> Update
+                                                        </button>
+                                                        <button class="btn btn-danger btn-sm"
+                                                                ng-click="removeActionMS($index, 'A')">
+                                                            <i class="fas fa-trash"></i> Remove
+                                                        </button>
+                                                    </div>
+                                                </span>
+                                            </td>
+                                            <td class="w-50">
+                                                <span ng-show="dom_alternative_flow.action_interpret !== ''">
+                                                    <strong> {{dom_alternative_flow.he_passed + '.' + ($index + 1)}}</strong>
+                                                    {{dom_alternative_flow.action_interpret}}
+                                                    <div class="mt-2 mb-2 text-center">
+                                                        <button class="btn btn-success btn-sm"
+                                                                ng-click="openModalUpdateAction(dom_alternative_flow, 'A')">
+                                                            <i class="fas fa-edit"></i> Update
+                                                        </button>
+                                                        <button class="btn btn-danger btn-sm"
+                                                                ng-click="removeActionMS($index, 'A')">
+                                                            <i class="fas fa-trash"></i> Remove
+                                                        </button>
+                                                    </div>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="nav-secuence" role="tabpanel"
+                                 aria-labelledby="nav-secuence-tab">
+
+                                <div class="form-group">
+                                    <label class="col-form-label col-form-label-sm">Selected Package:</label>
+                                    <select class="form-control form-control-sm" name="s_package" ng-model="s_package">
+                                        <option value=""> ---</option>
+                                        <option ng-repeat="package in secuenceData.package" ng-value="$index">
+                                            {{package.packagename}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="col-form-label col-form-label-sm">Selected object 1:</label>
+                                            <select class="form-control form-control-sm" name="s_object1" ng-model="s_object1">
+                                                <option value=""> ---</option>
+                                                <option ng-repeat="object in secuenceData.package[s_package].objects"
+                                                        ng-value="$index"> {{object.objectname}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="col-form-label col-form-label-sm">Selected object 2:</label>
+                                            <select class="form-control form-control-sm" name="s_object2" ng-model="s_object2">
+                                                <option value=""> ---</option>
+                                                <option ng-repeat="object in secuenceData.package[s_package].objects"
+                                                        ng-value="$index"> {{object.objectname}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion small" id="accordionExample">
+                                    <div class="card">
+                                        <div class="card-header" id="headingOne">
+                                            <h2 class="mb-0">
+                                                <button class="btn btn-link" type="button" data-toggle="collapse"
+                                                        data-target="#collapseOne" aria-expanded="true"
+                                                        aria-controls="collapseOne">
+                                                    Normal flow
+                                                </button>
+                                            </h2>
+                                        </div>
+
+                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                             data-parent="#accordionExample">
+                                            <div class="card-body">
+                                                <form name="form_snf" ng-submit="addNormalFlow(form_snf)">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <label class="col-form-label col-form-label-sm">Object 1 methods:</label>
+                                                                <select class="form-control form-control-sm"
+                                                                        name="nf_objectmethods1" ng-model="nf_objectmethods1">
+                                                                    <option value=""> ---</option>
+                                                                    <option ng-repeat="method in secuenceData.package[s_package].objects[s_object1].methods"
+                                                                            ng-value="method.methodname"> {{method.methodname}}
+                                                                    </option>
+                                                                </select>
+                                                                <div class="invalid-feedback">
+                                                                    Select at least one method.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <label class="col-form-label col-form-label-sm">Object 2 methods:</label>
+                                                                <select class="form-control form-control-sm"
+                                                                        name="nf_objectmethods2x" ng-model="nf_objectmethods2x">
+                                                                    <option value=""> ---</option>
+                                                                    <option ng-repeat="method in secuenceData.package[s_package].objects[s_object2].methods"
+                                                                            ng-value="method.methodname"> {{method.methodname}}
+                                                                    </option>
+                                                                </select>
+                                                                <div class="invalid-feedback">
+                                                                    Select at least one method.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <label class="col-form-label col-form-label-sm">Message
+                                                                    type:</label>
+                                                                <select ng-class="(form_snf.mnf_message.$invalid &&
+                                                                                        form_snf.mnf_message.$dirty) ?
+                                                                                        'form-control form-control-sm is-invalid'
+                                                                                        : 'form-control form-control-sm'"
+                                                                        name="mnf_message" ng-model="mnf_message" required="">
+                                                                    <option value=""> ----</option>
+                                                                    <option value="sync_message"> Synchronous message</option>
+                                                                    <option value="async_message"> Asynchronous message</option>
+                                                                </select>
+                                                                <div class="invalid-feedback">
+                                                                    Select a message type.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div ng-show="form_snf.mnf_message.$modelValue === 'sync_message'">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label class="col-form-label col-form-label-sm">Object 2
+                                                                        response:</label>
+                                                                    <input class="form-control form-control-sm" type="text"
+                                                                           name="nf_objectresponse2" ng-model="nf_objectresponse2"
+                                                                           ng-value="{{form_snf.mnf_message.$modelValue === 'async_message' ? nf_objectmethods2 = '' : nf_objectmethods2}}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label class="col-form-label col-form-label-sm">Response
+                                                                        type:</label>
+                                                                    <select class="form-control form-control-sm"
+                                                                            name="rnf_response" ng-model="rnf_response">
+                                                                        <option value=""> ----</option>
+                                                                        <option value="sync_response"> Synchronous response
+                                                                        </option>
+                                                                        <option value="async_response"> Asynchronous response
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <button ng-disabled="form_snf.$invalid" type="submit"
+                                                            class="btn btn-sm btn-info w-100 mb-3">
+                                                        Add
+                                                    </button>
+                                                </form>
+                                                <br>
+                                                <div class="w-100 overflow-auto">
+                                                    <table class="table table-bordered table-sm table-hover">
+                                                        <thead class="thead-dark">
+                                                            <tr>
+                                                                <th scope="col">Object from</th>
+                                                                <th scope="col">Object to</th>
+                                                                <th scope="col">Message/Call:messsage_type</th>
+                                                                <th scope="col">Response:response_type</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="dom_table_normal_flow in table_normal_flow">
+                                                                <td>{{dom_table_normal_flow.from}}</td>
+                                                                <td>{{dom_table_normal_flow.to}}</td>
+                                                                <td>
+                                                                    {{dom_table_normal_flow.message + ':' + dom_table_normal_flow.message_type}}
+                                                                </td>
+                                                                <td>
+                                                                    {{dom_table_normal_flow.message_type === "async_message" ? "No response needed" :
+                                                            (dom_table_normal_flow.response + ':' + dom_table_normal_flow.response_type)}}
+                                                                </td>
+                                                                <td>
+                                                                    <button class="btn btn-success btn-sm" style="font-size: 10px"
+                                                                            ng-click="updateStepSecuence()">
+                                                                        <i class="fas fa-pen"></i>
+                                                                    </button>
+                                                                    <button class="btn btn-danger btn-sm" style="font-size: 10px"
+                                                                            ng-click="deleteStepSecuence($index)">
+                                                                        <i class="fas fa-trash"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card" style="display: none">
+                                        <div class="card-header" id="headingTwo">
+                                            <h2 class="mb-0">
+                                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                                        data-target="#collapseTwo" aria-expanded="false"
+                                                        aria-controls="collapseTwo">
+                                                    Loops
+                                                </button>
+                                            </h2>
+                                        </div>
+                                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                                             data-parent="#accordionExample">
+                                            <div class="card-body">
+                                                <form name="form_sl" ng-submit="addLoop(form_sl)">
+
+                                                    <div class="form-group">
+                                                        <label class="col-form-label col-form-label-sm">Condition:</label>
+                                                        <input ng-class="(form_sl.slip_condition.$invalid &&
+                                                                                form_sl.slip_condition.$dirty) ?
+                                                                                'form-control form-control-sm is-invalid'
+                                                                                : 'form-control form-control-sm'"
+                                                               name="slip_condition" ng-model="slip_condition" type="text">
+                                                        <div class="invalid-feedback">
+                                                            Enter the condition loop.
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <label class="col-form-label col-form-label-sm">Object 1
+                                                                    methods:</label>
+                                                                <select ng-class="(form_sl.slip_objectmethods1.$invalid &&
+                                                                                        form_sl.slip_objectmethods1.$dirty) ?
+                                                                                        'form-control form-control-sm is-invalid'
+                                                                                        : 'form-control form-control-sm'"
+                                                                        name="slip_objectmethods1"
+                                                                        ng-model="slip_objectmethods1" required="">
+                                                                    <option value=""> ---</option>
+                                                                    <option ng-repeat="method in secuenceData.package[s_package].objects[s_object1].methods"
+                                                                            ng-value="$index"> {{method.methodname}}
+                                                                    </option>
+                                                                </select>
+                                                                <div class="invalid-feedback">
+                                                                    Select at least one method.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <label class="col-form-label col-form-label-sm">Message
+                                                                    type:</label>
+                                                                <select ng-class="(form_sl.msl_message.$invalid &&
+                                                                                        form_sl.msl_message.$dirty) ?
+                                                                                        'form-control form-control-sm is-invalid'
+                                                                                        : 'form-control form-control-sm'"
+                                                                        ng-disabled="form_sl.slip_objectmethods1.$invalid"
+                                                                        name="msl_message" ng-model="msl_message" required="">
+                                                                    <option value=""> ----</option>
+                                                                    <option value="sync_message"> Synchronous message</option>
+                                                                    <option value="async_message"> Asynchronous message</option>
+                                                                </select>
+                                                                <div class="invalid-feedback">
+                                                                    Select a message type.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div ng-show="form_sl.msl_message.$modelValue === 'sync_message'">
+                                                        <div class="form-group">
+                                                            <label class="col-form-label col-form-label-sm">Object 2
+                                                                response:</label>
+                                                            <input class="form-control form-control-sm" type="text"
+                                                                   name="loop_objectmethods2" ng-model="loop_objectmethods2"
+                                                                   ng-value="{{form_sl.msl_message.$modelValue === 'async_message' ? loop_objectmethods2 = '' : loop_objectmethods2}}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="custom-control custom-radio custom-control-inline">
+                                                                <input type="radio" id="sr_rsl" name="rsl_response"
+                                                                       ng-model="rsl_response" class="custom-control-input"
+                                                                       value="sync_response">
+                                                                <label class="custom-control-label" for="sr_rsl">Synchronous
+                                                                    response</label>
+                                                            </div>
+                                                            <div class="custom-control custom-radio custom-control-inline">
+                                                                <input type="radio" id="ar_rsl" name="rsl_response"
+                                                                       ng-model="rsl_response" class="custom-control-input"
+                                                                       value="async_response">
+                                                                <label class="custom-control-label" for="ar_rsl">Asynchronous
+                                                                    response</label>
+                                                            </div>
+                                                            <span ng-class="(form_sl.rsl_response.$modelValue !== 'sync_message' || form_sl.rsl_response.$modelValue !== 'async_response') ? 'text-danger' : 'text-success'">
+                                                                ← Required fields, select one of the options
+                                                            </span> <span> {{form_sl.rsl_response.$modelValue}} </span>
+                                                        </div>
+                                                    </div>
+                                                    <button ng-disabled="form_sl.$invalid"
+                                                            type="submit" class="btn btn-sm btn-info mb-3">Add
+                                                    </button>
+                                                </form>
+                                                <div class="alert alert-success" role="alert">
+                                                    <strong> <i class="fas fa-redo-alt"></i> Loop Condition: </strong>
+                                                    {{secuenceData.secuence.loop.condition}}
+                                                </div>
+                                                <div class="w-100 overflow-auto">
+                                                    <table class="table table-bordered table-sm table-hover">
+                                                        <thead class="thead-dark">
+                                                            <tr>
+                                                                <th scope="col">Object from</th>
+                                                                <th scope="col">Object to</th>
+                                                                <th scope="col">Message/Call:messsage_type</th>
+                                                                <th scope="col">Response:response_type</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="dom_table_loop in table_loop">
+                                                                <td>{{dom_table_loop.from}}</td>
+                                                                <td>{{dom_table_loop.to}}</td>
+                                                                <td>{{dom_table_loop.message + ':' + dom_table_loop.message_type}}
+                                                                </td>
+                                                                <td>
+                                                                    {{dom_table_loop.message_type === "async_message" ? "No response needed" :
+                                                            (dom_table_loop.response + ':' + dom_table_loop.response_type)}}
+                                                                </td>
+                                                                <td>
+                                                                    <button class="btn btn-success btn-sm" style="font-size: 10px"
+                                                                            ng-click="">
+                                                                        <i class="fas fa-pen"></i>
+                                                                    </button>
+                                                                    <button class="btn btn-danger btn-sm" style="font-size: 10px"
+                                                                            ng-click="">
+                                                                        <i class="fas fa-trash"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card" style="display: none">
+                                        <div class="card-header" id="headingThree">
+                                            <h2 class="mb-0">
+                                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                                        data-target="#collapseThree" aria-expanded="false"
+                                                        aria-controls="collapseThree">
+                                                    Alternative flow
+                                                </button>
+                                            </h2>
+                                        </div>
+                                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                                             data-parent="#accordionExample">
+                                            <div class="card-body">
+                                                <form name="form_scif" ng-submit="addAlternativeIf(form_scif)">
+                                                    <div class="form-group">
+                                                        <label class="col-form-label col-form-label-sm">Condition if:</label>
+                                                        <input class="form-control form-control-sm" name="ipscif_condition_if"
+                                                               ng-model=ipscif_condition_if type="text">
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-form-label col-form-label-sm">Object 1
+                                                            methods:</label>
+                                                        <select class="form-control form-control-sm" name="scif_objectmethods1"
+                                                                ng-model="scif_objectmethods1">
+                                                            <option value=""> ---</option>
+                                                            <option ng-repeat="method in secuenceData.package[s_package].objects[s_object1].methods"
+                                                                    ng-value="$index"> {{method.methodname}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="custom-control custom-radio custom-control-inline">
+                                                            <input type="radio" id="sm_smcif" name="smcif_message"
+                                                                   ng-model="smcif_message" value="sync_message"
+                                                                   class="custom-control-input">
+                                                            <label class="custom-control-label" for="sm_smcif">Synchronous
+                                                                message</label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio custom-control-inline">
+                                                            <input type="radio" id="am_smcif" name="mscif_message"
+                                                                   ng-model="smcif_message" value="async_message"
+                                                                   class="custom-control-input">
+                                                            <label class="custom-control-label" for="am_smcif">Asynchronous
+                                                                message</label>
+                                                        </div>
+                                                    </div>
+                                                    <div ng-show="form_scif.smcif_message.$modelValue === 'sync_message'">
+                                                        <div class="form-group">
+                                                            <label class="col-form-label col-form-label-sm">Object 2
+                                                                response:</label>
+                                                            <input class="form-control form-control-sm"
+                                                                   name="scif_objectmethods2" ng-model="scif_objectmethods2"
+                                                                   type="text">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="custom-control custom-radio custom-control-inline">
+                                                                <input type="radio" id="sr_srcif" name="srcif_response"
+                                                                       ng-model="srcif_response" value="sync_response"
+                                                                       ng-checked="form_scif.smcif_message.$modelValue !== 'sync_message' ? false : false"
+                                                                       class="custom-control-input">
+                                                                <label class="custom-control-label" for="sr_srcif">Synchronous
+                                                                    response</label>
+                                                            </div>
+                                                            <div class="custom-control custom-radio custom-control-inline">
+                                                                <input type="radio" id="ar_srcif" name="smcif_response"
+                                                                       ng-model="srcif_response" value="async_response"
+                                                                       ng-checked="form_scif.smcif_message.$modelValue !== 'sync_message' ? false : false"
+                                                                       class="custom-control-input">
+                                                                <label class="custom-control-label" for="ar_srcif">Asynchronous
+                                                                    response</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <button ng-disabled="form_scif.$invalid"
+                                                            type="submit" class="btn btn-sm btn-info">Add
+                                                    </button>
+                                                </form>
+
+                                                <hr>
+
+                                                <form name="form_scelse" ng-submit="addAlternativeElse(form_scelse)">
+
+                                                    <div class="form-group">
+                                                        <label class="col-form-label col-form-label-sm">Condition else:</label>
+                                                        <input class="form-control form-control-sm"
+                                                               name="ipscelse_condition_else" ng-model="ipscelse_condition_else"
+                                                               type="text">
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-form-label col-form-label-sm">Object 1
+                                                            methods:</label>
+                                                        <select class="form-control form-control-sm" name="celse_objectmethods1"
+                                                                ng-model="celse_objectmethods1">
+                                                            <option value=""> ---</option>
+                                                            <option ng-repeat="method in secuenceData.package[s_package].objects[s_object1].methods"
+                                                                    ng-value="$index"> {{method.methodname}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="custom-control custom-radio custom-control-inline">
+                                                            <input type="radio" id="sm_smcelse" name="smcelse_message"
+                                                                   ng-model="smcelse_message" value="sync_message"
+                                                                   class="custom-control-input">
+                                                            <label class="custom-control-label" for="sm_smcelse">Synchronous
+                                                                message</label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio custom-control-inline">
+                                                            <input type="radio" id="am_smcelse" name="smcelse_message"
+                                                                   ng-model="smcelse_message" value="async_message"
+                                                                   class="custom-control-input">
+                                                            <label class="custom-control-label" for="am_smcelse">Asynchronous
+                                                                message</label>
+                                                        </div>
+                                                    </div>
+                                                    <div ng-show="form_scelse.smcelse_message.$modelValue === 'sync_message'">
+                                                        <div class="form-group">
+                                                            <label class="col-form-label col-form-label-sm">Object 2
+                                                                response:</label>
+                                                            <input class="form-control form-control-sm"
+                                                                   name="celse_objectmethods2" ng-model="celse_objectmethods2"
+                                                                   type="text">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="custom-control custom-radio custom-control-inline">
+                                                                <input type="radio" id="sr_smcelse" name="smcelse_response"
+                                                                       ng-model="smcelse_response" value="sync_response"
+                                                                       ng-checked="form_scelse.smcelse_message.$modelValue !== 'sync_message' ? false : false"
+                                                                       class="custom-control-input">
+                                                                <label class="custom-control-label" for="sr_smcelse">Synchronous
+                                                                    response</label>
+                                                            </div>
+                                                            <div class="custom-control custom-radio custom-control-inline">
+                                                                <input type="radio" id="ar_smcelse" name="smcelse_response"
+                                                                       ng-model="smcelse_response" value="async_response"
+                                                                       ng-checked="form_scelse.smcelse_message.$modelValue !== 'sync_message' ? false : false"
+                                                                       class="custom-control-input">
+                                                                <label class="custom-control-label" for="ar_smcelse">Asynchronous
+                                                                    response</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <button ng-disabled="form_scelse.$invalid"
+                                                            type="submit" class="btn btn-sm btn-info">Add
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="w-100 h-25"> consola </div>
+                        <br>
+                        <button ng-click="cancelUseCase(form_usecase)" type="button" class="btn btn-sm btn-danger">Cancel
+                        </button>
+                        <button form="form_usecase" type="submit" ng-disabled="form_usecase.$invalid"
+                                class="btn btn-sm btn-primary" ng-hide="flag_update"> Save changes
+                        </button>
+                        <button ng-click="updateUseCase(form_usecase, true)" form="form_usecase" type="button"
+                                ng-show="flag_update"
+                                class="btn btn-sm btn-primary">Update changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal view usecase -->
+        <div class="modal fade" id="modal_view_usecase" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+             aria-hidden="true" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">View Use Case</h5>
+                    </div>
+                    <div class="modal-body overflow-auto" style="max-height: 500px;">
+                        <button class="btn btn-primary btn-sm" ng-click="copyUseCase()"> Copy to Clipboard </button>
+                        <div class="custom-control custom-checkbox mt-1 mb-1">
+                            <input type="checkbox" class="custom-control-input" id="showSymbol" checked ng-model="showLS">
+                            <label class="custom-control-label" for="showSymbol">Show language symbol</label>
+                        </div>
+
+                        <table class="table table-sm table-bordered mt-2" id="viewUseCaseTable">
+                            <tr>
+                                <td> <strong> Use Case: </strong> </td>
+                                <td> {{ !showLS ? jsonUseCase.useCase[encontrado].name_i : jsonUseCase.useCase[encontrado].name}} </td>
+                            </tr>
+                            <tr>
+                                <td> <strong> Actors: </strong> </td>
+                                <td> 
+                                    <span ng-repeat="actor in actorsUseCase">
+                                        {{actor.name}}
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> <strong> Porpuse </strong> </td>
+                                <td> {{!showLS ? jsonUseCase.useCase[encontrado].porpuse_i : jsonUseCase.useCase[encontrado].porpuse}} </td>
+                            </tr>
+                            <tr>
+                                <td> <strong> Precondition: </strong> </td>
+                                <td> {{!showLS ? jsonUseCase.useCase[encontrado].pre_condition_i : jsonUseCase.useCase[encontrado].pre_condition}} </td>
+                            </tr>
+                            <tr>
+                                <td> <strong> Poscondition: </strong> </td>
+                                <td> {{!showLS ? jsonUseCase.useCase[encontrado].post_condition_i : jsonUseCase.useCase[encontrado].post_condition}} </td>
+                            </tr>
+                            <tr>
+                                <td> <strong> Description: </strong> </td>
+                                <td> {{!showLS ? jsonUseCase.useCase[encontrado].description_interpret : jsonUseCase.useCase[encontrado].description_original}} </td>
+                            </tr>
+
+                            <tr class="table-active center-d">
+                                <td colspan="2" style="color: black"> <strong> Normal Flow </strong> </td>
+                            </tr>
+
+                            <tr>
+                                <td class="center-d"><strong>Actions the actor</strong></td>
+                                <td class="center-d"><strong>System Response</strong></td>
+                            </tr>
+                            <tr ng-repeat="dom_main_stage in jsonUseCase.useCase[encontrado].main_stage">
+                                <td class="w-50">
+                                    <span ng-show="dom_main_stage.actor !== 'System'">
+                                        <strong> {{($index + 1) + ') ' +
+                                                    dom_main_stage.actor + ': '}}</strong>
+                                        {{!showLS ? dom_main_stage.action_interpret : dom_main_stage.action_original}}
+                                    </span>
+                                </td>
+                                <td class="w-50">
+                                    <span ng-show="dom_main_stage.actor === 'System'">
+                                        <strong> {{($index + 1) + ') ' +
+                                                    dom_main_stage.actor + ': '}}</strong>
+                                        {{!showLS ? dom_main_stage.action_interpret : dom_main_stage.action_original}}
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr class="table-active center-d">
+                                <td colspan="2" style="color: black"> <strong> Alternating Flow </strong> </td>
+                            </tr>
+
+                            <tr>
+                                <td><strong>Actions the actor</strong></td>
+                                <td><strong>System Response</strong></td>
+                            </tr>
+                            <tr ng-repeat="dom_alternative_flow in jsonUseCase.useCase[encontrado].alternative_flow">
+                                <td class="w-50">
+                                    <span ng-show="dom_alternative_flow.action_interpret === true">
+                                        <strong> {{dom_alternative_flow.he_passed + '.' + ($index + 1)}}</strong>
+                                        {{!showLS ? dom_alternative_flow.action_interpret : dom_alternative_flow.action_original}}
+                                    </span>
+                                </td>
+                                <td class="w-50">
+                                    <span ng-show="dom_alternative_flow.action_interpret !== ''">
+                                        <strong> {{dom_alternative_flow.he_passed + '.' + ($index + 1)}}</strong>
+                                        {{!showLS ? dom_alternative_flow.action_interpret : dom_alternative_flow.action_original}}
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" type="button" class="btn btn-sm btn-danger">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal asscoation use acse (herencia entre actores) -->
+        <div class="modal fade" id="modal_association_usecase" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle" data-backdrop="static" data-keyboard="false"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <form class="w-100" name="frmAssociationUseCase" ng-submit="createAssociationUseCase(frmAssociationUseCase)" novalidate>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"> Association Use Case </h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="col-form-label col-form-label-sm">From usecase:</label>
+                                <select name="selectusecase1"
+                                        ng-model="selectusecase1"
+                                        ng-class="(formAssociation.selectusecase1.$invalid
+                                                                && formAssociation.selectusecase1.$dirty) ?
+                                                                'form-control form-control-sm is-invalid'
+                                                                : 'form-control form-control-sm'" required>
+                                    <option value="">Seleccione</option>
+                                    <option ng-repeat="data in jsonUseCase.useCase"
+                                            ng-value="{{$index}}">
+                                        {{data.obj_usecase.getName()}}
+                                    </option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Select a use case.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label col-form-label-sm">To usecase:</label>
+                                <select name="selectusecase2"
+                                        ng-model="selectusecase2"
+                                        ng-class="(formAssociation.selectusecase2.$invalid
+                                                                && formAssociation.selectusecase2.$dirty) ?
+                                                                'form-control form-control-sm is-invalid'
+                                                                : 'form-control form-control-sm'" required>
+                                    <option value="">Seleccione</option>
+                                    <option ng-repeat="data in jsonUseCase.useCase"
+                                            ng-value="{{$index}}">
+                                        {{data.obj_usecase.getName()}}
+                                    </option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Select a use case.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
+                            <button ng-disabled="frmAssociationUseCase.$invalid" type="submit"
+                                    class="btn btn-sm btn-primary">Save changes
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal new asociation -->
+        <div class="modal fade" id="modal_association" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle" data-backdrop="static" data-keyboard="false"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <form class="w-100" name="formAssociation"
+                      ng-submit="createAssociation(formAssociation)" novalidate>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">New Association </h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="col-form-label col-form-label-sm">Actor</label>
+                                <select name="selecactor"
+                                        ng-model="selecactor"
+                                        ng-class="(formAssociation.selecactor.$invalid
+                                                                && formAssociation.selecactor.$dirty) ?
+                                                                'form-control form-control-sm is-invalid'
+                                                                : 'form-control form-control-sm'" required>
+                                    <option value="">Seleccione</option>
+                                    <option ng-repeat="data in jsonUseCase.actors"
+                                            ng-value="{{$index}}">
+                                        {{data.obj_actor.getName()}}
+                                    </option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Select an actor.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label col-form-label-sm">Use
+                                    Case</label>
+                                <select name="selectusecase"
+                                        ng-model="selectusecase"
+                                        ng-class="(formAssociation.selectusecase.$invalid
+                                                                && formAssociation.selectusecase.$dirty) ?
+                                                                'form-control form-control-sm is-invalid'
+                                                                : 'form-control form-control-sm'" required>
+                                    <option value="">Seleccione</option>
+                                    <option ng-repeat="data in jsonUseCase.useCase"
+                                            ng-value="{{$index}}">
+                                        {{data.obj_usecase.getName()}}
+                                    </option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Select a use case.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm btn-danger"
+                                    data-dismiss="modal">Cancel
+                            </button>
+                            <button ng-disabled="formAssociation.$invalid" type="submit"
+                                    class="btn btn-sm btn-primary">Save changes
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal new inclusion -->
+        <div class="modal fade" id="modal_inclusion" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle" data-backdrop="static" data-keyboard="false"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <form class="w-100" name="formInclusion" ng-submit="createInclusion(formInclusion)" novalidate>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">New Inclusion </h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="col-form-label col-form-label-sm">Use Case base</label>
+                                <select name="selectusecase1"
+                                        ng-model="selectusecase1"
+                                        ng-class="(formInclusion.selectusecase1.$invalid && formInclusion.selectusecase1.$dirty) ?
+                                                                'form-control form-control-sm is-invalid'
+                                                                : 'form-control form-control-sm'" required>
+                                    <option value="">Seleccione</option>
+                                    <option ng-repeat="data in jsonUseCase.useCase" ng-value="{{$index}}">
+                                        {{data.obj_usecase.getName()}}
+                                    </option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Select a use case.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label col-form-label-sm">Use Case include</label>
+                                <select name="selectusecase2"
+                                        ng-model="selectusecase2"
+                                        ng-class="(formInclusion.selectusecase2.$invalid && formInclusion.selectusecase2.$dirty) ?
+                                                                'form-control form-control-sm is-invalid'
+                                                                : 'form-control form-control-sm'" required>
+                                    <option value="">Seleccione</option>
+                                    <option ng-repeat="data in jsonUseCase.useCase" ng-value="{{$index}}">
+                                        {{data.obj_usecase.getName()}}
+                                    </option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Select a use case.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
+                            <button ng-disabled="formInclusion.$invalid" type="submit"
+                                    class="btn btn-sm btn-primary">Save changes
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal new extend -->
+        <div class="modal fade" id="modal_extend" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+             aria-hidden="true" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <form class="w-100" name="formExtend" ng-submit="createExtend(formExtend)" novalidate>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">New Extend </h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="col-form-label col-form-label-sm">Use Case 2</label>
+                                <select name="selectusecase1"
+                                        ng-model="selectusecase1"
+                                        ng-class="(formExtend.selectusecase1.$invalid && formExtend.selectusecase1.$dirty) ?
+                                                                'form-control form-control-sm is-invalid'
+                                                                : 'form-control form-control-sm'" required>
+                                    <option value="">Seleccione</option>
+                                    <option ng-repeat="data in jsonUseCase.useCase" ng-value="{{$index}}">
+                                        {{data.obj_usecase.getName()}}
+                                    </option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Select a use case.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label col-form-label-sm">Use Case 2</label>
+                                <select name="selectusecase2"
+                                        ng-model="selectusecase2"
+                                        ng-class="(formExtend.selectusecase2.$invalid && formExtend.selectusecase2.$dirty) ?
+                                                                'form-control form-control-sm is-invalid'
+                                                                : 'form-control form-control-sm'" required>
+                                    <option value="">Seleccione</option>
+                                    <option ng-repeat="data in jsonUseCase.useCase" ng-value="{{$index}}">
+                                        {{data.obj_usecase.getName()}}
+                                    </option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Select a use case.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
+                            <button ng-disabled="formExtend.$invalid" type="submit" class="btn btn-sm btn-primary">Save
+                                changes
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal new generalization -->
+        <div class="modal fade" id="modal_generalization" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle" data-backdrop="static" data-keyboard="false"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <form class="w-100" name="formGeneralization" ng-submit="createGeneralization(formGeneralization)"
+                      novalidate>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">New Generalization </h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="col-form-label col-form-label-sm">Use Case 1</label>
+                                <select name="selectusecase1"
+                                        ng-model="selectusecase1"
+                                        ng-class="(formGeneralization.selectusecase1.$invalid && formGeneralization.selectusecase1.$dirty) ?
+                                                                'form-control form-control-sm is-invalid'
+                                                                : 'form-control form-control-sm'" required>
+                                    <option value="">Seleccione</option>
+                                    <option ng-repeat="data in jsonUseCase.useCase" ng-value="{{$index}}">
+                                        {{data.obj_usecase.getName()}}
+                                    </option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Select a use case.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label col-form-label-sm">Use Case 2</label>
+                                <select name="selectusecase2"
+                                        ng-model="selectusecase2"
+                                        ng-class="(formGeneralization.selectusecase2.$invalid && formGeneralization.selectusecase2.$dirty) ?
+                                                                'form-control form-control-sm is-invalid'
+                                                                : 'form-control form-control-sm'" required>
+                                    <option value="">Seleccione</option>
+                                    <option ng-repeat="data in jsonUseCase.useCase" ng-value="{{$index}}">
+                                        {{data.obj_usecase.getName()}}
+                                    </option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Select a use case.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
+                            <button ng-disabled="formGeneralization.$invalid" type="submit" class="btn btn-sm btn-primary">
+                                Save changes
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!--Modal new class-->
+        <div class="modal fade" id="modal_newclass" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle" data-backdrop="static" data-keyboard="false"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 ng-show="!updateClass" class="modal-title"> New Class </h5>
+                        <h5 ng-show="updateClass" class="modal-title"> Update Class </h5>
+                    </div>
+                    <div class="modal-body">
+                        <form name="formNewClass">
+                            <div class="row">
+                                <div class="col">
+                                    <label class="col-form-label col-form-label-sm" for="classname"> Class name </label>
+                                    <input ng-model="nc_classname" name="nc_classname" class="form-control form-control-sm"
+                                           id="classname" type="text"
+                                           ng-class="(formNewClass.nc_classname.$invalid && formNewClass.nc_classname.$dirty) ?
+                                                                   'form-control form-control-sm is-invalid'
+                                                                   : 'form-control form-control-sm'" required>
+                                    <div class="invalid-feedback">
+                                        Please enter the class name.
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <label class="col-form-label col-form-label-sm" for="typeclass"> Visibility </label>
+                                    <select class="form-control form-control-sm" ng-model="nc_visibility" name="nc_visibility"
+                                            id="typeclass"
+                                            ng-options="dom_visibility for dom_visibility in description"
+                                            ng-class="(formNewClass.nc_visibility.$invalid && formNewClass.nc_visibility.$dirty) ?
+                                                                        'form-control form-control-sm is-invalid'
+                                                                        : 'form-control form-control-sm'" required>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please selected the visibility.
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="mt-3">
+                            <span class="font-weight-bold"> Attributes  </span>
+                            <form action="" name="formAtt">
+                                <div class="row">
+                                    <div class="col">
+                                        <label class="col-form-label col-form-label-sm" for="attribute_name"> Attribute
+                                            name </label>
+                                        <input ng-model="att_name" name="att_name" class="form-control form-control-sm"
+                                               id="attribute_name" type="text" required>
+                                    </div>
+                                    <div class="col">
+                                        <label class="col-form-label col-form-label-sm" for="at_data_type"> Data type </label>
+                                        <select class="form-control form-control-sm" ng-model="att_datatype"
+                                                name="att_datatype" id="at_data_type" required
+                                                ng-options="dom_data_type for dom_data_type in data_type">
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="col-form-label col-form-label-sm"> Visibility </label>
+                                        <select class="form-control form-control-sm" ng-model="att_visibility"
+                                                name="att_visibility" required
+                                                ng-options="dom_visibility for dom_visibility in description">
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="col-form-label col-form-label-sm"> Action </label> <br>
+                                        <button class="btn btn-info btn-sm w-100" ng-disabled="formAtt.$invalid"
+                                                ng-click="addAttribute(formAtt)"> Add attribute
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div ng-show="attributes.length === 0" class="form-group text-center mt-3">
+                                <strong> There are no attributes. </strong>
+                            </div>
+                            <table class="table table-sm table-bordered mt-3" ng-show="attributes.length > 0">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Visibility</th>
+                                        <th scope="col">Data type</th>
+                                        <th scope="col">Attribute</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="dom_attributes in attributes"
+                                        class="{{dom_attributes.type === 'fk' ? 'table-info text-dark font-weight-bold': ''}}">
+                                        <td>{{dom_attributes.visibility}}</td>
+                                        <td>{{dom_attributes.type === 'fk' ? 'Foreign Key' : dom_attributes.type}}</td>
+                                        <td>{{dom_attributes.name}}</td>
+                                        <td>
+                                            <button class="btn btn-primary btn-sm" ng-click="selectedAtt(dom_attributes, $index)"
+                                                    ng-disabled="dom_attributes.type === 'fk'">
+                                                <i class="fas fa-pen-square"></i></button>
+                                            <button class="btn btn-danger btn-sm" ng-click="deleteAttribute($index)"
+                                                    ng-disabled="dom_attributes.type === 'fk'">
+                                                <i class="fas fa-trash-alt"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="mt-3">
+                            <span class="font-weight-bold"> Methods  </span>
+                            <form name="formMethod">
+                                <div class="row">
+                                    <div class="col">
+                                        <label class="col-form-label col-form-label-sm" for="method_name">Method name </label>
+                                        <input ng-model="mt_name" name="mt_name" class="form-control form-control-sm"
+                                               id="method_name" type="text" required>
+                                    </div>
+                                    <div class="col">
+                                        <label class="col-form-label col-form-label-sm" for="mt_data_type"> Data type </label>
+                                        <select class="form-control form-control-sm" ng-model="mt_datatype"
+                                                name="mt_datatype" id="mt_data_type" required
+                                                ng-options="dom_data_type for dom_data_type in data_type">
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="col-form-label col-form-label-sm"> Visibility </label>
+                                        <select class="form-control form-control-sm" ng-model="mt_visibility"
+                                                name="mt_visibility" required
+                                                ng-options="dom_visibility for dom_visibility in description">
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="col-form-label col-form-label-sm"> Action </label> <br>
+                                        <button class="btn btn-info btn-sm w-100" ng-disabled="formMethod.$invalid"
+                                                ng-click="addMethod(formMethod)"> Add method
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div ng-show="methods.length === 0" class="form-group text-center mt-3">
+                                <strong> There are no methods. </strong>
+                            </div>
+                            <table class="table table-sm table-bordered mt-3" ng-show="methods.length > 0">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Visibility</th>
+                                        <th scope="col">Data type</th>
+                                        <th scope="col">Method</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="dom_methods in methods">
+                                        <td>{{dom_methods.visibility}}</td>
+                                        <td>{{dom_methods.type}}</td>
+                                        <td>{{dom_methods.name}}</td>
+                                        <td>
+                                            <button class="btn btn-warning btn-sm" ng-click="getParameters(dom_methods, $index)"
+                                                    data-toggle="tooltip" data-placement="top" title="Parameters">
+                                                <i class="fas fa-cubes text-dark"></i>
+                                            </button>
+                                            <button class="btn btn-primary btn-sm" ng-click=""><i class="fas fa-pen-square"></i>
+                                            </button>
+                                            <button class="btn btn-danger btn-sm" ng-click="deleteMethod($index)">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-danger" ng-click="cancelClass(formNewClass)">Cancel</button>
+                        <button ng-show="!updateClass" ng-disabled="formNewClass.$invalid && !updateClass"
+                                type="submit" class="btn btn-sm btn-primary"
+                                ng-click="newClass(formNewClass)">
+                            Save changes
+                        </button>
+                        <button ng-show="updateClass" ng-disabled="formNewClass.$invalid && updateClass"
+                                type="submit" class="btn btn-sm btn-primary"
+                                ng-click="modifyClass(formNewClass)">
+                            Update class
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Modal para editar un atributo-->
+        <div class="modal fade" id="modal_updateAtt" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle" data-backdrop="static" data-keyboard="false"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <form class="w-100" name="formUpadateAtt" ng-submit="updateAttribute(formUpadateAtt)" novalidate>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Update attribute</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="col-form-label col-form-label-sm" for="up_attribute_name"> Attribute name </label>
+                                <input ng-model="up_att_name" name="up_att_name" class="form-control form-control-sm"
+                                       id="up_attribute_name" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label col-form-label-sm" for="up_at_data_type"> Data type </label>
+                                <select class="form-control form-control-sm" ng-model="up_att_datatype"
+                                        name="up_att_datatype" id="up_at_data_type"
+                                        ng-options="dom_data_type for dom_data_type in data_type">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label col-form-label-sm" for="up_typeclass"> Visibility </label>
+                                <select class="form-control form-control-sm" ng-model="up_att_visibility"
+                                        name="up_att_visibility"
+                                        id="up_typeclass"
+                                        ng-options="dom_visibility for dom_visibility in description">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
+                            <button ng-disabled="formUpadateAtt.$invalid" type="submit" class="btn btn-sm btn-primary">
+                                Save changes
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!--Modal para cargar y editar los parametros de un metodo-->
+        <div class="modal fade" id="modal_parameters" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle" data-backdrop="static" data-keyboard="false"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Parameters</h5>
+                    </div>
+                    <div class="modal-body">
+                        <button ng-show="!activeEditionParam" ng-disabled="activeEditionParam" class="btn btn-primary btn-sm"
+                                ng-click="addParameter()">
+                            Add parameter
+                        </button>
+                        <button ng-show="!activeEditionParam && paramMethods.length > 0"
+                                ng-disabled="activeEditionParam && paramMethods.length === 0" class="btn btn-success btn-sm"
+                                ng-click="activeEdition()">
+                            Enabled edition
+                        </button>
+                        <button ng-show="activeEditionParam" ng-disabled="!activeEditionParam" class="btn btn-success btn-sm"
+                                ng-click="disabledEdition()">
+                            Disabled edition
+                        </button>
+                        <div ng-show="paramMethods.length === 0" class="form-group text-center mt-3">
+                            <strong> There are no parameters. </strong>
+                        </div>
+                        <div class="row" ng-repeat="dom_paramMethods in paramMethods" ng-show="paramMethods.length > 0">
+                            <div class="col">
+                                <label class="col-form-label col-form-label-sm" for="up_typeclass"> Param name </label>
+                                <input ng-value="dom_paramMethods.name"
+                                       id="{{'param_name_' + $index}}" name="{{'param_name_' + $index}}"
+                                       ng-disabled="dom_paramMethods.active === false || dom_paramMethods.active === undefined"
+                                       class="form-control form-control-sm" type="text">
+                            </div>
+                            <div class="col">
+                                <label class="col-form-label col-form-label-sm" for="up_typeclass"> Data type </label>
+                                <select class="form-control form-control-sm"
+                                        ng-disabled="dom_paramMethods.active === false || dom_paramMethods.active === undefined"
+                                        id="{{'datatype_' + $index}}" name="{{'datatype_' + $index}}"
+                                        ng-model="datatype_param" ng-blur="saveUpateActive($index)"
+                                        ng-value="selectedTypeParameter(dom_paramMethods.type)"
+                                        ng-options="dom_data_type for dom_data_type in data_type">
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label class="col-form-label col-form-label-sm" for="up_typeclass"> Action </label> <br>
+                                <button ng-show="dom_paramMethods.active" ng-disabled="!dom_paramMethods.active"
+                                        class="btn btn-primary btn-sm"
+                                        ng-click="saveParameter($index)">
+                                    <i class="fas fa-save"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm" ng-click="deleteParam($index)">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
+                        <button ng-disabled="activeEditionParam" type="submit" ng-click="saveParameters()"
+                                class="btn btn-sm btn-primary">
+                            Save changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Modal para las relaciiones de las clases-->
+        <div class="modal fade" id="modal_relations_class" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle" data-backdrop="static" data-keyboard="false"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{typeRelation.value}}</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form name="formRelationClass">
+                            <div class="form-group">
+                                <label class="col-form-label col-form-label-sm"> Class From </label>
+                                <select class="form-control form-control-sm" ng-model="class_from"
+                                        name="class_from" required
+                                        ng-options="dom_class.className for dom_class in jsonClass.diagram[0].class">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label col-form-label-sm"> Class To </label>
+                                <select class="form-control form-control-sm" ng-model="class_to"
+                                        name="class_to" required
+                                        ng-options="dom_class.className for dom_class in jsonClass.diagram[0].class">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label col-form-label-sm"> Cardinality </label>
+                                <select class="form-control form-control-sm" ng-model="cardinalidate"
+                                        name="cardinalidate" required>
+                                    <option value="">---</option>
+                                    <option value="1..1"> One at a time</option>
+                                    <option value="1..*"> One to many</option>
+                                    <option value="*..1"> Many to one</option>
+                                    <!--<option value="*..*"> Many to many</option>-->
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
+                        <button ng-disabled="formRelationClass.$invalid" type="submit" class="btn btn-sm btn-primary"
+                                ng-click="createRelation(formRelationClass)">
+                            Save changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Modal para editar la leyenda de las relaciones-->
+        <div class="modal fade" id="modal_update_legend" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle" data-backdrop="static" data-keyboard="false"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <form class="w-100" name="formUpdateLegend" ng-submit="updateLegend(formUpdateLegend)"
+                      novalidate>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit Legend Class</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="col-form-label col-form-label-sm" for="classname"> Legend name </label>
+                                <input ng-model="up_legendclass" name="up_legendclass" class="form-control form-control-sm" type="text"
+                                       ng-class="(formUpdateLegend.up_legendclass.$invalid && formUpdateLegend.up_legendclass.$dirty) ?
+                                                               'form-control form-control-sm is-invalid'
+                                                               : 'form-control form-control-sm'" required>
+                                <div class="invalid-feedback">
+                                    Please enter the legend class.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
+                            <button ng-disabled="formUpdateLegend.$invalid" type="submit" class="btn btn-sm btn-primary">
+                                Save changes
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!--GENERATE TDD-->
+        <!--Modal para generar las tdd-->
+        <div class="modal fade" id="modal_generate_tdd" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle" data-backdrop="static" data-keyboard="false"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Generate TDD</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-success" role="alert">
+                            <i class="fas fa-info-circle"></i> TDD or Test-Driven Development is a programming practice that
+                            consists of writing tests (usually
+                            unit tests) first, then writing source code that passes the test successfully, and finally
+                            refactoring the written code.
+                        </div>
+
+                        <div class="text-center w-100" ng-hide="jsonClass.diagram.length > 0">
+                            <img class="mb-3" src="resources/img/img-uml/tddicon.svg" alt="" width="400">
+                            <h6><strong> No class diagram data for generating tests with JUnit</strong></h6>
+                        </div>
+
+                        <div class="row p-3 mt-4" style="margin-top: 2rem !important;" ng-show="jsonClass.diagram.length > 0">
+                            <div class="col-5 p-3" style="border: 3px solid #bd5333; border-radius: 0px 0px 0px 5px">
+                                <button class="btn btn-sm button-active mr-2 mt-1 styleTree"> Object tree</button>
+                                <ul class="list_tdd" ng-repeat="packDiagram in jsonClass.diagram">
+                                    <li><i class="fas fa-box"></i> {{packDiagram.packName}}
+                                        <ul class="list_tdd li_tdd" ng-repeat="classDiagram in packDiagram.class">
+                                            <li><i class="fas fa-cube"></i>
+                                                {{classDiagram.className}}
+                                                <a href="#" ng-click="viewCodeTddClass(classDiagram.className)"
+                                                   class="badge badge-success" data-toggle="tooltip" data-placement="top"
+                                                   title="View code test JUnit">
+                                                    <i class="fas fa-code"></i>
+                                                </a>
+                                                <ul class="list_tdd li_tdd" ng-repeat="methodsDiagram in classDiagram.methods">
+                                                    <li class="li_hover {{cssMethod === methodsDiagram.name ? 'li_active': ''}}"
+                                                        ng-click="activeMethod(methodsDiagram, packDiagram.packName, classDiagram.className)"
+                                                        ><i class="fas fa-cog"></i> {{methodsDiagram.name}}
+                                                        <ul class="list_tdd li_tdd"
+                                                            ng-repeat="parametersDiagram in methodsDiagram.parameters">
+                                                            <li><i class="fas fa-wrench"></i> {{parametersDiagram.name}}</li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-7 p-3" style="border: 3px solid #bd5333; border-radius: 0px 5px 5px 0px">
+                                <div class="" ng-show="!flagSelected">
+                                    <div class="w-100 text-center">
+                                        <div class="alert alert-warning" role="alert">
+                                            With the icon <a href="#" class="badge badge-success">
+                                                <i class="fas fa-code"></i> </a>
+                                            the JUnit code of the selected class will be generated, if you click on
+                                            the button at the bottom the JUnit code of all existing classes will be generated in
+                                            a
+                                            single test.
+                                        </div>
+                                        <img class="mb-3" src="resources/img/img-uml/tddicon.svg" alt="" width="200"> <br>
+                                        <button ng-click="generateTddGlobal()" class="btn button-d btn-sm"> Generate TDD
+                                        </button>
+                                    </div>
+                                    <br>
+                                    <div class="">
+                                        <h6><strong> Record of tests currently performed by each class </strong></h6>
+                                        <div class="card mb-3" ng-repeat="dom_class in classTdd">
+                                            <h6 class="card-header">{{dom_class.class}}</h6>
+                                            <div class="card-body" style="font-size: 13px;line-height: 13px;">
+                                                <div class="text-monospace" ng-repeat="dom_method in dom_class.Methods">
+                                                    Method: {{dom_method.NameMethod}} - {{dom_method.TypeMethods}}
+                                                    <div ng-repeat="test in dom_method.parameters">
+                                                        Test # {{$index + 1}}
+                                                        <div ng-repeat="dom_param in test">
+                                                            ⚝ {{dom_param.name}} = {{dom_param.value}}
+                                                        </div>
+                                                        ⤤ Return: {{dom_method.return[$index].value}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="" ng-show="flagSelected">
+                                    <strong> Class selected: </strong> {{classNameSelected}} <br>
+                                    <strong>
+                                        {{methodSelected.visibility + ' ' + methodSelected.name + ' (' + methodSelected.type + ')'}} </strong>
+                                    <div ng-show="methodSelected.type !== 'void'">
+                                        <div class="form-group" ng-repeat="param in methodSelected.parameters">
+                                            <label class="col-form-label col-form-label-sm" for="">
+                                                {{param.name + ' (' + param.type + ')'}} </label>
+                                            <input id="param{{$index}}"
+                                                   class="form-control form-control-sm"
+                                                   required type="text">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-form-label col-form-label-sm" for=""> Return
+                                                {{' (' + methodSelected.type + ')'}} </label>
+                                            <input ng-disabled="methodSelected.type === 'void'" name="returnMethod"
+                                                   ng-model="returnMethod"
+                                                   class="form-control form-control-sm" type="text">
+                                        </div>
+                                        <button type="button" ng-click="cancelActiveMethod()" class="btn btn-danger btn-sm">
+                                            Cancel
+                                        </button>
+                                        <button
+                                            ng-click="addTest(methodSelected)"
+                                            class="btn btn-primary btn-sm"> Add
+                                            test
+                                        </button>
+                                        <div class="alert alert-warning mt-3" role="alert"
+                                             ng-show="searchMethodTest(methodSelected.name).length === 0">
+                                            There are no tests currently added, to add a new test enter the respective data for
+                                            the selected method, be careful to fill in all the fields.
+                                        </div>
+                                        <table class="table table-bordered table-striped table-sm mt-3"
+                                               ng-show="searchMethodTest(methodSelected.name).parameters.length > 0">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th> Test Nº</th>
+                                                    <th scope="col" ng-repeat="paramTest in methodSelected.parameters">
+                                                        {{paramTest.name}}
+                                                    </th>
+                                                    <th> Return</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="test in searchMethodTest(methodSelected.name).parameters">
+                                                    <th> {{$index + 1}}</th>
+                                                    <th scope="row" ng-repeat="paramValue in test"> {{paramValue.value}}</th>
+                                                    <th scope="row">
+                                                        {{searchMethodTest(methodSelected.name).return[$index].value}}
+                                                    </th>
+                                                    <th>
+                                                        <button class="btn btn-danger btn-sm" ng-click="deleteTest($index)">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </button>
+                                                    </th>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div ng-show="methodSelected.type === 'void'">
+                                        <h6 class="font-weight-bold text-danger"> The selected method does not return any
+                                            value,
+                                            therefore no tests can be performed. </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
+                        <button ng-disabled="" type="button" class="btn btn-sm btn-primary"
+                                ng-click="saveModeling()">
+                            Save changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--begin: modal para visualizar el codigo de las tdd-->
+        <div class="modal fade" id="modal_code_tdd" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle" data-backdrop="static" data-keyboard="false"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Code TDD JUnit</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="border" id="codeTdd" style="height: 38rem"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-danger" ng-click="closeCodeTdd()">Exit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--CREATE MAVEN PROJECT-->
+        <!--Modal para configurar los atributos de las clases creadas-->
+        <div class="modal fade" id="modal_create_mavenproject" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle" data-backdrop="static" data-keyboard="false"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Create Maven Project</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="w-100">
+                            <div class="w-100">
+                                <h6> Entities </h6>
+                                <button ng-repeat="classDiagram in jsonMavenProject.entities"
+                                        ng-hide="classDiagram.modifiers === 'interface' || classDiagram.modifiers === 'enumerate' ||
+                                                                    classDiagram.className.includes('DAO')"
+                                        ng-class="classDiagram.classFront" ng-click="selectedEntitie(classDiagram, $index)">
+                                    {{classDiagram.className}}
+                                </button>
+                            </div>
+                            <!-- End of Sidebar -->
+                            <div class="ud_diagram_div overflow-hidden w-100 p-3" draggable="true">
+                                <div class="alert alert-success" role="alert" ng-hide="selectedEntitieObj.attributes.length > 0">
+                                    <i class="fas fa-info-circle"></i>
+                                    Select an entity to display its respective attributes
+                                </div>
+                                <table class="table table-striped table-sm table-bordered" ng-show="selectedEntitieObj.attributes.length > 0">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th> Name</th>
+                                            <th> Data type</th>
+                                            <th> Length/Precision</th>
+                                            <th> Not NULL ?</th>
+                                            <th> Primary key ?</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="attributes in selectedEntitieObj.attributes" ng-show="attributes.type !== 'fk'">
+                                            <td> {{attributes.name}}</td>
+                                            <td>
+                                                <select class="form-control form-control-sm"
+                                                        id="{{'datatype_maven' + $index}}" name="{{'datatype_maven' + $index}}"
+                                                        ng-model="datatype_mavenproject"
+                                                        ng-blur="updateDataTypeMavenProject(attributes, $index)"
+                                                        ng-change="updateDataTypeMavenProject(attributes, $index)"
+                                                        ng-value="selectedTypeParameter(attributes.type)"
+                                                        ng-options="dom_data_type for dom_data_type in data_type">
+                                                    <option value=""> ---</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input ng-disabled="selectedTypeParameter(attributes.type) !== 'string:String'"
+                                                       class="form-control form-control-sm" type="number" min="1" max="100"
+                                                       ng-blur="updateLengthMavenProject(attributes, $index)"
+                                                       id="{{'length_maven' + $index}}"
+                                                       value="{{attributes.length_precision > 0 ? attributes.length_precision : null}}">
+                                            </td>
+                                            <td>
+                                                <div class="custom-control custom-switch">
+                                                    <input type="checkbox" class="custom-control-input" id="{{'notNull_' + $index}}"
+                                                           ng-model="modelNotNull" ng-checked="attributes.not_null"
+                                                           ng-click="updateNotNullMavenProject(attributes)">
+                                                    <label class="custom-control-label" for="{{'notNull_' + $index}}"></label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="custom-control custom-switch">
+                                                    <input type="checkbox" class="custom-control-input" id="{{'pkey_' + $index}}"
+                                                           ng-model="modelPKey" ng-checked="attributes.primary_key"
+                                                           ng-click="updatePrimaryKeyMavenProject(attributes, $index)">
+                                                    <label class="custom-control-label" for="{{'pkey_' + $index}}"></label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
+                        <button ng-disabled="" type="button" class="btn btn-sm btn-primary" ng-click="nextStep()">
+                            Next
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Modal para configurar los parametros de la clase conexion a una base de datos-->
+        <div class="modal fade" id="modal_class_conecction" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle" data-backdrop="static" data-keyboard="false"
+             aria-hidden="true">
+            <div class="modal-dialog modal modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Parameters Class Conecction Data Base</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form name="formConecction">
+                            <div class="form-group">
+                                <label class="col-form-label-sm col-form-label-sm"> Data base name: </label>
+                                <input type="text" ng-class="(formConecction.db_name.$invalid && formConecction.db_name.$dirty) ?
+                                                        'form-control form-control-sm is-invalid'
+                                                        : 'form-control form-control-sm'" name="db_name" ng-model="db_name" required="true">
+                                <div class="invalid-feedback">
+                                    Please enter the data base name.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label-sm col-form-label-sm" > User: </label>
+                                <input type="text" ng-class="(formConecction.db_user.$invalid && formConecction.db_user.$dirty) ?
+                                                        'form-control form-control-sm is-invalid'
+                                                        : 'form-control form-control-sm'" name="db_user" ng-model="db_user" required="true">
+                                <div class="invalid-feedback">
+                                    Please enter the user name.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label-sm col-form-label-sm" > Password: </label>
+                                <input type="password" ng-class="(formConecction.db_password.$invalid && formConecction.db_password.$dirty) ?
+                                                        'form-control form-control-sm is-invalid'
+                                                        : 'form-control form-control-sm'" name="db_password" ng-model="db_password" required="true" autocomplete="newpassword">
+                                <div class="invalid-feedback">
+                                    Please enter the password.
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-10">
+                                    <div class="form-group">
+                                        <label class="col-form-label-sm col-form-label-sm" > Server: </label>
+                                        <input type="text" ng-class="(formConecction.db_server.$invalid && formConecction.db_server.$dirty) ?
+                                                                'form-control form-control-sm is-invalid'
+                                                                : 'form-control form-control-sm'" name="db_server" ng-model="db_server" required="true">
+                                        <div class="invalid-feedback">
+                                            Please enter the server name.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label class="col-form-label-sm col-form-label-sm" > Port: </label>
+                                        <input type="text" ng-class="(formConecction.db_port.$invalid && formConecction.db_port.$dirty) ?
+                                                                'form-control form-control-sm is-invalid'
+                                                                : 'form-control form-control-sm'" name="db_port" ng-model="db_port" required="true">
+                                        <div class="invalid-feedback">
+                                            Please enter the port.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label-sm col-form-label-sm" > Driver Conecction: </label>
+                                <select ng-class="(formConecction.db_driver.$invalid && formConecction.db_driver.$dirty) ?
+                                                        'form-control form-control-sm is-invalid'
+                                                        : 'form-control form-control-sm'" name="db_driver" ng-model="db_driver" required="true">
+                                    <option value="">---</option>
+                                    <option value="pg">PostgreSQL</option>
+                                    <option value="mq">MySQL</option>
+                                    <option value="sq">SqlServer</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please enter the driver conecction.
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-danger" ng-click="returnStep()">Return</button>
+                        <button ng-disabled="formConecction.$invalid" type="button" class="btn btn-sm btn-primary" ng-click="createMavenProject(formConecction)">
+                            Create maven project
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para empaquetar el proyecto maven -->
+        <div class="modal fade" id="modal_package_maven" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle" data-backdrop="static" data-keyboard="false"
+             aria-hidden="true">
+            <div class="modal-dialog modal modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Package project</h5>
+                    </div>
+                    <div class="modal-body text-center">
+                        <div class="alert alert-success" role="alert">
+                            Project maven successfully created
+                        </div>
+                        <button class="btn button-d btn-sm" ng-click="packagePrjMav()">
+                            <i class="fas fa-folder"></i> Package Zip project </button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-danger" ng-click="cancelDownload()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para descargar el proyecto maven -->
+        <div class="modal fade" id="modal_download_maven" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle" data-backdrop="static" data-keyboard="false"
+             aria-hidden="true">
+            <div class="modal-dialog modal modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Download project</h5>
+                    </div>
+                    <div class="modal-body text-center">
+                        <div class="alert alert-success" role="alert">
+                            Project maven successfully created
+                        </div>
+                        <button class="btn button-d btn-sm" ng-click="downloadPrjMav()">
+                            <i class="fas fa-download"></i> Download </button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-danger" ng-click="cancelDownload()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="content-wrapper" class="d-flex flex-column" style="overflow: hidden">
+            <!-- Main Content -->
+            <div id="content" style="display: flex; width: 100%">
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-0 static-top shadow w-100">
+                    <div class="">
+                        <img class="" src="resources/img/logo-app/logoTDDT4IOTSicon.svg" width="50" alt="logo"/>
+                    </div>
+                    <div class="ml-3">
+                        <h5 class="position-absolute font-weight-bold" style="color: #39297C !important; margin-left: 2px">
+                            {{dataProject.name_mp}} - <span class="text-dark"> Permit : </span>
+                            <span class="badge badge-success">{{dataProject.permit_pm === 'A' ? 'OWNER' : dataProject.permit_pm === 'R' ? 'READER' : 'WRITER'}}</span>
+                        </h5>
+                        <div class="" style="margin-top: 25px">
+                            <button ng-click="saveModeling()" class="btn badge badge-light"><i class="fas fa-save"></i> Save
+                                modeling
+                            </button>
+                            <button class="btn badge badge-light" ng-click="openModalTdd()"><i class="fas fa-cog"></i>
+                                Generate TDD <span class="badge badge-pill badge-danger">NEW</span>
+                            </button>
+                            <!--<button class="btn badge badge-light"> <i class="fab fa-adversal"></i> Verbs and nouns</button>-->
+                            <button class="btn badge badge-light" id="Symbols_use_cases"><i class="fab fa-symfony"></i> Symbols
+                                to
+                                describe use cases
+                            </button>
+                            <button class="btn badge badge-light" ng-click="openModalCreateMavenProject()">
+                                <i class="fab fa-java"></i>
+                                Create maven project <span class="badge badge-pill badge-danger">NEW</span>
+                            </button>
+                            <a class="btn badge badge-primary" download='MavenProject.zip' ng-show="mavenProject !== ''"
+                               ng-href="{{'../' + mavenProject}}"> <i class="fas fa-download"></i> Download maven project </a>
+
+                            <a onclick="location.href = 'app.html#!/myprojects'" class="btn badge badge-danger"> <i
+                                    class="fas fa-sign-out-alt"></i> Exit </a>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <ul class="navbar-nav ml-auto">
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" id="searchDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                 aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                               placeholder="Search for..." aria-label="Search"
+                                               aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+                        <!-- Nav Item - Alerts -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-users"></i>
+                                <!-- Counter - Alerts -->
+                                <span class="badge badge-danger badge-counter">{{usersConected.length}}</span>
+                            </a>
+                            <!-- Dropdown - Alerts -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                 aria-labelledby="alertsDropdown">
+                                <h6 class="dropdown-header">
+                                    Users connected
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="#" type=""
+                                   ng-repeat="dom_usersConected in usersConected">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-primary">
+                                            <i class="fas fa-user text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">{{dom_usersConected.usr.email}}</div>
+                                        <span class="font-weight-bold">
+                                            {{dom_usersConected.usr.name}}
+                                            <i ng-show="dom_usersConected.host" class="fas fa-crown" style="color: #EFB810"></i>
+                                        </span>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">🔃</a>
+                            </div>
+                        </li>
+
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" id="userDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                    {{DatoUsuario.name_person + ' ' + DatoUsuario.lastname_person}}</span>
+                                <img class="img-profile rounded-circle" alt="..."
+                                     ng-src="{{rutaImgUser + DatoUsuario.pathimg_person}}">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                 aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" ng-click="logOut()">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+            </div>
+            <div style="display: inherit; height: 100%; overflow: hidden; width: 100%">
+                <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion p-3" style="width: 5rem !important;">
+
+                    <li ng-show="showTool === 'UMLUseCaseDiagram'" class="nav-item">
+                        <div class="sidebar-heading p-0 text-center mb-2">
+                            Tools
+                        </div>
+                        <div ng-show="editionClasDiagram === false" class="bg-white col rounded mb-2">
+                            <div class="row p-2 toolUml" id="btnactor" draggable="true"
+                                 data-toggle="tooltip" data-placement="right" title="Actor">
+                                <img class="m-auto" src="resources/img/img-uml/actor.svg" alt="">
+                            </div>
+                            <div class="row p-2 toolUml" id="btninheritanceactor" draggable="true"
+                                 data-toggle="tooltip" data-placement="right" title="Inheritance  Actor">
+                                <img class="m-auto" src="resources/img/img-uml/herenciaActor.svg" alt="">
+                            </div>
+                            <div class="row p-2 toolUml" id="btnusecase" draggable="true"
+                                 data-toggle="tooltip" data-placement="right" title="Use case">
+                                <img class="m-auto" src="resources/img/img-uml/useCase.svg" alt="">
+                            </div>
+                            <div class="row p-2 toolUml" id="btnassociationusecase" draggable="true"
+                                 data-toggle="tooltip" data-placement="right" title="Assosiation Use case">
+                                <img class="m-auto" src="resources/img/img-uml/relUseCaseuml.svg" alt="">
+                            </div>
+                            <div class="row p-2 toolUml" id="btninclusion" draggable="true"
+                                 data-toggle="tooltip" data-placement="right" title="Include">
+                                <img class="m-auto" src="resources/img/img-uml/include.svg" alt="">
+                            </div>
+                            <div class="row p-2 toolUml" id="btnextend" draggable="true"
+                                 data-toggle="tooltip" data-placement="right" title="Extends">
+                                <img class="m-auto" src="resources/img/img-uml/extends.svg" alt="">
+                            </div>
+                            <div class="row p-2 toolUml" id="btngeneralization" draggable="true"
+                                 data-toggle="tooltip" data-placement="right" title="Generalization">
+                                <img class="m-auto" src="resources/img/img-uml/general.svg" alt="">
+                            </div>
+                            <div class="row p-2 toolUml" id="btnasosition" draggable="true"
+                                 data-toggle="tooltip" data-placement="right" title="Association">
+                                <img class="m-auto" src="resources/img/img-uml/assoc.svg" alt="">
+                            </div>
+                        </div>
+
+                        <div class="bg-white col rounded mb-2">
+                            <div class="row p-2 toolUml"
+                                 data-toggle="tooltip" data-placement="right" title="Export image png">
+                                <i class="fas fa-file-image" ng-click="exportImage()"
+                                   style="color: black; margin: auto; font-size: 2rem"></i>
+                            </div>
+                        </div>
+
+                    </li>
+
+                    <!-- Nav Item - Utilities Collapse Menu -->
+                    <li ng-show="showTool === 'UMLClassDiagram'" class="nav-item">
+                        <div class="sidebar-heading p-0 text-center mb-2">
+                            Tools
+                        </div>
+                        <div ng-show="editionClasDiagram === true"
+                             class="bg-white col rounded mb-2">
+                            <div class="row p-2 toolUml" id="btnclass" draggable="true"
+                                 data-toggle="tooltip" data-placement="right" title="Class">
+                                <img class="m-auto" src="resources/img/img-uml/classDiagram/classicon.svg" alt="">
+                            </div>
+                            <div class="row p-2 toolUml" id="btnagregation" draggable="true"
+                                 data-toggle="tooltip" data-placement="right" title="Agregation">
+                                <img class="m-auto" src="resources/img/img-uml/classDiagram/agregaicon.svg" alt="">
+                            </div>
+                            <div class="row p-2 toolUml" id="btndependecy" draggable="true"
+                                 data-toggle="tooltip" data-placement="right" title="Dependency">
+                                <img class="m-auto" src="resources/img/img-uml/include.svg" alt="">
+                            </div>
+                            <div class="row p-2 toolUml" id="btngeneralizationc" draggable="true"
+                                 data-toggle="tooltip" data-placement="right" title="Generalization">
+                                <img class="m-auto" src="resources/img/img-uml/general.svg" alt="">
+                            </div>
+                            <div class="row p-2 toolUml" id="btnasositionc" draggable="true"
+                                 data-toggle="tooltip" data-placement="right" title="Association">
+                                <img class="m-auto" src="resources/img/img-uml/assoc.svg" alt="">
+                            </div>
+                        </div>
+
+                        <div class="bg-white col rounded mb-2">
+                            <div ng-show="editionClasDiagram === true" class="row p-2 toolUml"
+                                 data-toggle="tooltip" data-placement="right" title="Restore">
+                                <i class="fas fa-undo" ng-click="restoreClassDiagram()"
+                                   style="color: black; margin: auto; font-size: 2rem"></i>
+                            </div>
+                            <div ng-show="editionClasDiagram === false" class="row p-2 toolUml"
+                                 data-toggle="tooltip" data-placement="right" title="Activate edition">
+                                <i class="fas fa-play-circle" ng-click="activateEditionClassDiagram()"
+                                   style="color: black; margin: auto; font-size: 2rem"></i>
+                            </div>
+                            <div class="row p-2 toolUml"
+                                 data-toggle="tooltip" data-placement="right" title="Export image png">
+                                <i class="fas fa-file-image" ng-click="exportImage()"
+                                   style="color: black; margin: auto; font-size: 2rem"></i>
+                            </div>
+                        </div>
+
+                    </li>
+
+                    <!-- Nav Item - Utilities Collapse Menu -->
+                    <li ng-show="showTool === 'UMLSequenceDiagram'" class="nav-item">
+                        <div class="sidebar-heading p-0 text-center mb-2">
+                            Tools
+                        </div>
+                        <div class="bg-white col rounded mb-2">
+                            <div class="row p-2 toolUml" draggable="true"
+                                 data-toggle="tooltip" data-placement="right" title="Tools in construction">
+                                <i class="fas fa-hammer"
+                                   style="color: black; margin: auto; font-size: 2rem"></i>
+                            </div>
+                        </div>
+
+                        <div class="bg-white col rounded mb-2">
+                            <div class="row p-2 toolUml"
+                                 data-toggle="tooltip" data-placement="right" title="Export image png">
+                                <i class="fas fa-file-image" ng-click="exportImage()"
+                                   style="color: black; margin: auto; font-size: 2rem"></i>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+                <div class="w-100 p-3" style="overflow: auto;display: flow-root;">
+                    <div style="height: 100%">
+                        <div class="w-100">
+                            <button ng-repeat="buttonUml in btnDiagramUml" ng-show="buttonUml.type !== 'UMLSequenceDiagram'"
+                                    ng-class="buttonUml.btnactive" ng-click="changeDiagramA(buttonUml)"> {{buttonUml.name}}
+                            </button>
+                            <button class="btn btn-sm button-dt mr-2 mt-1" id="dropdownMenuButton"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Secuences Diagrams
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" ng-repeat="buttonUml in btnDiagramUml" href="#"
+                                   ng-click="changeDiagramA(buttonUml)" ng-show="buttonUml.type === 'UMLSequenceDiagram'">{{buttonUml.name}}</a>
+                            </div>
+                        </div>
+                        <!-- End of Sidebar -->
+                        <div id="areaDiagram" class="ud_diagram_div overflow-hidden" draggable="true"
+                             style="max-width: 2000px; max-height: 2000px ;margin-top: 4px; height: 94%">
+                            <canvas id="mac">
+                            </canvas>
+                            <canvas id="mot">
+                            </canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <script src="resources/js/js-global/js_global.js" ></script>
+        <script src="resources/js/js-global/jsAlertPersonalize.js" ></script>
+        <script src="resources/js/js-uml/js_diagram_uml.js"></script>
+        <script src="resources/js/js-uml/js_tools_uml.js"></script>
+        <script src="resources/js/js-uml/js_class_diagram.js" ></script>
+
+        <!--begin: websocket-->
+        <script src="resources/js/js-websocket/ctrl_webscoket.js" ></script>
+        <!--end: websocket-->
+
+        <!--begin: mavenproject-->
+        <script src="resources/js/js-mavenprojeect/js_mavenproject.js" ></script>
+        <!--end: mavenproject-->
+
+        <script src="resources/js/js-tdd/js_tdd.js" ></script>
+        <script src="resources/js/js-library/armadillo.js"></script>
+        <script src="resources/js/js-library/cycle.js" ></script>
+        <script src="resources/js/js-library/JSONE.js" ></script>
+        <script src="resources/js/js-uml/secuenceUml.js" ></script>
+    </body>
+</html>

@@ -1,0 +1,130 @@
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Diagrams Uml</h1>
+        <button type="button" ng-click="openInsertProject()" class="btn button-d btn-sm"> New Project</button>
+    </div>
+
+    <!-- Content Row -->
+    <div class="row">
+        <!-- Area Simbol -->
+        <div class="col-xl-6 col-lg-6">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div
+                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Projects List</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="media" ng-show="myprojects.length === 0">
+                        <div class="media-body">
+                            <div class="text-center">
+                                <img class="mb-4" src="resources/img/img-app/nodata.svg" alt="..." width="150">
+                                <br>
+                                <h5>No data currently available</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="media mb-2" ng-repeat="dom_myprojects in myprojects" ng-show="myprojects.length > 0">
+                        <img src="resources/img/img-app/proyecto.svg" class="align-self-center mr-3" alt="..."
+                             width="70">
+                        <div class="media-body">
+                            <div style="font-size: 12px">
+                                <strong> Creation date: </strong> {{dom_myprojects.creationdate_mp}} -
+                                <strong> Update date: </strong> {{dom_myprojects.updatedate_mp}}
+                            </div>
+                            <h5 class="mt-0 text-dark"><strong> {{dom_myprojects.name_mp}} </strong></h5>
+                            <div class="row">
+                                <div class="col-xl-4 col-md-3 mb-2">
+                                    <button class="btn button-d btn-sm w-100" ng-click="selectProject(dom_myprojects)">
+                                        Open Project
+                                    </button>
+                                </div>
+                                <div class="col-xl-4 col-md-3 mb-2">
+                                    <button class="btn button-ds btn-sm w-100" href="#">Share Project</button>
+                                </div>
+                                <div class="col-xl-4 col-md-3 mb-2">
+                                    <button class="btn button-dt btn-sm w-100" href="#">Rename Project</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-6 col-lg-6">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Projects Modules</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="media" ng-show="flag_selected_project === false">
+                        <div class="media-body">
+                            <div class="text-center">
+                                <img class="mb-4" src="resources/img/img-app/selelctProject.svg" alt="..." width="150">
+                                <br>
+                                <h5>Select Project</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="flag_selected_project === true">
+                        <div style="font-size: 12px">
+                            <strong> Creation date: </strong> {{selected_project.creationdate_mp}} -
+                            <strong> Update date: </strong> {{selected_project.updatedate_mp}}
+                        </div>
+                        <h5 class="mt-0 text-dark"><strong> {{selected_project.name_mp}} </strong></h5>
+                    </div>
+                    <div class="media" ng-show="selected_project.uml.status === 'I'">
+                        <div class="media-body">
+                            <h5 class="mt-0"><strong> Module Diagramas Uml </strong></h5>
+                            <div class="text-center">
+                                <img class="mb-4" src="resources/img/img-app/newModuleUml.svg" alt="..." width="225">
+                                <br>
+                                <button class="btn button-ds btn-sm" ng-click="createModuleUml(selected_project)">Create
+                                    Module
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="media" ng-show="selected_project.uml.status === 'A'">
+                        <div class="media-body">
+                            <h5 class="mt-0"><strong> Module Diagramas Uml </strong></h5>
+                            <span>Download the files in json format so that another developer can import your research and improve it.</span>
+                            <div class="alert alert-primary mt-2" role="alert">
+                                <a href="">diagram_use_case.json</a>
+                            </div>
+                            <div class="alert alert-primary" role="alert">
+                                <a href="">diagram_class.json</a>
+                            </div>
+                            <span>Download a file containing java code based on class diagram.</span>
+                            <div class="alert alert-info mt-2" role="alert">
+                                <a href="">code.java</a>
+                            </div>
+                            <span>Download a file containing the srcipt sql based on class diagram</span>
+                            <div class="alert alert-warning mt-2" role="alert">
+                                <a href="">script.sql</a>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-4 col-md-3 mb-2">
+                                    <button ng-click="openUml()" class="btn btn-success w-100 d-block"><i class="fas fa-folder-open"></i>
+                                        Open module
+                                    </button>
+                                </div>
+                                <div class="col-xl-4 col-md-3 mb-2">
+                                    <button class="btn btn-danger w-100 d-block"><i class="fas fa-minus-square"></i>
+                                        Delete module
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

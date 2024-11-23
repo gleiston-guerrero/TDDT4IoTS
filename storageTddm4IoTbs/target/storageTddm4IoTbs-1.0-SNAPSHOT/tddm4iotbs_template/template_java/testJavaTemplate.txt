@@ -1,0 +1,20 @@
+package com.app.tddt4iots;{$s}
+{$s}
+import org.junit.jupiter.api.Test;{$s}
+import org.springframework.boot.test.context.SpringBootTest;{$s}
+import com.app.tddt4iots.service.*;{$s}
+import com.app.tddt4iots.entities.*;{$s}
+import java.util.*;{$s}
+import java.lang.*;{$s}
+import java.io.*;{$s}
+{$s}
+@SpringBootTest{$s}
+class {$javaTestName}{
+    {$s}
+    {$javaClassName}Service instance;{$s}
+    {$s}
+    {$javaTestName}(){ }{$s}
+    {$s}
+{$methodsTest}
+    {$s}
+}

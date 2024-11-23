@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html  ng-app="app">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="resources/js/js-library/angular.js" type="text/javascript"></script>
+    </head>
+    <body ng-controller="ctrl">
+        <div>TODO write content</div>
+        <script>
+                    var app = angular.module("app", []);
+                    app.controller("ctrl", function ($scope, $http) {
+                        angular.element(document).ready(function () {
+                            console.log("angular on ready");
+                            websocketInit("1234");
+                        });
+                        var SessionParams = {};
+                        var url = (window.location.protocol === 'https:' ? 'wss://' : 'ws://') +
+                                window.location.host
+                                + "/Tddm4IoTbsServer/ws_sharing_Ea";
+                        var webSocketIoT;
+                        function websocketInit(UserParams) {
+                            webSocketIoT = new WebSocket(url);
+                            webSocketIoT.onopen = onOpen;
+                            webSocketIoT.onclose = onClose;
+                            webSocketIoT.onmessage = onMessage;
+                            webSocketIoT.onerror = onError;
+                            if (UserParams)
+                            {
+                                SessionParams.groupid = UserParams;
+                            }
+                        }
+                        function websocketisOpen() {
+//                            try {
+//                                console.log("estado:", webSocketIoT.readyState);
+//                                if (webSocketIoT.readyState === 1)
+//                                {
+//                                }
+//                            } catch (e) {
+//                                console.log("sin ciadas", e);
+//                            }
+                            if (webSocketIoT != null) {
+                                return webSocketIoT.readyState === 1;
+                            }
+                            return false;
+                        }
+                        function websocketClose() {
+                            webSocketIoT.close();
+                        }
+                        function onOpen() {
+                            console.log("conectado...");
+                            let objmsg = {
+                                "config": "init",
+                                "groupId": SessionParams.groupid,
+                                "host": false,
+                                "user": {
+                                    "name": "Anthony Pachay"
+                                }
+                            };
+                            MessageSend(objmsg);
+                        }
+                        function onClose(evt) {
+                            console.log("Desconectado...");
+                            console.log(evt);
+                        }
+                        function onError(event) {
+                            console.error("Error en el WebSocket detectado:");
+                            console.log(event);
+                        }
+                        function MessageSend(obj) {
+                            console.log("enviando...");
+                            let objmsg = JSON.stringify(obj);
+                            if (objmsg.length <= 10000450)
+                            {
+                                webSocketIoT.send(objmsg);
+                                console.log("enviand mensaje:sock");
+                                console.log(objmsg);
+                            } else {
+                                alertAll({status: 4, information: "The message exceeds the limit."});
+                            }
+                        }
+                        function onMessage(evt) {
+                            var obj = JSON.parse(evt.data);
+                            console.log(obj);
+                            //header-config-content
+                            //groupId
+                            switch (obj.config) {
+                                case "host":
+                                    {
+                                        //llamar a toast AlertAll (status = 1)
+                                        alert("host change");
+                                    }
+                                    break;
+                                case "save":
+                                    {
+                                        //invocar al método de guardar
+                                        //puedes incluir los datos de quien desea guardar
+                                        // y agregarlo al toast o label
+                                        alert("Guardar");
+                                    }
+                                    break;
+                                case "connect":
+                                    {
+                                        // llamar a toast de: Tal usuario se ha conectado
+
+                                    }
+                                    break;
+                                case "disconnect":
+                                    {
+                                        // llamar a toast de: Tal usuario se ha *des*conectado
+                                    }
+                                    break;
+                                case "list":
+                                    {
+                                        //esta es la lista de usuarios que tienen en línea :D
+                                        window.alert("lista");
+                                    }
+                                    break;
+                                case "error":
+                                    {
+                                        // regresa cuando hubo un error
+                                        //header - content - config
+                                        // header es system para este caso
+                                    }
+                                    break;
+                                default:
+                                    {
+                                        //este no deberias definirlo
+                                    }
+                                    break;
+                                    //PUEDES AGREGAR TU MÉTODOS
+                                    //aqui solo basta agregar el config que recibiras
+                                    //un ejemplo puede ser config="circuit"
+                                    //entonces ese condif lo envías y así mismo
+                                    //lo validas aquí para recibirlo :3
+                            }
+                        }
+
+                        //######################################################
+                        //                  otros métodos
+                        //######################################################
+                        function ws_save() {
+                            let objmsg = {
+                                "config": "save",
+                                "groupId": SessionParams.groupid
+                            };
+                            MessageSend(objmsg);
+                        }
+
+                        function SendData() {
+                            let objmsg = {
+                                "groupId": SessionParams.groupid,
+                                "config": "circuit",
+                                "data": {"port": "a", "loca": 3.155}
+                            };
+                            MessageSend(objmsg);
+                        }
+
+//                        setTimeout(function () {
+//                            SendData();
+//                        }, 3000);
+                    });
+        </script>
+    </body>
+</html>

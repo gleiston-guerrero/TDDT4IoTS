@@ -1,0 +1,29 @@
+/** estilo para el menu de los paquetes y clases creados */
+
+.list_tdd{
+    list-style: none;
+}
+
+.li_tdd {
+    margin-left: 1rem;
+    border-left: 1px solid black;
+    padding: 0.5rem;
+    border-left-style: dashed
+}
+
+.li_hover:hover{
+    cursor: pointer;
+    color: #0074E8;
+}
+
+.li_active{
+    color: #dbab35;
+    font-style: italic;
+    text-decoration: underline;
+}
+
+.styleTree{
+    position: absolute;
+    margin-left: -18.5px;
+    margin-top: -51px !important;
+}

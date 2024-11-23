@@ -1,0 +1,5 @@
+{$imports}
+{$s}
+export interface {$nameInterface} {{$s}
+{$attributes}
+}
